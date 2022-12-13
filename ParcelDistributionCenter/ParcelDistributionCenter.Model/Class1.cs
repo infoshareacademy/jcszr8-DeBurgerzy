@@ -6,22 +6,36 @@
     }
 }
 
-/* Model:
+/* //CLASSES:
  * 
- * Parcel ( int Id, "enum" Status, "enum" size, int CourierId,Client Sender,Client Recipient, Address Current)
+ * Parcel ( 
+ *      int ParcelId, "enum" Size, Client Sender, Client Recipient, Address SendAddres, Address DeliveryAddress
+ *      "enum" ParcelStatus, Address CurrentAdress, Date PostDate, Date DeliveryDate, Date ExpireDate )
  * 
- * Client( int Id, string Name, strin Surname, Address Address)
+ *   //ExpireDate - data, po której paczka zostanie zwrócona do nadawcy w razie braku odbioru
  * 
- * ParcelLocker( int Id, "enum" status, ParcelLockerPlace ParcelLockerPlace, Address Address )
+ * Client( int ClientId, string Name, string Surname, Addres ClientAddres, Phone PhoneNumber)
  * 
- * ParcelLockerPlace ( int L, int S, int M )  // do przemyślenia czy zostawiamy to jako oddzielną klasę
+ * ParcelLocker( int LockerId, "enum" LockerStatus, Capacity LockerCapacity, Addres LockerAddres, Parcel<list> StoredParcels)
  *  
- * DeliveryCenter( int Id,)
+ * DeliveryCenter( int CenterId, Capacity CenterCapacity, Adress CenterAdress, Parcel<list> StoredParcels, ParcelLocker <list> SuportedLockers) 
  * 
- * Courier( int Id, )
- * 
- * Address ( )
+ * Courier( int Id, Capacity CourierCapacity, int <list> Route, Parcel<list> Parcels)
  * 
  * 
-
+ * //POMOCNICZE
+ * Capacity ( int L, int S, int M )
+ * 
+ * Date (int day, "enum" mounth, int year)
+ * 
+ * Addres ( ??GoogleFormat??)
+ * 
+ * Phone ()
+ *
+ *
+ * // 1. Narazie zakładałbym że wszystkie paczki trafiają z paczkomatu do centrum przełądunkowego i potem do odpowiednich paczkomatów. 
+ *       Jeżeli paczkomatu docelowego niema na liście SuportedLockers to wysyłka do DeliveryCenter które wspiera paczkomat docelowy
+ * // 2. Na początek zakładałbym że kuruer może zrobić dziennie 2 kursy - Centrum-Paczkomat-Centrum (możemy kiedyś dodać listę odległości ale już chyba jest to dość skomplikowane)
+ * // 3. Obecną lokalizację paczki określa dokłądnie Addres więc nie trzeba już dawać ID kuriera/paczkomatu/centrum
+ * // 4. Przepraszam za literówki - to był dłuugi dzień 
 */
