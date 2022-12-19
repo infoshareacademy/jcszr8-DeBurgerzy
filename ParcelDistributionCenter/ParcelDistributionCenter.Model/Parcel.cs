@@ -1,7 +1,21 @@
 ﻿namespace ParcelDistributionCenter.Model
 {
-    public class Class1
+    public class Parcel //na razie tak wstępnie zrobione
     {
+        public int package_number { get; set; }//moze uint? lub zabezpieczenue przed ujemnymi
+        public Status status { get; set; } //enum
+        public string courier_id { get; set; }
+        public string sender_name { get; set; }
+        public string recipient_name { get; set; }
+        public ParcelSize size { get; set; }//enum
+        public string sender_email { get; set; }
+        public string sender_phone { get; set; }
+        public string recipient_email { get; set; }
+        public string recipient_phone { get; set; }
+        public string sender_address { get; set; }
+        public string delivery_address { get; set; }
+        public string delivery_machine_id { get; set; }
+        public DateTime registered { get; set; }//nie wiem czy dobrze
 
     }
 }
