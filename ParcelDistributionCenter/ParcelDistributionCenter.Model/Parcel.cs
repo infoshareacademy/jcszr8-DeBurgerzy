@@ -1,21 +1,23 @@
-﻿namespace ParcelDistributionCenter.Model
+﻿using ParcelDistributionCenter.Model.Enums;
+
+namespace ParcelDistributionCenter.Model
 {
     public class Parcel //na razie tak wstępnie zrobione
     {
-        public int package_number { get; set; }//moze uint? lub zabezpieczenue przed ujemnymi
-        public Status status { get; set; } //enum
-        public string courier_id { get; set; }
-        public string sender_name { get; set; }
-        public string recipient_name { get; set; }
-        public ParcelSize size { get; set; }//enum
-        public string sender_email { get; set; }
-        public string sender_phone { get; set; }
-        public string recipient_email { get; set; }
-        public string recipient_phone { get; set; }
-        public string sender_address { get; set; }
-        public string delivery_address { get; set; }
-        public string delivery_machine_id { get; set; }
-        public DateTime registered { get; set; }//nie wiem czy dobrze
+        public int Package_number { get; set; }//moze uint? lub zabezpieczenue przed ujemnymi, jakaś metoda później
+        public Status Status { get; set; } //enum
+        public string Courier_id { get; set; }
+        public string Sender_name { get; set; }
+        public string Recipient_name { get; set; }
+        public ParcelSize Size { get; set; }//enum
+        public string Sender_email { get; set; }
+        public string Sender_phone { get; set; }
+        public string Recipient_email { get; set; }
+        public string Recipient_phone { get; set; }
+        public string Sender_address { get; set; }
+        public string Delivery_address { get; set; }
+        public string Delivery_machine_id { get; set; }
+        public DateTime Registered { get; set; }//nie wiem czy dobrze
 
     }
 }
