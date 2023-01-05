@@ -24,10 +24,10 @@ namespace ParcelDistributionCenter.ConsoleUI
                  Console.WriteLine("");
             }
 
-            UserList1[0].Size = ParcelSize.big;
-            UserList1[1].Size = ParcelSize.big;
-            UserList1[2].Size = ParcelSize.big;
-            UserList1[3].Size = ParcelSize.big;
+            UserList1[0].Size = ParcelSize.Big;
+            UserList1[1].Size = ParcelSize.Big;
+            UserList1[2].Size = ParcelSize.Big;
+            UserList1[3].Size = ParcelSize.Big;
             foreach (var item in UserList1)//testowe wyswietlanie listy użytkowników itp.
             {
                 Console.WriteLine($"Rozmiar paczki: {item.Size}");

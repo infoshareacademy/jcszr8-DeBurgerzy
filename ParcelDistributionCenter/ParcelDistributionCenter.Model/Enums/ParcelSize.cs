@@ -8,8 +8,8 @@ namespace ParcelDistributionCenter.Model.Enums
 {
     public enum ParcelSize
     {
-        big,
-        medium,
-        small
+        Big,
+        Medium,
+        Small
     }
 }
