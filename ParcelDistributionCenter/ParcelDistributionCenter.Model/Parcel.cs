@@ -1,21 +1,25 @@
-﻿namespace ParcelDistributionCenter.Model
+﻿using ParcelDistributionCenter.Model.Enums;
+
+namespace ParcelDistributionCenter.Model
 {
     public class Parcel //na razie tak wstępnie zrobione
     {
-        public string Courier_id { get; set; } = string.Empty;
-        public string Delivery_address { get; set; } = string.Empty;
-        public string Delivery_machine_id { get; set; } = string.Empty;
-        public int Package_number { get; set; } = -1;  //moze uint? lub zabezpieczenue przed ujemnymi
-        public string Recipient_email { get; set; } = string.Empty;
-        public string Recipient_name { get; set; } = string.Empty;
-        public string Recipient_phone { get; set; } = string.Empty;
-        public DateTime Registered { get; set; } = DateTime.Now; //nie wiem czy dobrze
-        public string Sender_address { get; set; } = string.Empty;
-        public string Sender_email { get; set; } = string.Empty;
-        public string Sender_name { get; set; } = string.Empty;
-        public string Sender_phone { get; set; } = string.Empty;
-        public ParcelSize Size { get; set; } = ParcelSize.Small; //enum
-        public Status Status { get; set; } = Status.Stored_by_sender; //enum
+        public int Package_number { get; set; }//moze uint? lub zabezpieczenue przed ujemnymi, jakaś metoda później
+        public Status Status { get; set; } //enum
+        public string Courier_id { get; set; }
+        public string Sender_name { get; set; }
+        public string Recipient_name { get; set; }
+        public ParcelSize Size { get; set; }//enum
+        public string Sender_email { get; set; }
+        public string Sender_phone { get; set; }
+        public string Recipient_email { get; set; }
+        public string Recipient_phone { get; set; }
+        public string Sender_address { get; set; }
+        public string Delivery_address { get; set; }
+        public string Delivery_machine_id { get; set; }
+        public DateTime Registered { get; set; }//nie wiem czy dobrze
+
+
     }
 }
 

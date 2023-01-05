@@ -1,9 +1,15 @@
-﻿namespace ParcelDistributionCenter.Model
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ParcelDistributionCenter.Model.Enums
 {
     public enum ParcelSize
     {
-        Big,
-        Medium,
-        Small
+        big,
+        medium,
+        small
     }
 }
