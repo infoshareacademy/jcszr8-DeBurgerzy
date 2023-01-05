@@ -1,6 +1,6 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using ParcelDistributionCenter.Model;//dodane dzięki: add/Project Reference 
+using ParcelDistributionCenter.Model.Enums;
 
 namespace ParcelDistributionCenter.ConsoleUI
 {
@@ -16,12 +16,21 @@ namespace ParcelDistributionCenter.ConsoleUI
 
             foreach (var item in UserList1)//testowe wyswietlanie listy użytkowników itp.
             {
-                Console.WriteLine($"Numer paczki: { item.Package_number}");
+                // Console.WriteLine($"Numer paczki: {item.Package_number}");
                 Console.WriteLine($"Rozmiar paczki: {item.Size}");
-                Console.WriteLine($"Adres paczkomatu: { item.Delivery_machine_id}");
-                Console.WriteLine($"Adres dostawy: { item.Delivery_address}");
-                Console.WriteLine($"Data rejestracji: { item.Registered}");
-                Console.WriteLine("");
+                // Console.WriteLine($"Adres paczkomatu: {item.Delivery_machine_id}");
+                // Console.WriteLine($"Adres dostawy: {item.Delivery_address}");
+                //Console.WriteLine($"Data rejestracji: {item.Registered}");
+                 Console.WriteLine("");
+            }
+
+            UserList1[0].Size = ParcelSize.big;
+            UserList1[1].Size = ParcelSize.big;
+            UserList1[2].Size = ParcelSize.big;
+            UserList1[3].Size = ParcelSize.big;
+            foreach (var item in UserList1)//testowe wyswietlanie listy użytkowników itp.
+            {
+                Console.WriteLine($"Rozmiar paczki: {item.Size}");
             }
         }
     }
