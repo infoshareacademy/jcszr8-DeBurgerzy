@@ -4,18 +4,18 @@ namespace ParcelDistributionCenter.Model
 {
     public class Parcel //na razie tak wstępnie zrobione
     {
-        public int Package_number { get; set; }//moze uint? lub zabezpieczenue przed ujemnymi, jakaś metoda później
+        public uint Package_number { get; init; }//moze uint? lub zabezpieczenue przed ujemnymi, jakaś metoda później
         public Status Status { get; set; } //enum
         public string Courier_id { get; set; }
-        public string Sender_name { get; set; }
-        public string Recipient_name { get; set; }
-        public ParcelSize Size { get; set; }//enum
-        public string Sender_email { get; set; }
-        public string Sender_phone { get; set; }
-        public string Recipient_email { get; set; }
-        public string Recipient_phone { get; set; }
-        public string Sender_address { get; set; }
-        public string Delivery_address { get; set; }
+        public string Sender_name { get; init; }
+        public string Recipient_name { get; init; }
+        public ParcelSize Size { get; init; }//enum
+        public string Sender_email { get; init; }
+        public string Sender_phone { get; init; }
+        public string Recipient_email { get; init; }
+        public string Recipient_phone { get; init; }
+        public string Sender_address { get; init; }
+        public string Delivery_address { get; set; } 
         public string Delivery_machine_id { get; set; }
         public DateTime Registered { get; set; }//nie wiem czy dobrze
 
