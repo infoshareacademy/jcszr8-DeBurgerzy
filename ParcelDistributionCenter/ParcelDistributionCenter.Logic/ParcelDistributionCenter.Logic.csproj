@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ParcelDistributionCenter.Model\ParcelDistributionCenter.Model.csproj" />
+  </ItemGroup>
+
 </Project>
