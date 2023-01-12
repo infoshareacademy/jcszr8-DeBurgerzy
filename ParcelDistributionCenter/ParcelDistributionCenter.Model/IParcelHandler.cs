@@ -8,6 +8,6 @@ namespace ParcelDistributionCenter.Model
 {
     internal interface IParcelHandler
     {
-        public List<uint> Parcels_numbers_list { get; set; }
+        public List<string> Parcels_numbers_list { get; set; }
     }
 }

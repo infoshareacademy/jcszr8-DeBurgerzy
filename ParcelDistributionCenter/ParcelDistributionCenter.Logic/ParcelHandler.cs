@@ -19,8 +19,8 @@ namespace ParcelDistributionCenter.Logic
             while (i<3) 
             {
                 Console.WriteLine("Podaj numer paczki:");
-                string parcel_number = Console.ReadLine();
-                    parcel = parcels_list.FirstOrDefault(Package => Package.Package_number == parcel_number);
+                string number = Console.ReadLine();
+                    parcel = parcels_list.FirstOrDefault(Package => Package.Number == number);
                 if (parcel != null)
                 {
                     Console.WriteLine("Znaleziono paczkę o podanym numerze");
@@ -36,14 +36,22 @@ namespace ParcelDistributionCenter.Logic
         {
             Console.WriteLine
                 (
-                  $" Numer: {parcel.Package_number}\n" +
+                  $" Numer: {parcel.Number}\n" +
                   $" Wielkość: {parcel.Size} \n" +
                   $" Mail Nadawcy: {parcel.Sender_email} \n" +
                   $" Mail Odbiorcy: {parcel.Recipient_email} \n" +
-                  $" Paczkomat nadania: {parcel.Send_parcel_id} \n" +
-                  $" Paczkomat docelowy: {parcel.Delivery_parcel_id} \n" +
+                  $" Paczkomat nadania: {parcel.Sender_locker_id} \n" +
+                  $" Paczkomat docelowy: {parcel.Delivery_locker_id} \n" +
                   $" Data nadania: {parcel.Registered}\n"
                 );
+        }
+
+        public static void Display(List<Parcel> parcels)
+        {
+            foreach (Parcel courier in parcels)
+            {
+                Display(courier);
+            }
         }
     }
 

@@ -4,39 +4,38 @@ namespace ParcelDistributionCenter.Model
 {
     public class Parcel
     {
-        public string Package_number { get; init; }
+        public string Number { get; init; }
         public ParcelSize Size { get; init; }
         public string Sender_email { get; set; }
-        public string Send_parcel_id { get; set; }
+        public string Sender_locker_id { get; set; }
         public string Recipient_email { get; set; }
-        public string Delivery_parcel_id { get; set; }
+        public string Delivery_locker_id { get; set; }
         public Status Status { get; set; }
         public string Current_location_id { get; set; }
-        public string? Courier_id { get; set; }
         public DateTime Registered { get; set; }
         public DateTime? Deliver_date { get; set; }
         public DateTime? Expire_date { get; set; }
 
 
-        public Parcel(string package_number, ParcelSize size, string sender_email, string send_parcel_id, string recipient_email, string delivery_parcel_id, Status status, string current_location_id, string? courier_id, DateTime registered) // konstruktor przy starcie programu - wczytywanie z bazy
+
+        public Parcel(string number, ParcelSize size, string sender_email, string sender_locker_id, string recipient_email, string delivery_locker_id, Status status, string current_location_id, DateTime registered, DateTime? deliver_date) // konstruktor przy starcie programu - wczytywanie z bazy
         {
-            Package_number = package_number;
+            Number = number;
             Size = size;
             Sender_email = sender_email;
-            Send_parcel_id = send_parcel_id;
+            Sender_locker_id = sender_locker_id;
             Recipient_email = recipient_email;
-            Delivery_parcel_id = delivery_parcel_id;
+            Delivery_locker_id = delivery_locker_id;
             Status = status;
             Current_location_id = current_location_id;
-            Courier_id = courier_id;
             Registered = registered;
-            Deliver_date=null; 
+            Deliver_date = deliver_date; 
             Expire_date = null;
         }
 
        /* public Parcel(ParcelSize size, string sender_email, string send_parcel_id, string recipient_email, string delivery_parcel_id) // konstruktor przy wprowadzaniu paczki
         {
-            Package_number = "1"; // Do opracowania algorytm nadawania numerów paczek;
+           Number = "1"; // Do opracowania algorytm nadawania numerów paczek;
             Size = size;
             Sender_email = sender_email;
             Send_parcel_id = send_parcel_id;

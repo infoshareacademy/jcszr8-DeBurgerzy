@@ -14,7 +14,7 @@ namespace ParcelDistributionCenter.Model
         public int Big_lockers_count { get; set; }
         public int Medium_lockers_count { get; set; }
         public int Small_lockers_count {get; set; }
-        public List<uint> Parcels_numbers_list { get; set; }
+        public List<string> Parcels_numbers_list { get; set; }
 
         //public Dictionary<Enums.ParcelSize, int> Capacity; - alternatywa dla 3 pól z wielkościami paczek
 
@@ -26,7 +26,7 @@ namespace ParcelDistributionCenter.Model
             Big_lockers_count = big_lockers_count;
             Medium_lockers_count = medium_lockers_count;
             Small_lockers_count = small_lockers_count;
-            Parcels_numbers_list = new List<uint>();
+            Parcels_numbers_list = new List<string>();
         }
 
         public Locker(string address, int big_lockers_count, int medium_lockers_count, int small_lockers_count ) //konstruktor przy tworzeniu nowej
@@ -37,7 +37,7 @@ namespace ParcelDistributionCenter.Model
             Big_lockers_count= big_lockers_count;
             Medium_lockers_count= medium_lockers_count;
             Small_lockers_count= small_lockers_count;
-            Parcels_numbers_list= new List<uint>();
+            Parcels_numbers_list= new List<string>();
         }
     }
 }
