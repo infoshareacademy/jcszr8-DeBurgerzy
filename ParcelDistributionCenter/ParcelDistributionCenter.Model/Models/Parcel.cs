@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using ParcelDistributionCenter.Model.Enums;
+using System.Net.Sockets;
 using System.Text.Json.Serialization;
 
 namespace ParcelDistributionCenter.Model.Models
@@ -20,8 +21,6 @@ namespace ParcelDistributionCenter.Model.Models
         public DateTime? Deliver_date { get; set; }
         public DateTime? Expire_date { get; set; }
         public ParcelSize Value { get; set; }
-
-
 
         public Parcel(string number, ParcelSize size, string sender_email, string sender_locker_id, string recipient_email, string delivery_locker_id, Status status, string current_location_id, DateTime registered, DateTime? deliver_date) // konstruktor przy starcie programu - wczytywanie z bazy
         {

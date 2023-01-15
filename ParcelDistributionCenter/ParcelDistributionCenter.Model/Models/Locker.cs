@@ -2,7 +2,7 @@
 
 namespace ParcelDistributionCenter.Model.Models
 {
-    internal class Locker : IParcelHandler, IParcelPlace
+    public class Locker : IParcelHandler, IParcelPlace
     {
         public Locker(string id, string address, int big_lockers_count, int medium_lockers_count, int small_lockers_count) // konstruktor przy starcie programu - wczytywanie z bazy
         {
