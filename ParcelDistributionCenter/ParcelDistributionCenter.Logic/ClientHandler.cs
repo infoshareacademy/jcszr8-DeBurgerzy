@@ -2,8 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+
+#pragma warning disable CS8600
+#pragma warning disable CS8604
+
 
 namespace ParcelDistributionCenter.Logic
 {
@@ -19,7 +24,7 @@ namespace ParcelDistributionCenter.Logic
             else 
             {
                 Console.WriteLine("Podaj swoje imie:");
-                string name = Console.ReadLine();
+                string name = Console.ReadLine(); // dodanie walidacji Name
                 Console.WriteLine("Podaj swoje nazwisko:");
                 string surname = Console.ReadLine();
                 Console.WriteLine("Podaj swój numer telefonu:");

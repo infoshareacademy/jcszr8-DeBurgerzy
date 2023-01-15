@@ -1,4 +1,6 @@
-﻿using ParcelDistributionCenter.Model.Enums;
+﻿using Newtonsoft.Json;
+using ParcelDistributionCenter.Model.Enums;
+using System.Text.Json.Serialization;
 
 namespace ParcelDistributionCenter.Model.Models
 {
@@ -6,8 +8,10 @@ namespace ParcelDistributionCenter.Model.Models
     {
         public string Number { get; init; }
         public ParcelSize Size { get; init; }
-        public string Sender_email { get; set; }
-        public string Sender_locker_id { get; set; }
+        [JsonProperty("Sender_email")]
+        public string SenderEmail { get; set; }
+        [JsonProperty("Sender_locker_id")]
+        public string SenderLockerId { get; set; }
         public string Recipient_email { get; set; }
         public string Delivery_locker_id { get; set; }
         public Status Status { get; set; }
@@ -15,6 +19,7 @@ namespace ParcelDistributionCenter.Model.Models
         public DateTime Registered { get; set; }
         public DateTime? Deliver_date { get; set; }
         public DateTime? Expire_date { get; set; }
+        public ParcelSize Value { get; set; }
 
 
 
@@ -22,8 +27,8 @@ namespace ParcelDistributionCenter.Model.Models
         {
             Number = number;
             Size = size;
-            Sender_email = sender_email;
-            Sender_locker_id = sender_locker_id;
+            SenderEmail = sender_email;
+            SenderLockerId = sender_locker_id;
             Recipient_email = recipient_email;
             Delivery_locker_id = delivery_locker_id;
             Status = status;

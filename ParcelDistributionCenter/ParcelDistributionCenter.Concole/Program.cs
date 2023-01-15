@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
+using ParcelDistributionCenter.Logic;
 using ParcelDistributionCenter.Model;//dodane dzięki: add/Project Reference 
 using ParcelDistributionCenter.Model.Enums;
+using ParcelDistributionCenter.Model.Models;
 
 namespace ParcelDistributionCenter.ConsoleUI
 {
@@ -9,32 +11,38 @@ namespace ParcelDistributionCenter.ConsoleUI
         static void Main(string[] args)
         {
 
-            // string ParcelUser = File.ReadAllText(@"D:\packages.json");//odczytanie json z pliku. Ścieżkę dodana na sztywno.
-            //plik Json umieszczony w projekcie :jcszr8-DeBurgerzy\ParcelDistributionCenter\ParcelDistributionCenter.Concole\bin\Debug\net6.0
-            string ParcelUser = File.ReadAllText("packages.json");
-            List<Parcel> UserList1 = JsonConvert.DeserializeObject<List<Parcel>>(ParcelUser);//wpisanie json do listy
+            //Load Clients
+            string clients = File.ReadAllText("..\\..\\..\\..\\ParcelDistributionCenter.Model\\json\\clients.json");
+            List<Client> clients_list = JsonConvert.DeserializeObject<List<Client>>(clients);
 
-            foreach (var item in UserList1)//testowe wyswietlanie listy użytkowników itp.
-            {
-                // Console.WriteLine($"Numer paczki: {item.Package_number}");
-                Console.WriteLine($"Rozmiar paczki: {item.Size}");
-                // Console.WriteLine($"Adres paczkomatu: {item.Delivery_machine_id}");
-                // Console.WriteLine($"Adres dostawy: {item.Delivery_address}");
-                //Console.WriteLine($"Data rejestracji: {item.Registered}");
-                Console.WriteLine($"Data rejestracji: {item.Registered}");
-                 Console.WriteLine("");
-            }
+            //Load Couriers
+            string couriers = File.ReadAllText("..\\..\\..\\..\\ParcelDistributionCenter.Model\\json\\couriers.json");
+            List<Courier> couriers_list = JsonConvert.DeserializeObject<List<Courier>>(couriers);
 
-            /*
-            UserList1[0].Size = ParcelSize.Big;
-            UserList1[1].Size = ParcelSize.Big;
-            UserList1[2].Size = ParcelSize.Big;
-            UserList1[3].Size = ParcelSize.Big;
-            foreach (var item in UserList1)//testowe wyswietlanie listy użytkowników itp.
+            //Load Parcel Lockers
+            string lockers = File.ReadAllText("..\\..\\..\\..\\ParcelDistributionCenter.Model\\json\\lockers.json");
+            List<Courier> lockers_list = JsonConvert.DeserializeObject<List<Courier>>(lockers);
+
+            //Load Parcels
+            string parcels = File.ReadAllText("..\\..\\..\\..\\ParcelDistributionCenter.Model\\json\\parcels.json");
+            List<Parcel> parcels_list = JsonConvert.DeserializeObject<List<Parcel>>(parcels);
+
+
+            //Test
+            //ParcelHandler.Display(parcels_list);
+
+
+            //TEST DZIAŁANIA WYSZUKIWANIA
+            ParcelHandler.FindPackageByNumber(parcels_list, out Parcel? parcel);
+
+            if (parcel == null)
             {
-                Console.WriteLine($"Rozmiar paczki: {item.Size}");
+                Console.WriteLine("Nie udało się znaleźć paczki.");
             }
-            */
+            else
+            {
+                ParcelHandler.Display(parcel);
+            }
         }
     }
 }
