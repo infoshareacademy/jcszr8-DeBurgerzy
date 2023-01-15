@@ -2,10 +2,9 @@
 {
     public enum Status
     {
-        In_preparation,
-        Stored_by_sender,
-        Stored_in_machine,
+        In_sender_locker,
         In_delivery,
+        In_destenation_locker,
         Delivered,
     }
 }

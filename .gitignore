@@ -12,6 +12,7 @@
 
 # Build results
 [Dd]ebug/
+![Dd]ebug/net6.0/*.json
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/

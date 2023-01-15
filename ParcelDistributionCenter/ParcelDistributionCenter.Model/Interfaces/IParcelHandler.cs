@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ParcelDistributionCenter.Model
+namespace ParcelDistributionCenter.Model.Interfaces
 {
     internal interface IParcelHandler
     {
-        public List<uint> Parcels_numbers_list { get; set; }
+        public List<string> Parcels_numbers_list { get; set; }
     }
 }
