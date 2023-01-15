@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using ParcelDistributionCenter.Logic;
-using ParcelDistributionCenter.Model;//dodane dzięki: add/Project Reference 
 using ParcelDistributionCenter.Model.Enums;
+using ParcelDistributionCenter.Model.Models;
 
 namespace ParcelDistributionCenter.ConsoleUI
 {
@@ -27,11 +27,11 @@ namespace ParcelDistributionCenter.ConsoleUI
 
 
             //Test
-            ParcelHandler.Display(parcels_list);
+            //ParcelHandler.Display(parcels_list);
 
-            /*
+            
             //TEST DZIAŁANIA WYSZUKIWANIA
-            ParcelHandler.FindPackageByNumber(UserList1, out Parcel? parcel);
+            ParcelHandler.FindPackageByNumber(parcels_list, out Parcel? parcel);
 
             if(parcel==null)
             {
@@ -41,7 +41,7 @@ namespace ParcelDistributionCenter.ConsoleUI
             {
                 ParcelHandler.Display(parcel);
             }  
-            */
+            
         }
     }
 }

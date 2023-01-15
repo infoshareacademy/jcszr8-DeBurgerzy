@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Schema;
-using ParcelDistributionCenter.Model;
+using ParcelDistributionCenter.Model.Models;
 using static System.Reflection.Metadata.BlobBuilder;
 
 
@@ -12,7 +13,15 @@ namespace ParcelDistributionCenter.Logic
 {
     public static class ParcelHandler
     {
-        public static void FindPackageByNumber (List<Model.Parcel>parcels_list, out Parcel? parcel) 
+        public static void SendPackage()
+        {
+            //Dane nadawcy
+            //Wielkość paczki;
+            //Paczkomat z którego wysyłam
+            //Dane odbiorcy
+            //Paczkomat do którego wysyłam
+        }
+        public static void FindPackageByNumber (List<Parcel>parcels_list, out Parcel? parcel) 
         {
             parcel= null;
             int i=0;
@@ -31,7 +40,6 @@ namespace ParcelDistributionCenter.Logic
             }
 
         }
-
         public static void Display(Parcel parcel)
         {
             Console.WriteLine

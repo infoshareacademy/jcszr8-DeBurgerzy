@@ -1,4 +1,4 @@
-﻿using ParcelDistributionCenter.Model;
+﻿using ParcelDistributionCenter.Model.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +15,22 @@ namespace ParcelDistributionCenter.Logic
             if (client != null)
             {
                Console.WriteLine("Klient o podanym emailu już istnieje");
-      
             }
             else 
             {
-                Console.WriteLine("Dodaję klienta!");
+                Console.WriteLine("Podaj swoje imie:");
+                string name = Console.ReadLine();
+                Console.WriteLine("Podaj swoje nazwisko:");
+                string surname = Console.ReadLine();
+                Console.WriteLine("Podaj swój numer telefonu:");
+                string phone = Console.ReadLine();
+                Client c = new Client(name,surname, email,phone);
+                client_list.Add(c);
+                Console.Clear();
+                Console.WriteLine("Dodano klienta!");
             }
+            Console.ReadKey();
+            Console.Clear();
         }
         public static void FindClientByEmail(List<Client> client_list, out Client? client)
         {
