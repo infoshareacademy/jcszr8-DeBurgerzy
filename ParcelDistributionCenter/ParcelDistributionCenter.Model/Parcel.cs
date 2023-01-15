@@ -2,57 +2,61 @@
 
 namespace ParcelDistributionCenter.Model
 {
-    public class Parcel //na razie tak wstępnie zrobione
+    public class Parcel
     {
-        public uint Package_number { get; init; }//moze uint? lub zabezpieczenue przed ujemnymi, jakaś metoda później
-        public Status Status { get; set; } //enum
-        public string Courier_id { get; set; }
-        public string Sender_name { get; init; }
-        public string Recipient_name { get; init; }
-        public ParcelSize Size { get; init; }//enum
-        public string Sender_email { get; init; }
-        public string Sender_phone { get; init; }
-        public string Recipient_email { get; init; }
-        public string Recipient_phone { get; init; }
-        public string Sender_address { get; init; }
-        public string Delivery_address { get; set; } 
-        public string Delivery_machine_id { get; set; }
-        public DateTime Registered { get; set; }//nie wiem czy dobrze
+        public string Package_number { get; init; }
+        public ParcelSize Size { get; init; }
+        public string Sender_email { get; set; }
+        public string Send_parcel_id { get; set; }
+        public string Recipient_email { get; set; }
+        public string Delivery_parcel_id { get; set; }
+        public Status Status { get; set; }
+        public string Current_location_id { get; set; }
+        public string? Courier_id { get; set; }
+        public DateTime Registered { get; set; }
+        public DateTime? Deliver_date { get; set; }
+        public DateTime? Expire_date { get; set; }
 
 
+        public Parcel(string package_number, ParcelSize size, string sender_email, string send_parcel_id, string recipient_email, string delivery_parcel_id, Status status, string current_location_id, string? courier_id, DateTime registered) // konstruktor przy starcie programu - wczytywanie z bazy
+        {
+            Package_number = package_number;
+            Size = size;
+            Sender_email = sender_email;
+            Send_parcel_id = send_parcel_id;
+            Recipient_email = recipient_email;
+            Delivery_parcel_id = delivery_parcel_id;
+            Status = status;
+            Current_location_id = current_location_id;
+            Courier_id = courier_id;
+            Registered = registered;
+            Deliver_date=null; 
+            Expire_date = null;
+        }
+
+       /* public Parcel(ParcelSize size, string sender_email, string send_parcel_id, string recipient_email, string delivery_parcel_id) // konstruktor przy wprowadzaniu paczki
+        {
+            Package_number = "1"; // Do opracowania algorytm nadawania numerów paczek;
+            Size = size;
+            Sender_email = sender_email;
+            Send_parcel_id = send_parcel_id;
+            Recipient_email = recipient_email;
+            Delivery_parcel_id = delivery_parcel_id;
+            Status = (Status)0;
+            Current_location_id = "Sender";
+            Courier_id = "0";
+            Registered = DateTime.Now;
+            Expire_date = Registered.AddDays(2);
+        }
+
+        */
+
+
+        //public string Delivery_address { get; set; } -  tego parametru nie rozumiem - dostarczamy do paczkomatu więc wszystko jest już w Parcel_id.
+        // public string Sender_name { get; set; } - do klienta
+        // public string Recipient_name { get; set; } - do klienta
+        // public string Sender_phone { get; set; } do klienta
+        // public string Recipient_phone { get; set; }  do klienta
+        // public string Sender_address { get; set; }  do klienta
     }
 }
-
-/* //CLASSES:
- *
- * Parcel (
- *      int ParcelId, "enum" Size, Client Sender, Client Recipient, Address SendAddres, Address DeliveryAddress
- *      "enum" ParcelStatus, Address CurrentAdress, Date PostDate, Date DeliveryDate, Date ExpireDate )
- *
- *   //ExpireDate - data, po której paczka zostanie zwrócona do nadawcy w razie braku odbioru
- *
- * Client( int ClientId, string Name, string Surname, Addres ClientAddres, Phone PhoneNumber)
- *
- * ParcelLocker( int LockerId, "enum" LockerStatus, Capacity LockerCapacity, Addres LockerAddres, Parcel<list> StoredParcels)
- *
- * DeliveryCenter( int CenterId, Capacity CenterCapacity, Adress CenterAdress, Parcel<list> StoredParcels, ParcelLocker <list> SuportedLockers)
- *
- * Courier( int Id, Capacity CourierCapacity, int <list> Route, Parcel<list> Parcels)
- *
- *
- * //POMOCNICZE
- * Capacity ( int L, int S, int M )
- *
- * Date (int day, "enum" mounth, int year)
- *
- * Addres ( ??GoogleFormat??)
- *
- * Phone ()
- *
- *
- * // 1. Narazie zakładałbym że wszystkie paczki trafiają z paczkomatu do centrum przełądunkowego i potem do odpowiednich paczkomatów.
- *       Jeżeli paczkomatu docelowego niema na liście SuportedLockers to wysyłka do DeliveryCenter które wspiera paczkomat docelowy
- * // 2. Na początek zakładałbym że kuruer może zrobić dziennie 2 kursy - Centrum-Paczkomat-Centrum (możemy kiedyś dodać listę odległości ale już chyba jest to dość skomplikowane)
- * // 3. Obecną lokalizację paczki określa dokłądnie Addres więc nie trzeba już dawać ID kuriera/paczkomatu/centrum
- * // 4. Przepraszam za literówki - to był dłuugi dzień
-*/
