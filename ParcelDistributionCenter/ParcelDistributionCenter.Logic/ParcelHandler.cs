@@ -46,9 +46,9 @@ namespace ParcelDistributionCenter.Logic
                 (
                   $" Numer: {parcel.Number}\n" +
                   $" Wielkość: {parcel.Size} \n" +
-                  $" Mail Nadawcy: {parcel.Sender_email} \n" +
+                  $" Mail Nadawcy: {parcel.SenderEmail} \n" +
                   $" Mail Odbiorcy: {parcel.Recipient_email} \n" +
-                  $" Paczkomat nadania: {parcel.Sender_locker_id} \n" +
+                  $" Paczkomat nadania: {parcel.SenderLockerId} \n" +
                   $" Paczkomat docelowy: {parcel.Delivery_locker_id} \n" +
                   $" Data nadania: {parcel.Registered}\n"
                 );

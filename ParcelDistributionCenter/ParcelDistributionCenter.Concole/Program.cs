@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using ParcelDistributionCenter.Logic;
+using ParcelDistributionCenter.Model;//dodane dzięki: add/Project Reference 
 using ParcelDistributionCenter.Model.Enums;
 using ParcelDistributionCenter.Model.Models;
 
@@ -9,6 +10,7 @@ namespace ParcelDistributionCenter.ConsoleUI
     {
         static void Main(string[] args)
         {
+
             //Load Clients
             string clients = File.ReadAllText("..\\..\\..\\..\\ParcelDistributionCenter.Model\\json\\clients.json");
             List<Client> clients_list = JsonConvert.DeserializeObject<List<Client>>(clients);
@@ -29,19 +31,18 @@ namespace ParcelDistributionCenter.ConsoleUI
             //Test
             //ParcelHandler.Display(parcels_list);
 
-            
+
             //TEST DZIAŁANIA WYSZUKIWANIA
             ParcelHandler.FindPackageByNumber(parcels_list, out Parcel? parcel);
 
-            if(parcel==null)
+            if (parcel == null)
             {
                 Console.WriteLine("Nie udało się znaleźć paczki.");
             }
-            else 
+            else
             {
                 ParcelHandler.Display(parcel);
-            }  
-            
+            }
         }
     }
 }
