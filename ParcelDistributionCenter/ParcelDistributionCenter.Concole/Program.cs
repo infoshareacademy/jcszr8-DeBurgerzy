@@ -15,6 +15,7 @@ namespace ParcelDistributionCenter.ConsoleUI
             //TEST DZIAŁANIA WYSZUKIWANIA
             ParcelHandler.FindPackageByNumber(UserList1, out Parcel? parcel);
 
+
             if(parcel==null)
             {
                 Console.WriteLine("Nie udało się znaleźć paczki.");
