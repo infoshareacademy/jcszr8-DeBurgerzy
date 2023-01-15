@@ -35,7 +35,7 @@ namespace ParcelDistributionCenter.ConsoleUI
             //TEST DZIAŁANIA WYSZUKIWANIA
             ParcelHandler.FindPackageByNumber(parcels_list, out Parcel? parcel);
 
-            if (parcel == null)
+            if(parcel==null)
             {
                 Console.WriteLine("Nie udało się znaleźć paczki.");
             }
