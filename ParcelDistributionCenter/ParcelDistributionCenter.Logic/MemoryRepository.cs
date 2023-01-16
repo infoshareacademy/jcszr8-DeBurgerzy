@@ -5,11 +5,10 @@ namespace ParcelDistributionCenter.Logic
 {
     public class MemoryRepository
     {
-        private const string clientsJsonName = "clients.json";
         private const string couriersJsonName = "couriers.json";
         private const string jsonFolderName = "json";
-        private const string lockersJsonName = "lockers.json";
-        private const string parcelsJsonName = "parcels.json";
+        private const string deliveryMachinesJsonName = "deliveryMachines.json";
+        private const string packagesJsonName = "packages.json";
         private static readonly string appDomainPath = AppDomain.CurrentDomain.BaseDirectory;
 
         // ZAPIS PLIKU MA BYĆ TYLKO DO STATYCZNEJ KLASY - NIE DO JSONA
@@ -17,29 +16,24 @@ namespace ParcelDistributionCenter.Logic
         {
             SetData();
         }
-
-        public static List<Client> ClientsList { get; private set; }
         public static List<Courier> CouriersList { get; private set; }
-        public static List<Locker> LockersList { get; private set; }
-        public static List<Parcel> ParcelsList { get; private set; }
+        public static List<DeliveryMachine> DeliveryMachinesList { get; private set; }
+        public static List<Package> PackagesList { get; private set; }
 
         private void SetData()
         {
-            if (ClientsList != null)
+            if (PackagesList != null)
             {
                 return;
             }
-            string clients = File.ReadAllText(Path.Combine(appDomainPath, jsonFolderName, clientsJsonName));
-            ClientsList = JsonConvert.DeserializeObject<List<Client>>(clients);
-
             string couriers = File.ReadAllText(Path.Combine(appDomainPath, jsonFolderName, couriersJsonName));
             CouriersList = JsonConvert.DeserializeObject<List<Courier>>(couriers);
 
-            string lockers = File.ReadAllText(Path.Combine(appDomainPath, jsonFolderName, lockersJsonName));
-            LockersList = JsonConvert.DeserializeObject<List<Locker>>(lockers);
+            string lockers = File.ReadAllText(Path.Combine(appDomainPath, jsonFolderName, deliveryMachinesJsonName));
+            DeliveryMachinesList = JsonConvert.DeserializeObject<List<DeliveryMachine>>(lockers);
 
-            string parcels = File.ReadAllText(Path.Combine(appDomainPath, jsonFolderName, parcelsJsonName));
-            ParcelsList = JsonConvert.DeserializeObject<List<Parcel>>(parcels);
+            string parcels = File.ReadAllText(Path.Combine(appDomainPath, jsonFolderName, packagesJsonName));
+            PackagesList = JsonConvert.DeserializeObject<List<Package>>(parcels);
         }
     }
 }

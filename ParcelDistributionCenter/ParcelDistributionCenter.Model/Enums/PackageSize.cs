@@ -1,6 +1,6 @@
 ﻿namespace ParcelDistributionCenter.Model.Enums
 {
-    public enum ParcelSize
+    public enum PackageSize
     {
         Big,
         Medium,

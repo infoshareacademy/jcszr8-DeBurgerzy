@@ -1,29 +1,25 @@
-﻿using ParcelDistributionCenter.Model.Interfaces;
+﻿using Newtonsoft.Json;
+
 
 namespace ParcelDistributionCenter.Model.Models
 {
-    public class Courier : IPerson, IParcelHandler
+    public class Courier
         
     {
-        public Courier(string id, string name, string surname, string email, string phone, int capacity, List<string> rout, List<string> parcels_numbers_list)
+        public Courier(string courierId, string name, string surname, string email, string phone )
         {
-            Id = id;
+            CourierId = courierId;
             Name = name;
             Surname = surname;
             Email = email;
             Phone = phone;
-            Capacity = capacity;
-            Rout = rout;
-            Parcels_numbers_list = parcels_numbers_list;
         }
 
-        public int Capacity { get; set; }
-        public string Email { get; set; }
-        public string Id { get; init; }
+        [JsonProperty("courier_id")]
+        public string CourierId { get; init; }
         public string Name { get; set; }
-        public List<string> Parcels_numbers_list { get; set; }
-        public string Phone { get; set; }
-        public List<string> Rout { get; set; }
         public string Surname { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
     }
 }
