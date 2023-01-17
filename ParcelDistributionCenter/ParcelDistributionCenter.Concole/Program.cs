@@ -1,14 +1,45 @@
 ﻿using ParcelDistributionCenter.Logic;
+using ParcelDistributionCenter.Model.Enums;
 
 namespace ParcelDistributionCenter.ConsoleUI
 {
     internal class Program
     {
+        private static bool highlight = true;
         private static void Main(string[] args)
         {
-            //TEST DZIAŁANIA WYSZUKIWANIA PACZEK
-            MemoryRepository repo = new();
-            PackageForm.FindPackageByNumber();
+            OptionsHandler optionsHandler = new();
+            do
+            {
+                Console.Clear();
+                Console.CursorVisible = false;
+                highlight = true;
+                optionsHandler.ShowOptions();
+                do
+                {
+                    ConsoleKeyInfo keyPressed = Console.ReadKey();
+                    switch (keyPressed.Key)
+                    {
+                        case ConsoleKey.Enter: highlight = false; break;
+                        case ConsoleKey.Escape: Environment.Exit(0); break;
+                        case ConsoleKey.UpArrow: optionsHandler.MoveRowUp(); break;
+                        case ConsoleKey.DownArrow: optionsHandler.MoveRowDown(); break;
+                    }
+                    optionsHandler.DrawSelectedRow(optionsHandler.SelectedIndex);
+                } while (highlight);
+
+                switch (optionsHandler.Options[optionsHandler.SelectedIndex].OptionType)
+                {
+                    case OptionsEnum.FindPackage:
+                            //dodano do testowania
+                            MemoryRepository repo = new();
+                            PackageForm.FindPackageByNumber();
+                            Thread.Sleep(3000);
+                        break;
+                    case OptionsEnum.AddPackage : break;
+                    case OptionsEnum.EditPackageData: break;
+                }
+            } while (true);
         }
     }
 }
