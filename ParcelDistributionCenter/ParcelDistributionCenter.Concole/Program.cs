@@ -9,6 +9,7 @@ namespace ParcelDistributionCenter.ConsoleUI
         private static void Main(string[] args)
         {
             OptionsHandler optionsHandler = new();
+            MemoryRepository repo = new();
             do
             {
                 Console.Clear();
@@ -31,13 +32,19 @@ namespace ParcelDistributionCenter.ConsoleUI
                 switch (optionsHandler.Options[optionsHandler.SelectedIndex].OptionType)
                 {
                     case OptionsEnum.FindPackage:
-                            //dodano do testowania
-                            MemoryRepository repo = new();
-                            PackageForm.FindPackageByNumber();
-                            Thread.Sleep(3000);
+                         //dodano do testowania
+                         PackageForm.FindPackageByNumber();
+                         Thread.Sleep(30000);
+                         break;
+                    case OptionsEnum.AddPackage :
+                         PackageForm.AddPackage();
+                        Thread.Sleep(30000);
                         break;
-                    case OptionsEnum.AddPackage : break;
                     case OptionsEnum.EditPackageData: break;
+                    case OptionsEnum.DisplayAllPackages:
+                         PackageForm.DisplayAllPackages();
+                         Thread.Sleep(30000);
+                         break;
                 }
             } while (true);
         }

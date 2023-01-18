@@ -75,6 +75,8 @@ public class OptionsHandler
             new Option(OptionsEnum.FindPackage, $"{++counter}. Find package."),
             new Option(OptionsEnum.AddPackage , $"{++counter}. Add new package."),
             new Option(OptionsEnum.EditPackageData, $"{++counter}. Edit package data."),
+            new Option(OptionsEnum.DisplayAllPackages, $"{++counter}. Display all packages data."),
+
         });
         optionsLastIndex = Options.Count - 1;
         foreach (Option option in Options)

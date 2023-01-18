@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using ParcelDistributionCenter.Model.Enums;
 using ParcelDistributionCenter.Model.Models;
 
 namespace ParcelDistributionCenter.Logic
