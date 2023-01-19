@@ -1,4 +1,5 @@
-﻿using ParcelDistributionCenter.Logic;
+﻿using ParcelDistributionCenter.ConsoleUI.Forms;
+using ParcelDistributionCenter.Logic;
 using ParcelDistributionCenter.Model.Enums;
 
 namespace ParcelDistributionCenter.ConsoleUI
@@ -31,19 +32,22 @@ namespace ParcelDistributionCenter.ConsoleUI
 
                 switch (optionsHandler.Options[optionsHandler.SelectedIndex].OptionType)
                 {
-                    case OptionsEnum.FindPackage:
+                    case OptionsEnum.FindPackageByNumber:
                          //dodano do testowania
                          PackageForm.FindPackageByNumber();
                          Thread.Sleep(30000);
                          break;
+                    case OptionsEnum.FindPackageByCourierID:
+                         break;
                     case OptionsEnum.AddPackage :
-                         PackageForm.AddPackage();
-                        Thread.Sleep(30000);
-                        break;
+                         AddPackage.AddNewPackage();
+                         break;
                     case OptionsEnum.EditPackageData: break;
                     case OptionsEnum.DisplayAllPackages:
                          PackageForm.DisplayAllPackages();
-                         Thread.Sleep(30000);
+                         Thread.Sleep(3000);
+                         break;
+                    case OptionsEnum.DisplayAllPackagesInPackageMachine:
                          break;
                 }
             } while (true);

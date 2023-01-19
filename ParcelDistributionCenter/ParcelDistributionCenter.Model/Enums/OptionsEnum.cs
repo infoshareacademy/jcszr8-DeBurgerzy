@@ -2,7 +2,9 @@
 {
     public enum OptionsEnum
     {
-        FindPackage,
+        FindPackageByNumber,
+        FindPackageByCourierID,
+        DisplayAllPackagesInPackageMachine,
         AddPackage,
         EditPackageData,
         DisplayAllPackages,

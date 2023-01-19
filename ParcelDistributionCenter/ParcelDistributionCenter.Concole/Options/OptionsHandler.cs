@@ -72,10 +72,12 @@ public class OptionsHandler
         int counter = 0;
         Options.AddRange(new List<Option>()
         {
-            new Option(OptionsEnum.FindPackage, $"{++counter}. Find package."),
+            new Option(OptionsEnum.FindPackageByNumber, $"{++counter}. Find package by number."),
+            new Option(OptionsEnum.FindPackageByCourierID, $"{++counter}. Find package by courier ID."),
             new Option(OptionsEnum.AddPackage , $"{++counter}. Add new package."),
             new Option(OptionsEnum.EditPackageData, $"{++counter}. Edit package data."),
             new Option(OptionsEnum.DisplayAllPackages, $"{++counter}. Display all packages data."),
+            new Option(OptionsEnum.DisplayAllPackagesInPackageMachine, $"{++counter}. Display all packages data in package machine ."),
 
         });
         optionsLastIndex = Options.Count - 1;
