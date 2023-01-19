@@ -1,22 +1,36 @@
 ﻿using ParcelDistributionCenter.Model.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ParcelDistributionCenter.Logic
 {
     public class PackageHandler
     {
-        public static Package? FindPackageByNumber(int packageNumber)
+        public static Package FindPackageByCourierID(string courierId)
         {
-            return MemoryRepository.PackagesList.FirstOrDefault(Package => Package.PackageNumber == packageNumber);
+            Func<Package, bool> predicate = p => p.CourierId == courierId;
+            return ReturnPackage(predicate);
         }
 
-        public static IEnumerable<Package> FindPackageBySenderEmail(string senderEmail)
+        public static Package FindPackageByNumber(int packageNumber)
         {
-            return MemoryRepository.PackagesList.Where(Package => Package.SenderEmail == senderEmail);
+            Func<Package, bool> predicate = p => p.PackageNumber == packageNumber;
+            return ReturnPackage(predicate);
+        }
+
+        public static Package FindPackageBySenderEmail(string senderEmail)
+        {
+            Func<Package, bool> predicate = p => p.SenderEmail == senderEmail;
+            return ReturnPackage(predicate);
+        }
+
+        private static Package ReturnPackage(Func<Package, bool> predicate)
+        {
+            Package package = MemoryRepository.PackagesList.FirstOrDefault(predicate);
+            if (package == default)
+            {
+                // dodać jakąś informację, że nie zwrócił obiektu
+                return null;
+            }
+            return package;
         }
     }
 }

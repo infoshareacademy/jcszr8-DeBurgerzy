@@ -1,12 +1,11 @@
 ﻿using Newtonsoft.Json;
 
-
 namespace ParcelDistributionCenter.Model.Models
 {
     public class Courier
-        
+
     {
-        public Courier(string courierId, string name, string surname, string email, string phone )
+        public Courier(string courierId, string name, string surname, string email, string phone)
         {
             CourierId = courierId;
             Name = name;
@@ -17,9 +16,17 @@ namespace ParcelDistributionCenter.Model.Models
 
         [JsonProperty("courier_id")]
         public string CourierId { get; init; }
-        public string Name { get; set; }
-        public string Surname { get; set; }
+
+        [JsonProperty("email")]
         public string Email { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("phone")]
         public string Phone { get; set; }
+
+        [JsonProperty("surname")]
+        public string Surname { get; set; }
     }
 }
