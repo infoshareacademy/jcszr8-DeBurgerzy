@@ -1,4 +1,4 @@
-﻿namespace ParcelDistributionCenter.Model.Enums//Pawel
+﻿namespace ParcelDistributionCenter.Model.Enums
 {
     public class Option
     {

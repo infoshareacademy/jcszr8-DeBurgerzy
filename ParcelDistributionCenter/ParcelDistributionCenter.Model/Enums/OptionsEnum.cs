@@ -4,9 +4,9 @@
     {
         FindPackageByNumber,
         FindPackageByCourierID,
-        DisplayAllPackagesInPackageMachine,
         AddPackage,
         EditPackageData,
         DisplayAllPackages,
+        DisplayAllPackagesInPackageMachine,
     }
 }

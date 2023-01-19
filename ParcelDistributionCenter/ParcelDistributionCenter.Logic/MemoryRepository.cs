@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using ParcelDistributionCenter.Model.Enums;
 using ParcelDistributionCenter.Model.Models;
 
 namespace ParcelDistributionCenter.Logic
@@ -7,8 +6,8 @@ namespace ParcelDistributionCenter.Logic
     public class MemoryRepository
     {
         private const string couriersJsonName = "couriers.json";
-        private const string jsonFolderName = "json";
         private const string deliveryMachinesJsonName = "deliveryMachines.json";
+        private const string jsonFolderName = "json";
         private const string packagesJsonName = "packages.json";
         private static readonly string appDomainPath = AppDomain.CurrentDomain.BaseDirectory;
 
@@ -17,6 +16,7 @@ namespace ParcelDistributionCenter.Logic
         {
             SetData();
         }
+
         public static List<Courier> CouriersList { get; private set; }
         public static List<DeliveryMachine> DeliveryMachinesList { get; private set; }
         public static List<Package> PackagesList { get; private set; }

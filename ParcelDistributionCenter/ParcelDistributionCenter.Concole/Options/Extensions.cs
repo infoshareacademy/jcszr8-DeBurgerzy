@@ -1,4 +1,4 @@
-﻿namespace ParcelDistributionCenter.ConsoleUI
+﻿namespace ParcelDistributionCenter.ConsoleUI.Options
 {
     public static class Extensions
     {
@@ -9,9 +9,7 @@
             Console.ForegroundColor = ConsoleColor.DarkCyan;
             string data = Console.ReadLine();
             Console.ResetColor();
-#pragma warning disable CS8603 // Possible null reference return.
             return data;
-#pragma warning restore CS8603 // Possible null reference return.
         }
 
         public static void ReportError(string message)

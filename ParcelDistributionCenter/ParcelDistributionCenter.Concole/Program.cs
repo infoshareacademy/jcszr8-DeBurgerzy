@@ -1,13 +1,13 @@
-﻿using ParcelDistributionCenter.ConsoleUI.Forms;
-using ParcelDistributionCenter.Logic;
+﻿using ParcelDistributionCenter.Logic;
 using ParcelDistributionCenter.Model.Enums;
 
 namespace ParcelDistributionCenter.ConsoleUI
 {
     internal class Program
     {
-        private static bool highlight = true;
-        private static void Main(string[] args)
+        private static bool _highlight = true;
+
+        private static void Main()
         {
             OptionsHandler optionsHandler = new();
             MemoryRepository repo = new();
@@ -15,40 +15,56 @@ namespace ParcelDistributionCenter.ConsoleUI
             {
                 Console.Clear();
                 Console.CursorVisible = false;
-                highlight = true;
+                _highlight = true;
                 optionsHandler.ShowOptions();
                 do
                 {
                     ConsoleKeyInfo keyPressed = Console.ReadKey();
                     switch (keyPressed.Key)
                     {
-                        case ConsoleKey.Enter: highlight = false; break;
-                        case ConsoleKey.Escape: Environment.Exit(0); break;
-                        case ConsoleKey.UpArrow: optionsHandler.MoveRowUp(); break;
-                        case ConsoleKey.DownArrow: optionsHandler.MoveRowDown(); break;
+                        case ConsoleKey.Enter:
+                            _highlight = false;
+                            break;
+
+                        case ConsoleKey.Escape:
+                            Environment.Exit(0);
+                            break;
+
+                        case ConsoleKey.UpArrow:
+                            optionsHandler.MoveRowUp();
+                            break;
+
+                        case ConsoleKey.DownArrow:
+                            optionsHandler.MoveRowDown();
+                            break;
                     }
                     optionsHandler.DrawSelectedRow(optionsHandler.SelectedIndex);
-                } while (highlight);
+                } while (_highlight);
 
                 switch (optionsHandler.Options[optionsHandler.SelectedIndex].OptionType)
                 {
                     case OptionsEnum.FindPackageByNumber:
-                         //dodano do testowania
-                         PackageForm.FindPackageByNumber();
-                         Thread.Sleep(30000);
-                         break;
+                        PackageForm.FindPackageByNumber();
+                        Thread.Sleep(30000);
+                        break;
+
                     case OptionsEnum.FindPackageByCourierID:
-                         break;
-                    case OptionsEnum.AddPackage :
-                         AddPackage.AddNewPackage();
-                         break;
-                    case OptionsEnum.EditPackageData: break;
+                        break;
+
+                    case OptionsEnum.AddPackage:
+                        //AddPackage.AddNewPackage();
+                        break;
+
+                    case OptionsEnum.EditPackageData:
+                        break;
+
                     case OptionsEnum.DisplayAllPackages:
-                         PackageForm.DisplayAllPackages();
-                         Thread.Sleep(3000);
-                         break;
+                        PackageForm.DisplayAllPackages();
+                        Thread.Sleep(3000);
+                        break;
+
                     case OptionsEnum.DisplayAllPackagesInPackageMachine:
-                         break;
+                        break;
                 }
             } while (true);
         }
