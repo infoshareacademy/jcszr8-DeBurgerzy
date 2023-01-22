@@ -67,6 +67,36 @@ namespace ParcelDistributionCenter.ConsoleUI.Forms
             else
                 return false;
         }
+
+        //sprawdzanie adresu
+        private static bool CheckAdresValidation(string adres)
+        {
+            int numberCount = 0;
+            int letterCount = 0;
+            int separatorCount = 0;
+            foreach (var ch in adres)
+            {
+                if (Char.IsNumber(ch))
+                {
+                    numberCount++;
+                }
+                else if (Char.IsLetter(ch))
+                {
+                    letterCount++;
+                }
+                
+                else if (Char.IsSeparator(ch))
+                {
+                    separatorCount++;
+                }
+            }
+            if (numberCount >= 1 & letterCount >=2 & separatorCount >= 1)
+            {
+                return true;
+            }
+            else
+                return false;
+        }
         public static void AddNewPackage()
         {
             //Wprowadzanie numeru paczki
@@ -136,7 +166,7 @@ namespace ParcelDistributionCenter.ConsoleUI.Forms
             var courierID = Console.ReadLine();
             Console.Clear();
 
-            //Wprowadzanie danych nadawcy
+            //Wprowadzanie imienia i nazwiska nadawcy
             bool nameSenderAdd = false;
             string senderName;
             do
@@ -151,7 +181,7 @@ namespace ParcelDistributionCenter.ConsoleUI.Forms
             while (nameSenderAdd == false);
             Console.Clear();
 
-            //Wprowadzanie danych odbiorcy
+            //Wprowadzanie imienia i nazwiska odbiorcy
             bool nameRecipientAdd = false;
             string recipientName;
             do
@@ -246,25 +276,25 @@ namespace ParcelDistributionCenter.ConsoleUI.Forms
 
 
             //Wprowadzanie adresu nadawcy
-            Console.WriteLine("Insert adres sender :");
-            var senderAddres = Console.ReadLine();
-            while (senderAddres.Length < 2)
+            var senderAddres = "";
+            do
             {
                 Console.Clear();
-                Console.WriteLine("Insert full adres sender:");
+                Console.WriteLine("Insert adres sender :");
                 senderAddres = Console.ReadLine();
-            }
+
+            } while (!CheckAdresValidation(senderAddres));
             Console.Clear();
 
             //Wprowadzanie adresu odbiorcy
-            Console.WriteLine("Insert adres delivery :");
-            var deliveryAddres = Console.ReadLine();
-            while (deliveryAddres.Length < 2)
+            var deliveryAddres = "";
+            do
             {
                 Console.Clear();
-                Console.WriteLine("Insert full adres delivery:");
+                Console.WriteLine("Insert adres delivery :");
                 deliveryAddres = Console.ReadLine();
-            }
+
+            } while (!CheckAdresValidation(deliveryAddres));
             Console.Clear();
 
             //Wprowadzanie Id paczkomatu
