@@ -9,6 +9,10 @@ namespace ParcelDistributionCenter.ConsoleUI.Forms
         public static void EditExistingPackage()
         {
             Package package = PackageForm.FindPackageByNumber();
+            if (package == null)
+            {
+                Extensions.WriteEndMessage();
+            }
             if (package != null)
             {
                 Console.Clear();
@@ -26,71 +30,62 @@ namespace ParcelDistributionCenter.ConsoleUI.Forms
                 Console.WriteLine($"Enter '{counter++}' to edit Delivery Address");
                 string enteredValue = Extensions.GetData("\nEnter number");
                 Console.Clear();
-                bool parsed = int.TryParse(enteredValue, out int statusInteger);
-                if (parsed)
+                switch (enteredValue)
                 {
-                    switch (statusInteger)
-                    {
-                        case 1:
-                            Status packageStatus = EnterPackageStatus();
-                            package.Status = packageStatus;
-                            break;
+                    case "1":
+                        Status packageStatus = EnterPackageStatus();
+                        package.Status = packageStatus;
+                        break;
 
-                        case 2:
-                            string senderName = EnterFullName(_senderName);
-                            package.SenderName = senderName;
-                            break;
+                    case "2":
+                        string senderName = EnterFullName(_senderName);
+                        package.SenderName = senderName;
+                        break;
 
-                        case 3:
-                            string senderEmail = EnterEmail(_senderName);
-                            package.SenderEmail = senderEmail;
-                            break;
+                    case "3":
+                        string senderEmail = EnterEmail(_senderName);
+                        package.SenderEmail = senderEmail;
+                        break;
 
-                        case 4:
-                            string senderPhone = EnterPhone(_senderName);
-                            package.SenderPhone = senderPhone;
-                            break;
+                    case "4":
+                        string senderPhone = EnterPhone(_senderName);
+                        package.SenderPhone = senderPhone;
+                        break;
 
-                        case 5:
-                            string senderAddress = EnterAddress(_senderName);
-                            package.SenderAddress = senderAddress;
-                            break;
+                    case "5":
+                        string senderAddress = EnterAddress(_senderName);
+                        package.SenderAddress = senderAddress;
+                        break;
 
-                        case 6:
-                            string recipientName = EnterFullName(_recipientName);
-                            package.RecipientName = recipientName;
-                            break;
+                    case "6":
+                        string recipientName = EnterFullName(_recipientName);
+                        package.RecipientName = recipientName;
+                        break;
 
-                        case 7:
-                            string recipientEmail = EnterEmail(_recipientName);
-                            package.RecipientEmail = recipientEmail;
-                            break;
+                    case "7":
+                        string recipientEmail = EnterEmail(_recipientName);
+                        package.RecipientEmail = recipientEmail;
+                        break;
 
-                        case 8:
-                            string recipientPhone = EnterPhone(_recipientName);
-                            package.RecipientPhone = recipientPhone;
-                            break;
+                    case "8":
+                        string recipientPhone = EnterPhone(_recipientName);
+                        package.RecipientPhone = recipientPhone;
+                        break;
 
-                        case 9:
-                            string deliveryAddress = EnterAddress(_deliveryName);
-                            package.DeliveryAddress = deliveryAddress;
-                            break;
+                    case "9":
+                        string deliveryAddress = EnterAddress(_deliveryName);
+                        package.DeliveryAddress = deliveryAddress;
+                        break;
 
-                        default:
-                            Extensions.ReportError($"Incorrect data! Choose number between 1 to 6!");
-                            EditExistingPackage();
-                            break;
-                    }
-                    package.Registered = DateTime.Now;
-                    Extensions.WriteMessageWithColor($"\nPackage with number {package.PackageNumber} edited successfully!", ConsoleColor.Green);
-                    DisplayForm.Display(package);
-                    Extensions.WriteEndMessage();
+                    default:
+                        Extensions.ReportError($"Incorrect data! Choose number between 1 to 6!");
+                        EditExistingPackage();
+                        break;
                 }
-                else
-                {
-                    Extensions.ReportError($"Incorrect data! Choose number between 1 to 6!");
-                    EditExistingPackage();
-                }
+                package.Registered = DateTime.Now;
+                Extensions.WriteMessageWithColor($"\nPackage with number {package.PackageNumber} edited successfully!", ConsoleColor.Green);
+                DisplayForm.Display(package);
+                Extensions.WriteEndMessage();
             }
         }
     }

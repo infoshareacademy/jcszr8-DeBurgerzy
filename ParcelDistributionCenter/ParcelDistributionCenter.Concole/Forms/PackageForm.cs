@@ -1,5 +1,6 @@
 ﻿using ParcelDistributionCenter.ConsoleUI.Options;
 using ParcelDistributionCenter.Logic;
+using ParcelDistributionCenter.Logic.Validators;
 using ParcelDistributionCenter.Model.Models;
 
 namespace ParcelDistributionCenter.ConsoleUI.Forms
@@ -9,6 +10,7 @@ namespace ParcelDistributionCenter.ConsoleUI.Forms
         public static void DisplayAllPackages()
         {
             Console.Clear();
+            Console.ResetColor();
             Console.Title = "Display All Packages";
             foreach (Package courier in MemoryRepository.PackagesList)
             {
@@ -24,6 +26,7 @@ namespace ParcelDistributionCenter.ConsoleUI.Forms
             {
                 DisplayForm.Display(package);
             }
+            Extensions.WriteEndMessage();
         }
 
         public static Package FindPackageByNumber()
@@ -32,7 +35,7 @@ namespace ParcelDistributionCenter.ConsoleUI.Forms
             Console.Title = "Find Package";
             Console.Write("Enter the package number: ");
             string input = Console.ReadLine();
-            if (int.TryParse(input, out int packageNumber))
+            if (int.TryParse(input, out int packageNumber) && PackageValidator.ValidatePackageNumber(packageNumber))
             {
                 Package package = PackageHandler.FindPackageByNumber(packageNumber);
                 if (package != null)
@@ -43,13 +46,11 @@ namespace ParcelDistributionCenter.ConsoleUI.Forms
                 {
                     Extensions.WriteMessageWithColor("\nThere is no package with the specified number!\n", ConsoleColor.Red);
                 }
-                Extensions.WriteEndMessage();
                 return null;
             }
             else
             {
-                Extensions.WriteMessageWithColor("\nIncorrect value provided. Value should be a number.\n", ConsoleColor.Red);
-                Extensions.WriteEndMessage();
+                Extensions.WriteMessageWithColor("\nIncorrect value provided. Number should 7 digits long.\n", ConsoleColor.Red);
             }
             return null;
         }

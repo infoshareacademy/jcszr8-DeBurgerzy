@@ -14,9 +14,10 @@ namespace ParcelDistributionCenter.ConsoleUI.Forms
 
         public static void AddNewPackage()
         {
-            int packageNumber = EnterPackageNumber();
+            Console.Clear();
+            int packageNumber = GeneratePackageNumber();
             Status packageStatus = EnterPackageStatus();
-            string courierID = new Guid().ToString();
+            string courierID = AssignCourierID();
             PackageSize packageSize = EnterPackageSize();
             string senderName = EnterFullName(_senderName);
             string senderEmail = EnterEmail(_senderName);
@@ -26,39 +27,62 @@ namespace ParcelDistributionCenter.ConsoleUI.Forms
             string recipientEmail = EnterEmail(_recipientName);
             string recipientPhone = EnterPhone(_recipientName);
             string deliveryAddress = EnterAddress(_deliveryName);
-            string deliveryMachineID = new Guid().ToString();
+            string deliveryMachineID = AssignDeliveryMachineID();
 
-            MemoryRepository.PackagesList.Add(new Package(packageNumber, packageStatus, courierID, senderName, recipientName, packageSize, senderEmail, senderPhone,
-                recipientEmail, recipientPhone, senderAddress, deliveryAddress, deliveryMachineID, DateTime.Now));
+            Package package = new(packageNumber, packageStatus, courierID, senderName, recipientName, packageSize, senderEmail, senderPhone,
+                recipientEmail, recipientPhone, senderAddress, deliveryAddress, deliveryMachineID, DateTime.Now);
+
+            MemoryRepository.PackagesList.Add(package);
+            Extensions.WriteMessageWithColor($"\nPackage with number {package.PackageNumber} edited successfully!", ConsoleColor.Green);
+            Extensions.WriteEndMessage();
+        }
+
+        protected static string AssignCourierID()
+        {
+            IEnumerable<string> courierIDs = MemoryRepository.CouriersList.Select(c => c.CourierId);
+            return GenerateRandomID(courierIDs);
+        }
+
+        protected static string AssignDeliveryMachineID()
+        {
+            IEnumerable<string> deliveryMachineIDs = MemoryRepository.DeliveryMachinesList.Select(c => c.DeliveryMachineId);
+            return GenerateRandomID(deliveryMachineIDs);
         }
 
         protected static string EnterAddress(string name)
         {
+            Console.Clear();
             string addressTitle = $"{name} Address";
             string addressString = Extensions.GetData(addressTitle);
 
-            bool validationPassed = AddPackageValidator.CheckAddressValidation(addressString);
+            bool validationPassed = PackageValidator.ValidateAddress(addressString);
             if (validationPassed)
             {
                 return addressString;
             }
-            // Wpisać odpowiedni komunikat walidacji
-            Extensions.ReportError($"Incorrect data! {addressTitle} should ...!");
+            Extensions.ReportError($"\nIncorrect data! {addressTitle} should contain at least 1 digit, 2 letters and 1 space separator!");
+            //ConsoleKeyInfo keyPressed = Console.ReadKey();
+            //Extensions.WriteEndMessage();
+            //if (keyPressed.Key == ConsoleKey.Escape)
+            //{
+            //    return string.Empty;
+            //}
             return EnterAddress(name);
         }
 
         protected static string EnterEmail(string name)
         {
+            Console.Clear();
             string emailTitle = $"{name} Email";
             string emailString = Extensions.GetData(emailTitle);
 
-            bool validationPassed = AddPackageValidator.CheckEmailValidation(emailString);
+            bool validationPassed = PackageValidator.ValidateEmail(emailString);
             if (validationPassed)
             {
                 return emailString;
             }
-            // Wpisać odpowiedni komunikat walidacji
-            Extensions.ReportError($"Incorrect data! {emailTitle} should ...!");
+            Extensions.ReportError($"\nIncorrect data! {emailTitle} should contain at least 6 chars, 1 '@' and 1 '.'!");
+            Console.ReadKey();
             return EnterEmail(name);
         }
 
@@ -69,26 +93,9 @@ namespace ParcelDistributionCenter.ConsoleUI.Forms
             return $"{senderName} {senderSurame}";
         }
 
-        protected static int EnterPackageNumber()
-        {
-            //Zastanowić się, czy mam mieć sprawdzenie czy jest 7 liczb
-            string packageTitle = "Package number";
-            string packageString = Extensions.GetData(packageTitle);
-            bool parsed = int.TryParse(packageString, out int packageinteger);
-            if (parsed)
-            {
-                bool validationPassed = AddPackageValidator.CheckPackageNumberValidation(packageinteger);
-                if (validationPassed)
-                {
-                    return packageinteger;
-                }
-            }
-            Extensions.ReportError($"Incorrect data! {packageTitle} should be a number!");
-            return EnterPackageNumber();
-        }
-
         protected static PackageSize EnterPackageSize()
         {
+            Console.Clear();
             Console.WriteLine("Insert package size:\n");
             Console.WriteLine("Insert '1' if package size is 'Small'");
             Console.WriteLine("Insert '2' if package size is 'Medium'");
@@ -96,118 +103,117 @@ namespace ParcelDistributionCenter.ConsoleUI.Forms
             Console.WriteLine();
             string statusTitle = "Status delivery";
             string statusString = Extensions.GetData(statusTitle);
-            bool parsed = int.TryParse(statusString, out int statusInteger);
-            if (parsed)
+            switch (statusString)
             {
-                switch (statusInteger)
-                {
-                    case 1:
-                        return PackageSize.Small;
+                case "1":
+                    return PackageSize.Small;
 
-                    case 2:
-                        return PackageSize.Medium;
+                case "2":
+                    return PackageSize.Medium;
 
-                    case 3:
-                        return PackageSize.Big;
+                case "3":
+                    return PackageSize.Big;
 
-                    default:
-                        Extensions.ReportError($"Incorrect data! Choose number between 1 to 3!");
-                        return EnterPackageSize();
-                }
-            }
-            else
-            {
-                Extensions.ReportError($"Incorrect data! Choose number between 1 to 6!");
-                return EnterPackageSize();
+                default:
+                    Extensions.ReportError($"\nIncorrect data! Choose number between 1 to 3!");
+                    Console.ReadKey();
+                    return EnterPackageSize();
             }
         }
 
         protected static Status EnterPackageStatus()
         {
+            Console.Clear();
             Console.WriteLine("Insert status delivery:\n");
             Console.WriteLine("Press '1' if status is 'In preparation'");
             Console.WriteLine("Press '2' if status is 'Stored by sender'");
             Console.WriteLine("Press '3' if status is 'Stored in machine'");
-            Console.WriteLine("Press '4' if status is 'In delivery'");
-            Console.WriteLine("Press '5' if status is 'Delivered'");
             Console.WriteLine();
             string statusTitle = "Status delivery";
             string statusString = Extensions.GetData(statusTitle);
-            bool parsed = int.TryParse(statusString, out int statusInteger);
-            if (parsed)
+            switch (statusString)
             {
-                switch (statusInteger)
-                {
-                    case 1:
-                        return Status.InPreparation;
+                case "1":
+                    return Status.InPreparation;
 
-                    case 2:
-                        return Status.StoredBySender;
+                case "2":
+                    return Status.StoredBySender;
 
-                    case 3:
-                        return Status.StoredInMachine;
+                case "3":
+                    return Status.StoredInMachine;
 
-                    case 4:
-                        return Status.InDelivery;
-
-                    case 5:
-                        return Status.Delivered;
-
-                    default:
-                        Extensions.ReportError($"Incorrect data! Choose number between 1 to 6!");
-                        return EnterPackageStatus();
-                }
-            }
-            else
-            {
-                Extensions.ReportError($"Incorrect data! Choose number between 1 to 6!");
-                return EnterPackageStatus();
+                default:
+                    Extensions.ReportError($"\nIncorrect data! Choose number between 1 to 3!");
+                    Console.ReadKey();
+                    return EnterPackageStatus();
             }
         }
 
         protected static string EnterPhone(string name)
         {
+            Console.Clear();
             string phoneTitle = $"{name} Phone";
             string phoneString = Extensions.GetData(phoneTitle);
 
-            bool validationPassed = AddPackageValidator.CheckPhoneNumberValidation(phoneString);
+            bool validationPassed = PackageValidator.ValidatePhoneNumber(phoneString);
             if (validationPassed)
             {
                 return phoneString;
             }
-            // Wpisać odpowiedni komunikat walidacji
-            Extensions.ReportError($"Incorrect data! {phoneTitle} should ...!");
+            Extensions.ReportError($"\nIncorrect data! {phoneTitle} should have length between 7 and 14 digits!");
+            Console.ReadKey();
             return EnterPhone(name);
+        }
+
+        protected static int GeneratePackageNumber()
+        {
+            IEnumerable<int> packagesNumbers = MemoryRepository.PackagesList.Select(c => c.PackageNumber);
+            Random rnd = new();
+            int generatedNumber;
+            do
+            {
+                generatedNumber = rnd.Next(1_000_000, 10_000_000);
+            } while (!packagesNumbers.Contains(generatedNumber));
+            return generatedNumber;
         }
 
         protected static string GetSenderName(string name)
         {
+            Console.Clear();
             string nameTitle = $"{name} Name";
             string senderString = Extensions.GetData(nameTitle);
 
-            bool validationPassed = AddPackageValidator.CheckNameValidation(senderString);
+            bool validationPassed = PackageValidator.ValidateName(senderString);
             if (validationPassed)
             {
                 return senderString;
             }
-            // Wpisać odpowiedni komunikat walidacji
-            Extensions.ReportError($"Incorrect data! {nameTitle} should ...!");
+            Extensions.ReportError($"\nIncorrect data! {nameTitle} should have at least one capital letter and to have length greater than 2!");
+            Console.ReadKey();
             return GetSenderName(name);
         }
 
         protected static string GetSenderSurname(string name)
         {
+            Console.Clear();
             string surnameTitle = $"{name} Surname";
             string senderString = Extensions.GetData(surnameTitle);
 
-            bool validationPassed = AddPackageValidator.CheckNameValidation(senderString);
+            bool validationPassed = PackageValidator.ValidateName(senderString);
             if (validationPassed)
             {
                 return senderString;
             }
-            // Wpisać odpowiedni komunikat walidacji
-            Extensions.ReportError($"Incorrect data! {surnameTitle} should ...!");
+            Extensions.ReportError($"\nIncorrect data! {surnameTitle} should have at least one capital letter and to have length greater than 2!");
+            Console.ReadKey();
             return GetSenderName(name);
+        }
+
+        private static string GenerateRandomID(IEnumerable<string> IdCollection)
+        {
+            Random rnd = new();
+            int selectedIndex = rnd.Next(IdCollection.Count());
+            return IdCollection.ToArray()[selectedIndex];
         }
     }
 }
