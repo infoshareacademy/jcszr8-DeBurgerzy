@@ -1,4 +1,5 @@
-﻿using ParcelDistributionCenter.Logic;
+﻿using ParcelDistributionCenter.ConsoleUI.Forms;
+using ParcelDistributionCenter.Logic;
 using ParcelDistributionCenter.Model.Enums;
 
 namespace ParcelDistributionCenter.ConsoleUI
@@ -56,7 +57,7 @@ namespace ParcelDistributionCenter.ConsoleUI
                         break;
 
                     case OptionsEnum.AddPackage:
-                        //AddPackage.AddNewPackage();
+                        AddPackageForm.AddNewPackage();
                         break;
 
                     case OptionsEnum.EditPackageData:

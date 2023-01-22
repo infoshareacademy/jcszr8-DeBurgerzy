@@ -1,8 +1,8 @@
-﻿using ParcelDistributionCenter.Logic;
+﻿using ParcelDistributionCenter.ConsoleUI.Options;
+using ParcelDistributionCenter.Logic;
 using ParcelDistributionCenter.Logic.Validators;
 using ParcelDistributionCenter.Model.Enums;
 using ParcelDistributionCenter.Model.Models;
-using Extensions = ParcelDistributionCenter.ConsoleUI.Options.Extensions;
 
 namespace ParcelDistributionCenter.ConsoleUI.Forms
 {

@@ -1,7 +1,8 @@
 ﻿using ParcelDistributionCenter.ConsoleUI.Options;
+using ParcelDistributionCenter.Logic;
 using ParcelDistributionCenter.Model.Models;
 
-namespace ParcelDistributionCenter.Logic
+namespace ParcelDistributionCenter.ConsoleUI.Forms
 {
     public static class PackageForm
     {
