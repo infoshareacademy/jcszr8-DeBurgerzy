@@ -3,10 +3,10 @@
     public enum OptionsEnum
     {
         FindPackageByNumber,
-        FindPackageByCourierID,
+        FindPackagesByCourierID,
+        FindPackagesByDeliveryMachineID,
         AddPackage,
         EditPackageData,
         DisplayAllPackages,
-        DisplayAllPackagesInPackageMachine,
     }
 }

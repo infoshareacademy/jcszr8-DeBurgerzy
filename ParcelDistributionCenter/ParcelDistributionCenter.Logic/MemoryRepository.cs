@@ -3,6 +3,7 @@ using ParcelDistributionCenter.Model.Models;
 
 namespace ParcelDistributionCenter.Logic
 {
+    // ZAPIS PLIKU MA BYĆ TYLKO DO STATYCZNEJ KLASY - NIE DO JSONA
     public class MemoryRepository
     {
         private const string couriersJsonName = "couriers.json";
@@ -11,17 +12,11 @@ namespace ParcelDistributionCenter.Logic
         private const string packagesJsonName = "packages.json";
         private static readonly string appDomainPath = AppDomain.CurrentDomain.BaseDirectory;
 
-        // ZAPIS PLIKU MA BYĆ TYLKO DO STATYCZNEJ KLASY - NIE DO JSONA
-        public MemoryRepository()
-        {
-            SetData();
-        }
-
         public static List<Courier> CouriersList { get; private set; }
         public static List<DeliveryMachine> DeliveryMachinesList { get; private set; }
         public static List<Package> PackagesList { get; private set; }
 
-        private void SetData()
+        public static void LoadData()
         {
             if (PackagesList != null)
             {

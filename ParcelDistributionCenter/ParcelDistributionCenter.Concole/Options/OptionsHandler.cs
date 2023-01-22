@@ -74,11 +74,11 @@ public class OptionsHandler
         Options.AddRange(new List<Option>()
         {
             new Option(OptionsEnum.FindPackageByNumber, $"{++counter}. Find package by number."),
-            new Option(OptionsEnum.FindPackageByCourierID, $"{++counter}. Find package by courier ID."),
+            new Option(OptionsEnum.FindPackagesByCourierID, $"{++counter}. Find package by courier ID."),
+            new Option(OptionsEnum.FindPackagesByDeliveryMachineID, $"{++counter}. Find packages by delivery machine ID."),
             new Option(OptionsEnum.AddPackage , $"{++counter}. Add new package."),
             new Option(OptionsEnum.EditPackageData, $"{++counter}. Edit package data."),
             new Option(OptionsEnum.DisplayAllPackages, $"{++counter}. Display all packages."),
-            new Option(OptionsEnum.DisplayAllPackagesInPackageMachine, $"{++counter}. Display all packages stored in package machine."),
         });
         _optionsLastIndex = Options.Count - 1;
         foreach (Option option in Options)
