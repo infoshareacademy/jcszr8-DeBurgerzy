@@ -8,9 +8,9 @@ namespace ParcelDistributionCenter.ConsoleUI.Forms
 {
     public class AddPackageForm
     {
-        private static readonly string _deliveryName = "Delivery";
-        private static readonly string _recipientName = "Recipient";
-        private static readonly string _senderName = "Sender";
+        protected static readonly string _deliveryName = "Delivery";
+        protected static readonly string _recipientName = "Recipient";
+        protected static readonly string _senderName = "Sender";
 
         public static void AddNewPackage()
         {
@@ -21,10 +21,10 @@ namespace ParcelDistributionCenter.ConsoleUI.Forms
             string senderName = EnterFullName(_senderName);
             string senderEmail = EnterEmail(_senderName);
             string senderPhone = EnterPhone(_senderName);
+            string senderAddress = EnterAddress(_senderName);
             string recipientName = EnterFullName(_recipientName);
             string recipientEmail = EnterEmail(_recipientName);
             string recipientPhone = EnterPhone(_recipientName);
-            string senderAddress = EnterAddress(_senderName);
             string deliveryAddress = EnterAddress(_deliveryName);
             string deliveryMachineID = new Guid().ToString();
 
@@ -32,7 +32,7 @@ namespace ParcelDistributionCenter.ConsoleUI.Forms
                 recipientEmail, recipientPhone, senderAddress, deliveryAddress, deliveryMachineID, DateTime.Now));
         }
 
-        private static string EnterAddress(string name)
+        protected static string EnterAddress(string name)
         {
             string addressTitle = $"{name} Address";
             string addressString = Extensions.GetData(addressTitle);
@@ -47,7 +47,7 @@ namespace ParcelDistributionCenter.ConsoleUI.Forms
             return EnterAddress(name);
         }
 
-        private static string EnterEmail(string name)
+        protected static string EnterEmail(string name)
         {
             string emailTitle = $"{name} Email";
             string emailString = Extensions.GetData(emailTitle);
@@ -62,14 +62,14 @@ namespace ParcelDistributionCenter.ConsoleUI.Forms
             return EnterEmail(name);
         }
 
-        private static string EnterFullName(string name)
+        protected static string EnterFullName(string name)
         {
             string senderName = GetSenderName(name);
             string senderSurame = GetSenderSurname(name);
             return $"{senderName} {senderSurame}";
         }
 
-        private static int EnterPackageNumber()
+        protected static int EnterPackageNumber()
         {
             //Zastanowić się, czy mam mieć sprawdzenie czy jest 7 liczb
             string packageTitle = "Package number";
@@ -87,12 +87,13 @@ namespace ParcelDistributionCenter.ConsoleUI.Forms
             return EnterPackageNumber();
         }
 
-        private static PackageSize EnterPackageSize()
+        protected static PackageSize EnterPackageSize()
         {
-            Console.WriteLine("Insert status delivery:");
-            Console.WriteLine("Insert '1' if status is 'Small ");
-            Console.WriteLine("Insert '2' if status is 'Medium");
-            Console.WriteLine("Insert '3' if status is 'Big");
+            Console.WriteLine("Insert package size:\n");
+            Console.WriteLine("Insert '1' if package size is 'Small'");
+            Console.WriteLine("Insert '2' if package size is 'Medium'");
+            Console.WriteLine("Insert '3' if package size is 'Big'");
+            Console.WriteLine();
             string statusTitle = "Status delivery";
             string statusString = Extensions.GetData(statusTitle);
             bool parsed = int.TryParse(statusString, out int statusInteger);
@@ -121,14 +122,15 @@ namespace ParcelDistributionCenter.ConsoleUI.Forms
             }
         }
 
-        private static Status EnterPackageStatus()
+        protected static Status EnterPackageStatus()
         {
-            Console.WriteLine("Insert status delivery:");
-            Console.WriteLine("Press '1' if status is 'In preparation");
-            Console.WriteLine("Press '2' if status is 'Stored by sender");
-            Console.WriteLine("Press '3' if status is 'Stored in machine");
-            Console.WriteLine("Press '4' if status is 'In delivery");
-            Console.WriteLine("Press '5' if status is 'Delivered");
+            Console.WriteLine("Insert status delivery:\n");
+            Console.WriteLine("Press '1' if status is 'In preparation'");
+            Console.WriteLine("Press '2' if status is 'Stored by sender'");
+            Console.WriteLine("Press '3' if status is 'Stored in machine'");
+            Console.WriteLine("Press '4' if status is 'In delivery'");
+            Console.WriteLine("Press '5' if status is 'Delivered'");
+            Console.WriteLine();
             string statusTitle = "Status delivery";
             string statusString = Extensions.GetData(statusTitle);
             bool parsed = int.TryParse(statusString, out int statusInteger);
@@ -163,7 +165,7 @@ namespace ParcelDistributionCenter.ConsoleUI.Forms
             }
         }
 
-        private static string EnterPhone(string name)
+        protected static string EnterPhone(string name)
         {
             string phoneTitle = $"{name} Phone";
             string phoneString = Extensions.GetData(phoneTitle);
@@ -178,7 +180,7 @@ namespace ParcelDistributionCenter.ConsoleUI.Forms
             return EnterPhone(name);
         }
 
-        private static string GetSenderName(string name)
+        protected static string GetSenderName(string name)
         {
             string nameTitle = $"{name} Name";
             string senderString = Extensions.GetData(nameTitle);
@@ -193,7 +195,7 @@ namespace ParcelDistributionCenter.ConsoleUI.Forms
             return GetSenderName(name);
         }
 
-        private static string GetSenderSurname(string name)
+        protected static string GetSenderSurname(string name)
         {
             string surnameTitle = $"{name} Surname";
             string senderString = Extensions.GetData(surnameTitle);

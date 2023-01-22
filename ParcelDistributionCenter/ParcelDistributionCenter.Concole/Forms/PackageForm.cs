@@ -12,12 +12,21 @@ namespace ParcelDistributionCenter.ConsoleUI.Forms
             Console.Title = "Display All Packages";
             foreach (Package courier in MemoryRepository.PackagesList)
             {
-                Display(courier);
+                DisplayForm.Display(courier);
             }
-            WriteEndMessage();
+            Extensions.WriteEndMessage();
         }
 
-        public static void FindPackageByNumber()
+        public static void DisplayPackageByNumber()
+        {
+            Package package = FindPackageByNumber();
+            if (package != null)
+            {
+                DisplayForm.Display(package);
+            }
+        }
+
+        public static Package FindPackageByNumber()
         {
             Console.Clear();
             Console.Title = "Find Package";
@@ -28,19 +37,21 @@ namespace ParcelDistributionCenter.ConsoleUI.Forms
                 Package package = PackageHandler.FindPackageByNumber(packageNumber);
                 if (package != null)
                 {
-                    Display(package);
+                    return package;
                 }
                 else
                 {
                     Extensions.WriteMessageWithColor("\nThere is no package with the specified number!\n", ConsoleColor.Red);
                 }
-                WriteEndMessage();
+                Extensions.WriteEndMessage();
+                return null;
             }
             else
             {
                 Extensions.WriteMessageWithColor("\nIncorrect value provided. Value should be a number.\n", ConsoleColor.Red);
-                WriteEndMessage();
+                Extensions.WriteEndMessage();
             }
+            return null;
         }
 
         public static void FindPackagesByCourierID()
@@ -54,7 +65,7 @@ namespace ParcelDistributionCenter.ConsoleUI.Forms
             {
                 foreach (Package package in packages)
                 {
-                    Display(package);
+                    DisplayForm.Display(package);
                 }
                 int deliveredPackages = packages.Where(p => p.Status == Model.Enums.Status.Delivered).Count();
                 int restPackages = packages.Count() - deliveredPackages;
@@ -65,7 +76,7 @@ namespace ParcelDistributionCenter.ConsoleUI.Forms
             {
                 Extensions.WriteMessageWithColor("\nThere are no packages with given courier ID!\n", ConsoleColor.Red);
             }
-            WriteEndMessage();
+            Extensions.WriteEndMessage();
         }
 
         public static void FindPackagesByDeliveryMachineID()
@@ -79,42 +90,20 @@ namespace ParcelDistributionCenter.ConsoleUI.Forms
             {
                 foreach (Package package in packages)
                 {
-                    Display(package);
+                    DisplayForm.Display(package);
                 }
             }
             else
             {
                 Extensions.WriteMessageWithColor("\nThere are no packages with given delivery machine ID!\n", ConsoleColor.Red);
             }
-            WriteEndMessage();
+            Extensions.WriteEndMessage();
         }
 
         public static void SendPackage()
         {
             //Zebranie danych od użytkownika oraz ich walidacja
             //konstruktor Package
-        }
-
-        private static void Display(Package package)
-        {
-            Console.WriteLine();
-            Console.WriteLine
-                (
-                  $" Package number: {package.PackageNumber}\n" +
-                  $" Package size: {package.Size} \n" +
-                  $" Package status: {package.Status} \n" +
-                  $" Sender data: {$"{package.SenderEmail}, {package.SenderName}, {package.SenderAddress}, {package.SenderPhone}"} \n" +
-                  $" Recipient data: {$"{package.RecipientEmail}, {package.RecipientName}, {package.DeliveryAddress}, {package.RecipientPhone}"} \n" +
-                  $" Delivery machine id: {package.DeliveryMachineId} \n" +
-                  $" Send date: {package.Registered} \n" +
-                  $" Courier id: {package.CourierId} \n"
-                );
-        }
-
-        private static void WriteEndMessage()
-        {
-            Extensions.WriteMessageWithColor("Press any key to go back to main window.");
-            Console.ReadKey();
         }
     }
 }

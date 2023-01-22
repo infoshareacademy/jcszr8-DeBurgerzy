@@ -17,6 +17,12 @@
             WriteMessage(message, ConsoleColor.Red);
         }
 
+        public static void WriteEndMessage()
+        {
+            WriteMessageWithColor("Press any key to go back to main window.");
+            Console.ReadKey();
+        }
+
         public static void WriteMessageWithColor(string message, ConsoleColor color = ConsoleColor.DarkCyan)
         {
             WriteMessage(message, color);

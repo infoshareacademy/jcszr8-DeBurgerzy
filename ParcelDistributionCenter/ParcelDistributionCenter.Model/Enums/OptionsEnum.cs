@@ -6,7 +6,7 @@
         FindPackagesByCourierID,
         FindPackagesByDeliveryMachineID,
         AddPackage,
-        EditPackageData,
+        EditPackage,
         DisplayAllPackages,
     }
 }

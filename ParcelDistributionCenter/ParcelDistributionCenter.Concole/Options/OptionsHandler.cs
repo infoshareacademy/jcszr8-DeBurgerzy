@@ -77,7 +77,7 @@ public class OptionsHandler
             new Option(OptionsEnum.FindPackagesByCourierID, $"{++counter}. Find package by courier ID."),
             new Option(OptionsEnum.FindPackagesByDeliveryMachineID, $"{++counter}. Find packages by delivery machine ID."),
             new Option(OptionsEnum.AddPackage , $"{++counter}. Add new package."),
-            new Option(OptionsEnum.EditPackageData, $"{++counter}. Edit package data."),
+            new Option(OptionsEnum.EditPackage, $"{++counter}. Edit package."),
             new Option(OptionsEnum.DisplayAllPackages, $"{++counter}. Display all packages."),
         });
         _optionsLastIndex = Options.Count - 1;

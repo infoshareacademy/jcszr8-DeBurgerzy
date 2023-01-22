@@ -45,7 +45,7 @@ namespace ParcelDistributionCenter.ConsoleUI
                 switch (optionsHandler.Options[optionsHandler.SelectedIndex].OptionType)
                 {
                     case OptionsEnum.FindPackageByNumber:
-                        PackageForm.FindPackageByNumber();
+                        PackageForm.DisplayPackageByNumber();
                         break;
 
                     case OptionsEnum.FindPackagesByCourierID:
@@ -60,7 +60,8 @@ namespace ParcelDistributionCenter.ConsoleUI
                         AddPackageForm.AddNewPackage();
                         break;
 
-                    case OptionsEnum.EditPackageData:
+                    case OptionsEnum.EditPackage:
+                        EditPackageForm.EditExistingPackage();
                         break;
 
                     case OptionsEnum.DisplayAllPackages:
