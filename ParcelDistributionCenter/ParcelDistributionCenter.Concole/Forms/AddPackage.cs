@@ -116,7 +116,7 @@ namespace ParcelDistributionCenter.ConsoleUI.Forms
             // wprowadzanie statusu paczki 
             int caseOption2=0;
             bool caseDone = false;
-            Status status = Status.in_preparation;
+            Status status = Status.InPreparation;
             Console.Clear();
             do
             {
@@ -133,23 +133,23 @@ namespace ParcelDistributionCenter.ConsoleUI.Forms
                 switch (caseOption2)
                 {
                     case 1:
-                        status = Status.in_preparation;
+                        status = Status.InPreparation;
                         caseDone = true;
                         break;
                     case 2:
-                        status = Status.stored_by_sender;
+                        status = Status.StoredBySender;
                         caseDone = true;
                         break;
                     case 3:
-                        status = Status.stored_in_machine;
+                        status = Status.StoredInMachine;
                         caseDone = true;
                         break;
                     case 4:
-                        status = Status.in_delivery;
+                        status = Status.InDelivery;
                         caseDone = true;
                         break;
                     case 5:
-                        status = Status.delivered;
+                        status = Status.Delivered;
                         caseDone = true;
                         break;
                     default:

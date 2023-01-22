@@ -1,6 +1,5 @@
 ﻿using ParcelDistributionCenter.Logic;
 using ParcelDistributionCenter.Model.Enums;
-using ParcelDistributionCenter.ConsoleUI.Forms;
 
 namespace ParcelDistributionCenter.ConsoleUI
 {
@@ -11,7 +10,7 @@ namespace ParcelDistributionCenter.ConsoleUI
         private static void Main()
         {
             OptionsHandler optionsHandler = new();
-            MemoryRepository repo = new();
+            MemoryRepository.LoadData();
             do
             {
                 Console.Clear();
@@ -46,14 +45,18 @@ namespace ParcelDistributionCenter.ConsoleUI
                 {
                     case OptionsEnum.FindPackageByNumber:
                         PackageForm.FindPackageByNumber();
-                        Thread.Sleep(30000);
                         break;
 
-                    case OptionsEnum.FindPackageByCourierID:
+                    case OptionsEnum.FindPackagesByCourierID:
+                        PackageForm.FindPackagesByCourierID();
+                        break;
+
+                    case OptionsEnum.FindPackagesByDeliveryMachineID:
+                        PackageForm.FindPackagesByDeliveryMachineID();
                         break;
 
                     case OptionsEnum.AddPackage:
-                        AddPackage.AddNewPackage();
+                        //AddPackage.AddNewPackage();
                         break;
 
                     case OptionsEnum.EditPackageData:
@@ -61,10 +64,6 @@ namespace ParcelDistributionCenter.ConsoleUI
 
                     case OptionsEnum.DisplayAllPackages:
                         PackageForm.DisplayAllPackages();
-                        Thread.Sleep(3000);
-                        break;
-
-                    case OptionsEnum.DisplayAllPackagesInPackageMachine:
                         break;
                 }
             } while (true);
