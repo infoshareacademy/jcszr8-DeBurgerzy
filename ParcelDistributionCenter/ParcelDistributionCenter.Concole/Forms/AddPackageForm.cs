@@ -61,6 +61,7 @@ namespace ParcelDistributionCenter.ConsoleUI.Forms
                 return addressString;
             }
             Extensions.ReportError($"\nIncorrect data! {addressTitle} should contain at least 1 digit, 2 letters and 1 space separator!");
+            Console.ReadKey();
             //ConsoleKeyInfo keyPressed = Console.ReadKey();
             //Extensions.WriteEndMessage();
             //if (keyPressed.Key == ConsoleKey.Escape)

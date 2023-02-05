@@ -3,7 +3,6 @@ using ParcelDistributionCenter.Model.Models;
 
 namespace ParcelDistributionCenter.Logic
 {
-    // ZAPIS PLIKU MA BYĆ TYLKO DO STATYCZNEJ KLASY - NIE DO JSONA
     public class MemoryRepository
     {
         private const string couriersJsonName = "couriers.json";
