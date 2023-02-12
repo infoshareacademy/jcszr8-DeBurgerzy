@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ParcelDistributionCenter.Logic;
 using ParcelDistributionCenter.Model.Models;
 using ParcelDistributionCenter.Web.Models;
@@ -8,6 +7,30 @@ namespace ParcelDistributionCenter.Web.Controllers
 {
     public class PackagesController : Controller
     {
+        private readonly IMemoryRepository _memoryRepository;
+
+        public PackagesController(IMemoryRepository memoryRepository)
+        {
+            _memoryRepository = memoryRepository;
+        }
+
+        // POST: PackagesController/Create
+        [HttpPost]
+        public ActionResult Create(FindPackageByNumberVM findPackageByNumberVM)
+        {
+            _memoryRepository.LoadData();
+            // walidacja ze stringa do inta
+            Package package = PackageHandler.FindPackageByNumber(int.Parse(findPackageByNumberVM.PackageNumber));
+            try
+            {
+                return View("DisplayPackage", package);
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
         // GET: PackagesController
         public ActionResult Index()
         {
@@ -29,24 +52,6 @@ namespace ParcelDistributionCenter.Web.Controllers
         //{
         //    return View();
         //}
-
-        // POST: PackagesController/Create
-        [HttpPost]
-        public ActionResult Create(FindPackageByNumberVM findPackageByNumberVM)
-        {
-            MemoryRepository.LoadData();
-            // walidacja ze stringa do inta
-            Package package = PackageHandler.FindPackageByNumber(int.Parse(findPackageByNumberVM.PackageNumber));
-            try
-            {
-                return View("DisplayPackage", package);
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
         //// GET: PackagesController/Edit/5
         //public ActionResult Edit(int id)
         //{
