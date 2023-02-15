@@ -3,19 +3,19 @@ using ParcelDistributionCenter.Model.Models;
 
 namespace ParcelDistributionCenter.Logic
 {
-    public class MemoryRepository : IMemoryRepository
+    public class MemoryRepository 
     {
         private const string couriersJsonName = "couriers.json";
         private const string deliveryMachinesJsonName = "deliveryMachines.json";
         private const string jsonFolderName = "json";
         private const string packagesJsonName = "packages.json";
-        private readonly string appDomainPath = AppDomain.CurrentDomain.BaseDirectory;
+        private static readonly string appDomainPath = AppDomain.CurrentDomain.BaseDirectory;
 
-        public List<Courier> CouriersList { get; private set; }
-        public List<DeliveryMachine> DeliveryMachinesList { get; private set; }
-        public List<Package> PackagesList { get; private set; }
+        public static List<Courier> CouriersList { get; private set; }
+        public static List<DeliveryMachine> DeliveryMachinesList { get; private set; }
+        public static List<Package> PackagesList { get; private set; }
 
-        public void LoadData()
+        public static void LoadData()
         {
             if (PackagesList != null)
             {
