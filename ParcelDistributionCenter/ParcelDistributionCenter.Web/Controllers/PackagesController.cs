@@ -18,7 +18,7 @@ namespace ParcelDistributionCenter.Web.Controllers
         [HttpPost]
         public ActionResult Create(FindPackageByNumberVM findPackageByNumberVM)
         {
-            _memoryRepository.LoadData();
+          
             // walidacja ze stringa do inta
             Package package = PackageHandler.FindPackageByNumber(int.Parse(findPackageByNumberVM.PackageNumber));
             try
@@ -38,8 +38,9 @@ namespace ParcelDistributionCenter.Web.Controllers
             return View();
         }
 
-        public ActionResult DisplayPackage()
+        public ActionResult DisplayPackages()
         {
+            MemoryRepository.LoadData();
             var model = PackageHandler.FindAll();
             return View(model);
         }
@@ -55,26 +56,28 @@ namespace ParcelDistributionCenter.Web.Controllers
         //{
         //    return View();
         //}
-        //// GET: PackagesController/Edit/5
-        //public ActionResult Edit(int id)
-        //{
-        //    return View();
-        //}
+        // GET: PackagesController/Edit/5
+        public ActionResult Edit(int id)
+        {
+            var model = PackageHandler.FindPackageByNumber(id);
+            return View(model);
+        }
 
-        //// POST: PackagesController/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+        // POST: PackagesController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, Package package)
+        {
+            try
+            {
+                PackageHandler.Update(package);
+                return RedirectToAction(nameof(DisplayPackages));
+            }
+            catch
+            {
+                return View(nameof(DisplayPackages));
+            }
+        }
 
         //// GET: PackagesController/Delete/5
         //public ActionResult Delete(int id)

@@ -1,4 +1,6 @@
-﻿using ParcelDistributionCenter.Model.Models;
+﻿using ParcelDistributionCenter.Model.Enums;
+using ParcelDistributionCenter.Model.Models;
+using System.Drawing;
 
 namespace ParcelDistributionCenter.Logic
 {
@@ -30,6 +32,22 @@ namespace ParcelDistributionCenter.Logic
                 return null;
             }
             return packages;
+        }
+        public static void Update(Package model)
+        {
+            var package = FindPackageByNumber(model.PackageNumber);
+            package.Status = model.Status;
+            package.CourierId = model.CourierId ;
+            package.SenderName = model.SenderName ;
+            package.RecipientName = model.RecipientName ;
+            package.SenderEmail = model.SenderEmail ;
+            package.SenderPhone = model.SenderPhone ;
+            package.RecipientEmail = model.RecipientEmail ;
+            package.RecipientPhone = model.RecipientPhone ;
+            package.SenderAddress = model.SenderAddress ;
+            package.DeliveryAddress = model.DeliveryAddress ;
+            package.DeliveryMachineId = model.DeliveryMachineId ;
+            package.Registered = model.Registered ;
         }
     }
 }
