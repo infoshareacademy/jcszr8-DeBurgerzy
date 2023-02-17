@@ -34,13 +34,16 @@ namespace ParcelDistributionCenter.Web.Controllers
         // GET: PackagesController
         public ActionResult Index()
         {
+            
             return View();
         }
 
-        //public ActionResult DisplayPackage(Package package)
-        //{
-        //    return View(package);
-        //}
+        public ActionResult DisplayPackage()
+        {
+            var model = PackageHandler.FindAll();
+            return View(model);
+        }
+        
         //// GET: PackagesController/Details/5
         //public ActionResult Details(int id)
         //{

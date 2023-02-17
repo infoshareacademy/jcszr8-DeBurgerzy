@@ -20,6 +20,8 @@ namespace ParcelDistributionCenter.Logic
 
         public static IEnumerable<Package> FindPackagesBySenderEmail(string senderEmail) => ReturnPackages(p => p.SenderEmail == senderEmail);
 
+        public static IEnumerable<Package> FindAll() =>ReturnPackages(p => true);
+
         private static IEnumerable<Package> ReturnPackages(Func<Package, bool> predicate)
         {
             IEnumerable<Package> packages = MemoryRepository.PackagesList.Where(predicate);
