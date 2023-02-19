@@ -4,10 +4,10 @@ namespace ParcelDistributionCenter.Logic
 {
     public interface IMemoryRepository
     {
-        static List<Courier> CouriersList { get; }
-        static List<DeliveryMachine> DeliveryMachinesList { get; }
-        static List<Package> PackagesList { get; }
+        List<Courier> CouriersList { get; }
+        List<DeliveryMachine> DeliveryMachinesList { get; }
+        List<Package> PackagesList { get; }
 
-        static void LoadData(){}
+        void LoadData();
     }
 }

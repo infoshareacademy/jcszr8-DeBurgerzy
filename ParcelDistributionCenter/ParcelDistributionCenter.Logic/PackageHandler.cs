@@ -1,14 +1,21 @@
-﻿using ParcelDistributionCenter.Model.Enums;
-using ParcelDistributionCenter.Model.Models;
-using System.Drawing;
+﻿using ParcelDistributionCenter.Model.Models;
 
 namespace ParcelDistributionCenter.Logic
 {
-    public class PackageHandler
+    public class PackageHandler : IPackageHandler
     {
-        public static Package FindPackageByNumber(int packageNumber)
+        private readonly IMemoryRepository _memoryRepository;
+
+        public PackageHandler(IMemoryRepository memoryRepository)
         {
-            Package package = MemoryRepository.PackagesList.FirstOrDefault(p => p.PackageNumber == packageNumber);
+            _memoryRepository = memoryRepository;
+        }
+
+        public IEnumerable<Package> FindAll() => ReturnPackages(p => true);
+
+        public Package FindPackageByNumber(int packageNumber)
+        {
+            Package package = _memoryRepository.PackagesList.FirstOrDefault(p => p.PackageNumber == packageNumber);
             if (package == default)
             {
                 return null;
@@ -16,38 +23,37 @@ namespace ParcelDistributionCenter.Logic
             return package;
         }
 
-        public static IEnumerable<Package> FindPackagesByCourierID(string courierId) => ReturnPackages(p => p.CourierId == courierId);
+        public IEnumerable<Package> FindPackagesByCourierID(string courierId) => ReturnPackages(p => p.CourierId == courierId);
 
-        public static IEnumerable<Package> FindPackagesByDeliveryMachineID(string deliveryMachineID) => ReturnPackages(p => p.DeliveryMachineId == deliveryMachineID);
+        public IEnumerable<Package> FindPackagesByDeliveryMachineID(string deliveryMachineID) => ReturnPackages(p => p.DeliveryMachineId == deliveryMachineID);
 
-        public static IEnumerable<Package> FindPackagesBySenderEmail(string senderEmail) => ReturnPackages(p => p.SenderEmail == senderEmail);
+        public IEnumerable<Package> FindPackagesBySenderEmail(string senderEmail) => ReturnPackages(p => p.SenderEmail == senderEmail);
 
-        public static IEnumerable<Package> FindAll() =>ReturnPackages(p => true);
-
-        private static IEnumerable<Package> ReturnPackages(Func<Package, bool> predicate)
+        public void Update(Package model)
         {
-            IEnumerable<Package> packages = MemoryRepository.PackagesList.Where(predicate);
+            var package = FindPackageByNumber(model.PackageNumber);
+            package.Status = model.Status;
+            package.CourierId = model.CourierId;
+            package.SenderName = model.SenderName;
+            package.RecipientName = model.RecipientName;
+            package.SenderEmail = model.SenderEmail;
+            package.SenderPhone = model.SenderPhone;
+            package.RecipientEmail = model.RecipientEmail;
+            package.RecipientPhone = model.RecipientPhone;
+            package.SenderAddress = model.SenderAddress;
+            package.DeliveryAddress = model.DeliveryAddress;
+            package.DeliveryMachineId = model.DeliveryMachineId;
+            package.Registered = model.Registered;
+        }
+
+        private IEnumerable<Package> ReturnPackages(Func<Package, bool> predicate)
+        {
+            IEnumerable<Package> packages = _memoryRepository.PackagesList.Where(predicate);
             if (!packages.Any())
             {
                 return null;
             }
             return packages;
-        }
-        public static void Update(Package model)
-        {
-            var package = FindPackageByNumber(model.PackageNumber);
-            package.Status = model.Status;
-            package.CourierId = model.CourierId ;
-            package.SenderName = model.SenderName ;
-            package.RecipientName = model.RecipientName ;
-            package.SenderEmail = model.SenderEmail ;
-            package.SenderPhone = model.SenderPhone ;
-            package.RecipientEmail = model.RecipientEmail ;
-            package.RecipientPhone = model.RecipientPhone ;
-            package.SenderAddress = model.SenderAddress ;
-            package.DeliveryAddress = model.DeliveryAddress ;
-            package.DeliveryMachineId = model.DeliveryMachineId ;
-            package.Registered = model.Registered ;
         }
     }
 }

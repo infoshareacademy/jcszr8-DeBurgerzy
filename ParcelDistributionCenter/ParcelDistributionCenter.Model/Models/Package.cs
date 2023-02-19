@@ -1,12 +1,13 @@
 ﻿using Newtonsoft.Json;
 using ParcelDistributionCenter.Model.Enums;
 using System.ComponentModel.DataAnnotations;
-using System.Xml.Linq;
 
 namespace ParcelDistributionCenter.Model.Models
 {
     public class Package
     {
+        private const string AddressErrorMessage = "Address should contain at least 1 digit, 2 letters and 1 space separator!";
+
         public Package(int packageNumber, Status status, string courierId, string senderName, string recipientName, PackageSize size, string senderEmail, string senderPhone,
             string recipientEmail, string recipientPhone, string senderAddress, string deliveryAddress, string deliveryMacineId, DateTime registered)
         {
@@ -25,7 +26,9 @@ namespace ParcelDistributionCenter.Model.Models
             DeliveryMachineId = deliveryMacineId;
             Registered = registered;
         }
-        public Package() { }
+
+        public Package()
+        { }
 
         [JsonProperty("courier_id")]
         [Display(Name = "Courier Id")]
@@ -33,6 +36,7 @@ namespace ParcelDistributionCenter.Model.Models
 
         [JsonProperty("delivery_address")]
         [Display(Name = "Delivery Address")]
+        [Required(ErrorMessage = AddressErrorMessage)]
         public string DeliveryAddress { get; set; }
 
         [JsonProperty("delivery_machine_id")]
@@ -45,6 +49,7 @@ namespace ParcelDistributionCenter.Model.Models
 
         [JsonProperty("recipient_email")]
         [Display(Name = "Recipient Email")]
+        [EmailAddress]
         public string RecipientEmail { get; set; }
 
         [JsonProperty("recipient_name")]
@@ -53,16 +58,20 @@ namespace ParcelDistributionCenter.Model.Models
 
         [JsonProperty("recipient_phone")]
         [Display(Name = "Recipient Phone")]
+        [Phone]
         public string RecipientPhone { get; set; }
+
         [Display(Name = "Registration date")]
         public DateTime Registered { get; set; }
 
         [JsonProperty("sender_address")]
         [Display(Name = "Sender Address")]
+        [Required(ErrorMessage = AddressErrorMessage)]
         public string SenderAddress { get; set; }
 
         [JsonProperty("sender_email")]
         [Display(Name = "Sender Email")]
+        [EmailAddress]
         public string SenderEmail { get; set; }
 
         [JsonProperty("sender_name")]
@@ -71,10 +80,12 @@ namespace ParcelDistributionCenter.Model.Models
 
         [JsonProperty("sender_phone")]
         [Display(Name = "Sender Phone")]
+        [Phone]
         public string SenderPhone { get; set; }
 
         [Display(Name = "Package Size")]
         public PackageSize Size { get; init; }
+
         public Status Status { get; set; }
     }
 }

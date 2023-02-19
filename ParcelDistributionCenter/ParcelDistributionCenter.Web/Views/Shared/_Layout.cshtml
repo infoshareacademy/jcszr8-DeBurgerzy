@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>@ViewData["Title"] - ParcelDistributionCenter.Web</title>
+    <title>@ViewData["Title"] - ParcelDistributionCenter</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="~/css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
@@ -18,7 +18,7 @@
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
         <!-- Navbar-->
-        
+
     </nav>
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
@@ -35,14 +35,13 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-edit"></i></div>
                             Packages List
                         </a>
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" asp-area="" asp-controller="Packages" asp-action="AddPackage">
                             <div class="sb-nav-link-icon"><i class="fas fa-cube"></i></div>
                             Send Package
                         </a>
-
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-filter"></i></div>
-                           Find Package
+                            Find Package
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
@@ -54,7 +53,7 @@
                         </div>
 
 
-                   
+
                         <div class="sb-sidenav-menu-heading">Manage Couriers</div>
                         <a class="nav-link" href="charts.html">
                             <div class="sb-nav-link-icon"><i class="fas fa-dolly"></i></div>

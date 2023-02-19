@@ -11,6 +11,8 @@ namespace ParcelDistributionCenter.Web
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<IMemoryRepository, MemoryRepository>();
+            builder.Services.AddScoped<IAddNewPackageHandler, AddNewPackageHandler>();
+            builder.Services.AddScoped<IPackageHandler, PackageHandler>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

@@ -7,20 +7,45 @@ namespace ParcelDistributionCenter.Web.Controllers
 {
     public class PackagesController : Controller
     {
+        private readonly IAddNewPackageHandler _addNewPackageHandler;
         private readonly IMemoryRepository _memoryRepository;
+        private readonly IPackageHandler _packageHandler;
 
-        public PackagesController(IMemoryRepository memoryRepository)
+        public PackagesController(IMemoryRepository memoryRepository, IAddNewPackageHandler addNewPackageHandler, IPackageHandler packageHandler)
         {
             _memoryRepository = memoryRepository;
+            _addNewPackageHandler = addNewPackageHandler;
+            _packageHandler = packageHandler;
+        }
+
+        // GET: PackagesController/AddPackage
+        public ActionResult AddPackage()
+        {
+            return View();
+        }
+
+        // POST: PackagesController/AddPackage
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddPackage(Package package)
+        {
+            bool added = _addNewPackageHandler.AddNewPackage(package);
+            if (added)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return View();
+            }
         }
 
         // POST: PackagesController/Create
         [HttpPost]
         public ActionResult Create(FindPackageByNumberVM findPackageByNumberVM)
         {
-          
             // walidacja ze stringa do inta
-            Package package = PackageHandler.FindPackageByNumber(int.Parse(findPackageByNumberVM.PackageNumber));
+            Package package = _packageHandler.FindPackageByNumber(int.Parse(findPackageByNumberVM.PackageNumber));
             try
             {
                 return View("DisplayPackage", package);
@@ -31,35 +56,18 @@ namespace ParcelDistributionCenter.Web.Controllers
             }
         }
 
-        // GET: PackagesController
-        public ActionResult Index()
-        {
-            
-            return View();
-        }
-
+        // GET: PackagesController/DisplayPackages
         public ActionResult DisplayPackages()
         {
-            MemoryRepository.LoadData();
-            var model = PackageHandler.FindAll();
+            _memoryRepository.LoadData();
+            var model = _packageHandler.FindAll();
             return View(model);
         }
-        
-        //// GET: PackagesController/Details/5
-        //public ActionResult Details(int id)
-        //{
-        //    return View();
-        //}
 
-        //// GET: PackagesController/Create
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
         // GET: PackagesController/Edit/5
         public ActionResult Edit(int id)
         {
-            var model = PackageHandler.FindPackageByNumber(id);
+            var model = _packageHandler.FindPackageByNumber(id);
             return View(model);
         }
 
@@ -70,7 +78,7 @@ namespace ParcelDistributionCenter.Web.Controllers
         {
             try
             {
-                PackageHandler.Update(package);
+                _packageHandler.Update(package);
                 return RedirectToAction(nameof(DisplayPackages));
             }
             catch
@@ -79,25 +87,10 @@ namespace ParcelDistributionCenter.Web.Controllers
             }
         }
 
-        //// GET: PackagesController/Delete/5
-        //public ActionResult Delete(int id)
-        //{
-        //    return View();
-        //}
-
-        //// POST: PackagesController/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+        // GET: PackagesController
+        public ActionResult Index()
+        {
+            return View();
+        }
     }
 }
