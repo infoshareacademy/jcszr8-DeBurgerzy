@@ -26,9 +26,9 @@ namespace ParcelDistributionCenter.Model.Models
             DeliveryMachineId = deliveryMacineId;
             Registered = registered;
         }
-
         public Package()
-        { }
+        {
+        }
 
         [JsonProperty("courier_id")]
         [Display(Name = "Courier Id")]
@@ -53,7 +53,7 @@ namespace ParcelDistributionCenter.Model.Models
         public string RecipientEmail { get; set; }
 
         [JsonProperty("recipient_name")]
-        [Display(Name = "Recipient Name")]
+        [Display(Name = "Recipient Name and Surname/Company Name")]
         public string RecipientName { get; set; }
 
         [JsonProperty("recipient_phone")]
@@ -75,7 +75,7 @@ namespace ParcelDistributionCenter.Model.Models
         public string SenderEmail { get; set; }
 
         [JsonProperty("sender_name")]
-        [Display(Name = "Sender Name")]
+        [Display(Name = "Sender Name and Surname/Company Name")]
         public string SenderName { get; set; }
 
         [JsonProperty("sender_phone")]

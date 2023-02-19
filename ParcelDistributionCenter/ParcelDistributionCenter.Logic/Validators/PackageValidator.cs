@@ -2,9 +2,9 @@
 
 namespace ParcelDistributionCenter.Logic.Validators
 {
-    public class PackageValidator
+    public class PackageValidator : IPackageValidator
     {
-        public static bool ValidateAddress(string address)
+        public bool ValidateAddress(string address)
         {
             int numberCount = 0;
             int letterCount = 0;
@@ -31,7 +31,7 @@ namespace ParcelDistributionCenter.Logic.Validators
             return false;
         }
 
-        public static bool ValidateEmail(string email)
+        public bool ValidateEmail(string email)
         {
             bool monkeyChar = email.Contains('@');
             bool dotchar = email.Contains('.');
@@ -44,7 +44,7 @@ namespace ParcelDistributionCenter.Logic.Validators
             return false;
         }
 
-        public static bool ValidateName(string name)
+        public bool ValidateName(string name)
         {
             bool isAnyCharUpper = name.Any(c => char.IsUpper(c));
             if (isAnyCharUpper & name.Length >= 3)
@@ -54,9 +54,9 @@ namespace ParcelDistributionCenter.Logic.Validators
             return false;
         }
 
-        public static bool ValidatePackageNumber(int packageNumber) => packageNumber >= 1_000_000 && packageNumber <= 9_999_999;
+        public bool ValidatePackageNumber(int packageNumber) => packageNumber >= 1_000_000 && packageNumber <= 9_999_999;
 
-        public static bool ValidatePhoneNumber(string phoneNumber)
+        public bool ValidatePhoneNumber(string phoneNumber)
         {
             if (string.IsNullOrEmpty(phoneNumber))
             {
@@ -66,7 +66,7 @@ namespace ParcelDistributionCenter.Logic.Validators
             return cleaned.Length > 7 && cleaned.Length < 14;
         }
 
-        private static string RemoveNonNumeric(string phone)
+        private string RemoveNonNumeric(string phone)
         {
             return Regex.Replace(phone, @"[^0-9]+", "");
         }

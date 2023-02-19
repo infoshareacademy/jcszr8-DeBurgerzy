@@ -1,4 +1,5 @@
-﻿using ParcelDistributionCenter.Model.Enums;
+﻿using ParcelDistributionCenter.Logic.Validators;
+using ParcelDistributionCenter.Model.Enums;
 using ParcelDistributionCenter.Model.Models;
 
 namespace ParcelDistributionCenter.Logic
@@ -6,59 +7,44 @@ namespace ParcelDistributionCenter.Logic
     public class AddNewPackageHandler : IAddNewPackageHandler
     {
         private readonly IMemoryRepository _memoryRepository;
+        private readonly IPackageValidator _packageValidator;
+        private readonly List<bool> validations = new();
 
-        public AddNewPackageHandler(IMemoryRepository memoryRepository)
+        public AddNewPackageHandler(IMemoryRepository memoryRepository, IPackageValidator packageValidator)
         {
             _memoryRepository = memoryRepository;
+            _packageValidator = packageValidator;
         }
 
         public bool AddNewPackage(Package package)
         {
             int packageNumber = GeneratePackageNumber();
-            Status packageStatus = package.Status;
+            ValidatePackageStatus(package.Status);
             string courierID = AssignCourierID();
-            PackageSize packageSize = package.Size;
-            string senderName = EnterFullName(package.SenderName);
-            string senderEmail = EnterEmail(package.SenderEmail);
-            string senderPhone = EnterPhone(package.SenderPhone);
-            string senderAddress = EnterAddress(package.SenderAddress);
-            string recipientName = EnterFullName(package.RecipientName);
-            string recipientEmail = EnterEmail(package.RecipientEmail);
-            string recipientPhone = EnterPhone(package.RecipientPhone);
-            string deliveryAddress = EnterAddress(package.DeliveryAddress);
+            ValidateFullName(package.SenderName);
+            ValidateEmail(package.SenderEmail);
+            ValidatePhone(package.SenderPhone);
+            ValidateAddress(package.SenderAddress);
+            ValidateFullName(package.RecipientName);
+            ValidateEmail(package.RecipientEmail);
+            ValidatePhone(package.RecipientPhone);
+            ValidateAddress(package.DeliveryAddress);
             string deliveryMachineID = AssignDeliveryMachineID();
 
-            //to do zmiany, żeby zwracało false, jeśli się coś nie uda
-            bool isAnyConditionNotSatisfied = true;
-            if (isAnyConditionNotSatisfied)
+            if (validations.Any(v => v == false))
             {
                 return false;
             }
-            Package newPackage = new(packageNumber, packageStatus, courierID, senderName, recipientName, packageSize, senderEmail, senderPhone,
-                recipientEmail, recipientPhone, senderAddress, deliveryAddress, deliveryMachineID, DateTime.Now);
+
+            Package newPackage = new(packageNumber, package.Status, courierID, package.SenderName, package.RecipientName, package.Size, package.SenderEmail, package.SenderPhone,
+                package.RecipientEmail, package.RecipientPhone, package.SenderAddress, package.DeliveryAddress, deliveryMachineID, DateTime.Now);
             _memoryRepository.PackagesList.Add(newPackage);
             return true;
         }
 
-        protected static string EnterEmail(string email)
+        private void ValidatePackageStatus(Status status)
         {
-            // Validate Email here
-            //bool validationPassed = PackageValidator.ValidateEmail(email);
-            return email;
-        }
-
-        protected static string EnterFullName(string name)
-        {
-            // Validate here name and surnmae together (so 2 capital letter, one space and at least 6 characters all together)
-            //bool validationPassed = PackageValidator.ValidateName(name);
-            return name;
-        }
-
-        protected static string EnterPhone(string phoneNumber)
-        {
-            // Validate Phone number here
-            //bool validationPassed = PackageValidator.ValidatePhoneNumber(phoneNumber);
-            return phoneNumber;
+            throw new NotImplementedException();
         }
 
         protected string AssignCourierID()
@@ -85,11 +71,23 @@ namespace ParcelDistributionCenter.Logic
             return generatedNumber;
         }
 
-        private static string EnterAddress(string address)
+        protected void ValidateEmail(string email)
         {
-            // Validate address here
-            //bool validationPassed = PackageValidator.ValidateAddress(addressString);
-            return address;
+            bool emailValidation = _packageValidator.ValidateEmail(email);
+            validations.Add(emailValidation);
+        }
+
+        protected void ValidateFullName(string name)
+        {
+            // Validate here name and surnmae together (so 2 capital letter, one space and at least 6 characters all together)
+            bool fullNameValidation = _packageValidator.ValidateName(name);
+            validations.Add(fullNameValidation);
+        }
+
+        protected void ValidatePhone(string phoneNumber)
+        {
+            bool phoneValidation = _packageValidator.ValidatePhoneNumber(phoneNumber);
+            validations.Add(phoneValidation);
         }
 
         private static string GenerateRandomID(IEnumerable<string> IdCollection)
@@ -97,6 +95,12 @@ namespace ParcelDistributionCenter.Logic
             Random rnd = new();
             int selectedIndex = rnd.Next(IdCollection.Count());
             return IdCollection.ToArray()[selectedIndex];
+        }
+
+        private void ValidateAddress(string address)
+        {
+            bool addressValidation = _packageValidator.ValidateAddress(address);
+            validations.Add(addressValidation);
         }
     }
 }

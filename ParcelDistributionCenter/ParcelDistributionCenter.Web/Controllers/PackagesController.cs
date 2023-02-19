@@ -29,6 +29,10 @@ namespace ParcelDistributionCenter.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddPackage(Package package)
         {
+            if (ModelState.IsValid)
+            {
+                return View(package);
+            }
             bool added = _addNewPackageHandler.AddNewPackage(package);
             if (added)
             {

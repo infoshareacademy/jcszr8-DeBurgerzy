@@ -1,4 +1,5 @@
 using ParcelDistributionCenter.Logic;
+using ParcelDistributionCenter.Logic.Validators;
 
 namespace ParcelDistributionCenter.Web
 {
@@ -13,6 +14,7 @@ namespace ParcelDistributionCenter.Web
             builder.Services.AddSingleton<IMemoryRepository, MemoryRepository>();
             builder.Services.AddScoped<IAddNewPackageHandler, AddNewPackageHandler>();
             builder.Services.AddScoped<IPackageHandler, PackageHandler>();
+            builder.Services.AddScoped<IPackageValidator, PackageValidator>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
