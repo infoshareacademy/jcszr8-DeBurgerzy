@@ -66,7 +66,7 @@ namespace ParcelDistributionCenter.Web.Controllers
         // POST: PackagesController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, Package package)
+        public ActionResult Edit(Package package)
         {
             try
             {
