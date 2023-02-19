@@ -11,6 +11,7 @@ namespace ParcelDistributionCenter.Logic
             _memoryRepository = memoryRepository;
         }
 
+        public IEnumerable<Package> FindAll() => _memoryRepository.PackagesList;
 
         public Package FindPackageByNumber(int packageNumber)
         {
@@ -44,7 +45,6 @@ namespace ParcelDistributionCenter.Logic
             package.DeliveryMachineId = model.DeliveryMachineId;
             package.Registered = model.Registered;
         }
-        public static IEnumerable<Package> FindAll() => MemoryRepository.PackagesList;
 
         private IEnumerable<Package> ReturnPackages(Func<Package, bool> predicate)
         {
