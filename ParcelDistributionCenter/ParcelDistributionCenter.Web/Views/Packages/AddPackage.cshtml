@@ -1,0 +1,172 @@
+﻿@model ParcelDistributionCenter.Model.Models.Package
+
+@{
+    ViewData["Title"] = "Add Package";
+}
+
+<h1 class="text-center">Add Package</h1>
+
+<hr />
+
+<div class="row align-items-center justify-content-center">
+    <div class="col-md-3 align-self-center">
+        <h2 class="text-center">Sender</h2>
+    </div>
+    <div class="col-md-3 align-self-center">
+        <h2 class="text-center">Recipient</h2>
+    </div>
+</div>
+@*<div class="container">
+    <div class="row align-items-center justify-content-center">
+        <form asp-action="AddPackage">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="col-md-4 align-self-center">
+                <div class="form-group">
+                    <label asp-for="DeliveryAddress" class="control-label"></label>
+                    <input asp-for="DeliveryAddress" class="form-control" />
+                    <span asp-validation-for="DeliveryAddress" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="RecipientEmail" class="control-label"></label>
+                    <input asp-for="RecipientEmail" class="form-control" />
+                    <span asp-validation-for="RecipientEmail" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="RecipientName" class="control-label"></label>
+                    <input asp-for="RecipientName" class="form-control" />
+                    <span asp-validation-for="RecipientName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="RecipientPhone" class="control-label"></label>
+                    <input asp-for="RecipientPhone" class="form-control" />
+                    <span asp-validation-for="RecipientPhone" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SenderAddress" class="control-label"></label>
+                    <input asp-for="SenderAddress" class="form-control" />
+                    <span asp-validation-for="SenderAddress" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-4 align-self-center">
+                <div class="form-group">
+                    <label asp-for="SenderEmail" class="control-label"></label>
+                    <input asp-for="SenderEmail" class="form-control" />
+                    <span asp-validation-for="SenderEmail" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SenderName" class="control-label"></label>
+                    <input asp-for="SenderName" class="form-control" />
+                    <span asp-validation-for="SenderName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SenderPhone" class="control-label"></label>
+                    <input asp-for="SenderPhone" class="form-control" />
+                    <span asp-validation-for="SenderPhone" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Size" class="control-label"></label>
+                    <input asp-for="Size" class="form-control" />
+                    <span asp-validation-for="Size" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Status" class="control-label"></label>
+                    <input asp-for="Status" class="form-control" />
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>*@
+
+@*NOWE*@
+<div class="row align-items-center justify-content-center">
+    <div class="col-md-3">
+        <table class="table align-content-center">
+            <tr>
+                <label asp-for="SenderAddress" class="control-label"></label>
+                <input asp-for="SenderAddress" class="form-control" />
+                <span asp-validation-for="SenderAddress" class="text-danger"></span>
+            </tr>
+            <tr>
+                <label asp-for="SenderEmail" class="control-label"></label>
+                <input asp-for="SenderEmail" class="form-control" />
+                <span asp-validation-for="SenderEmail" class="text-danger"></span>
+            </tr>
+            <tr>
+                <label asp-for="SenderName" class="control-label"></label>
+                <input asp-for="SenderName" class="form-control" />
+                <span asp-validation-for="SenderName" class="text-danger"></span>
+            <tr>
+            </tr>
+            <tr>
+                <label asp-for="SenderPhone" class="control-label"></label>
+                <input asp-for="SenderPhone" class="form-control" />
+                <span asp-validation-for="SenderPhone" class="text-danger"></span>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-3">
+        <table class="table">
+            <tr>
+                <label asp-for="DeliveryAddress" class="control-label"></label>
+                <input asp-for="DeliveryAddress" class="form-control" />
+                <span asp-validation-for="DeliveryAddress" class="text-danger"></span>
+            </tr>
+            <tr>
+                <label asp-for="RecipientEmail" class="control-label"></label>
+                <input asp-for="RecipientEmail" class="form-control" />
+                <span asp-validation-for="RecipientEmail" class="text-danger"></span>
+            </tr>
+            <tr>
+                <label asp-for="RecipientName" class="control-label"></label>
+                <input asp-for="RecipientName" class="form-control" />
+                <span asp-validation-for="RecipientName" class="text-danger"></span>
+            <tr>
+            </tr>
+            <tr>
+                <label asp-for="RecipientPhone" class="control-label"></label>
+                <input asp-for="RecipientPhone" class="form-control" />
+                <span asp-validation-for="RecipientPhone" class="text-danger"></span>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="row align-items-center justify-content-center">
+    <div class="col-md-3 align-self-center">
+        <h2 class="text-center">Other</h2>
+    </div>
+</div>
+
+<div class="row align-items-center justify-content-center">
+    <div class="col-md-3">
+        <table>
+            <tr>
+                <label asp-for="Size" class="control-label"></label>
+                <input asp-for="Size" class="form-control" />
+                <span asp-validation-for="Size" class="text-danger"></span>
+            </tr>
+            <tr>
+                <label asp-for="Status" class="control-label"></label>
+                <input asp-for="Status" class="form-control" />
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="form-group">
+    <input type="submit" value="Create" class="btn btn-primary" />
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
