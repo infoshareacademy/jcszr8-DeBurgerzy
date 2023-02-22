@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ParcelDistributionCenter.Logic;
+using ParcelDistributionCenter.Logic.Services;
+using ParcelDistributionCenter.Model.Models;
+using ParcelDistributionCenter.Web.Models;
 
 namespace ParcelDistributionCenter.Web.Controllers
 {
@@ -8,11 +11,13 @@ namespace ParcelDistributionCenter.Web.Controllers
     {
         private readonly IMemoryRepository _memoryRepository;
         private readonly ICourierHandler _courierHandler;
+        private readonly IPackageServices _packageServices;
 
-        public CouriersController(IMemoryRepository memoryRepository, ICourierHandler courierHandler)
+        public CouriersController(IMemoryRepository memoryRepository, ICourierHandler courierHandler, IPackageServices packageServices)
         {
             _memoryRepository = memoryRepository;
             _courierHandler = courierHandler;
+            _packageServices = packageServices;
         }
 
         // GET: CouriersController
@@ -93,17 +98,39 @@ namespace ParcelDistributionCenter.Web.Controllers
             }
         }
 
-        public ActionResult GetCourierPackages(int id, IFormCollection collection)
+        public ActionResult CourierPackages(string id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _memoryRepository.LoadData();
+            var model = _packageServices.GetCourierPackages(id);
+            return View(model);
         }
-        
+        public ActionResult CouriersPackages()
+        {
+            _memoryRepository.LoadData();
+            var model = _packageServices.GetCouriersPackages();
+            return View(model);
+        }
+
+        public ActionResult Assign(string id)
+        {
+            _memoryRepository.LoadData();
+            var model = _courierHandler.FindAll();
+            return View(model);
+        }
+
+    public ActionResult Assign2(string id, string packageNumber)
+    {
+        try
+        {
+                _memoryRepository.LoadData();
+                _packageServices.AssignPackage(id, packageNumber);
+                return RedirectToAction("CouriersPackages");
+        }
+        catch
+        {
+            return View();
+        }
     }
+      }
+
 }

@@ -1,4 +1,5 @@
 using ParcelDistributionCenter.Logic;
+using ParcelDistributionCenter.Logic.Services;
 
 namespace ParcelDistributionCenter.Web
 {
@@ -14,6 +15,7 @@ namespace ParcelDistributionCenter.Web
             builder.Services.AddTransient<IAddNewPackageHandler, AddNewPackageHandler>();
             builder.Services.AddTransient<IPackageHandler, PackageHandler>();
             builder.Services.AddTransient<ICourierHandler, CourierHandler>();
+            builder.Services.AddTransient<IPackageServices, PackageServices > ();
 
             var app = builder.Build();
 
