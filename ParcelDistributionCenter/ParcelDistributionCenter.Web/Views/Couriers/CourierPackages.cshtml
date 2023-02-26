@@ -6,6 +6,9 @@
 
 <h1>Couriers Packages List</h1>
 
+<p>
+    <a asp-action="UnassignedPackages" asp-route-id=@ViewContext.RouteData.Values["id"]>Assign new package</a>
+</p>
 
 <div class="card-body">
     <table id="datatablesSimple">
@@ -23,9 +26,6 @@
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Status)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CourierId)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.DeliveryAddress)
@@ -56,9 +56,6 @@
                         @Html.DisplayFor(modelItem => item.Status)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.CourierId)
-                    </td>
-                    <td>
                         @Html.DisplayFor(modelItem => item.DeliveryAddress)
                     </td>
                     <td>
@@ -69,13 +66,17 @@
                     </td>
 
                     <td>
-                        @Html.ActionLink("Packages", "CouriersPackages", new { id=item.CourierId}) |
-                        @Html.ActionLink("Edit", "Edit", new { id=item.PackageNumber}) |
-                        @Html.ActionLink("Details", "Details", new { id=item.PackageNumber  }) |
-                        @Html.ActionLink("Delete", "Delete", new { id=item.PackageNumber  })
+                        
+                        </td>
+                    <td>
+                        @Html.ActionLink("Unassign", "Unassign", new { id=item.PackageNumber}) |
+                        <a asp-controller="Packages" asp-action="Details" asp-route-id=@item.PackageNumber>Detail</a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>

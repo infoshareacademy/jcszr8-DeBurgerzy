@@ -4,6 +4,7 @@ using ParcelDistributionCenter.Logic;
 using ParcelDistributionCenter.Logic.Services;
 using ParcelDistributionCenter.Model.Models;
 using ParcelDistributionCenter.Web.Models;
+using System.Diagnostics.Metrics;
 
 namespace ParcelDistributionCenter.Web.Controllers
 {
@@ -12,16 +13,18 @@ namespace ParcelDistributionCenter.Web.Controllers
         private readonly IMemoryRepository _memoryRepository;
         private readonly ICourierHandler _courierHandler;
         private readonly IPackageServices _packageServices;
+        private readonly IAddNewCourierHandler _addNewCourierHandler;
 
-        public CouriersController(IMemoryRepository memoryRepository, ICourierHandler courierHandler, IPackageServices packageServices)
+        public CouriersController(IMemoryRepository memoryRepository, ICourierHandler courierHandler, IPackageServices packageServices, IAddNewCourierHandler addNewCourierHandler)
         {
             _memoryRepository = memoryRepository;
             _courierHandler = courierHandler;
             _packageServices = packageServices;
+            _addNewCourierHandler = addNewCourierHandler;
         }
 
         // GET: CouriersController
-        public ActionResult DisplayCouriers()
+        public ActionResult Index()
         {
             _memoryRepository.LoadData();
             var model = _courierHandler.FindAll();
@@ -29,10 +32,11 @@ namespace ParcelDistributionCenter.Web.Controllers
         }
 
         // GET: CouriersController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(string id)
         {
-            return View();
-
+            _memoryRepository.LoadData();
+            var model = _courierHandler.FindById(id);
+            return View(model);
         }
 
         // GET: CouriersController/Create
@@ -44,93 +48,78 @@ namespace ParcelDistributionCenter.Web.Controllers
         // POST: CouriersController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Courier courier)
         {
-            try
+            bool added = _addNewCourierHandler.AddNewCourier(courier);
+            if (added)
             {
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            else
             {
                 return View();
             }
         }
 
         // GET: CouriersController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string id)
         {
-            return View();
+            _memoryRepository.LoadData();
+            var model = _courierHandler.FindById(id);
+            return View(model);
         }
 
         // POST: CouriersController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Courier courier)
         {
             try
             {
+                _courierHandler.Update(courier);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return View(nameof(Index));
             }
         }
 
         // GET: CouriersController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string id)
         {
-            return View();
+            var model =_courierHandler.FindById(id);
+            _courierHandler.Delete(model);
+            return RedirectToAction(nameof(Index));
         }
 
-        // POST: CouriersController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
+   
         public ActionResult CourierPackages(string id)
         {
             _memoryRepository.LoadData();
             var model = _packageServices.GetCourierPackages(id);
             return View(model);
         }
-        public ActionResult CouriersPackages()
+        public ActionResult UnassignedPackages()
         {
             _memoryRepository.LoadData();
-            var model = _packageServices.GetCouriersPackages();
+            var model = _packageServices.GetUnassignedPackages();
             return View(model);
         }
 
-        public ActionResult Assign(string id)
+        public ActionResult Assign(string packageNumber, string CourierId)
         {
             _memoryRepository.LoadData();
+            if (CourierId != null)
+            {
+                _packageServices.AssignPackage(packageNumber, CourierId);
+                return RedirectToAction("CourierPackages", new {id = CourierId});
+            }
+            else
+            {
             var model = _courierHandler.FindAll();
             return View(model);
+            }
         }
-
-    public ActionResult Assign2(string id, string packageNumber)
-    {
-        try
-        {
-                _memoryRepository.LoadData();
-                _packageServices.AssignPackage(id, packageNumber);
-                return RedirectToAction("CouriersPackages");
-        }
-        catch
-        {
-            return View();
-        }
-    }
       }
-
 }

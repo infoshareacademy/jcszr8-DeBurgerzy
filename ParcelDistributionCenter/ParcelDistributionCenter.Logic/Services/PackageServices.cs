@@ -29,7 +29,7 @@ namespace ParcelDistributionCenter.Logic.Services
             return packages;
         }
 
-        public List<AssignPackagesVM> GetCouriersPackages()
+        public List<AssignPackagesVM> GetUnassignedPackages()
         {
             Courier unknownCourier = new Courier("Wrong Id", "Unknown", "Unknown", "Unknown", "Unknown");
             var assignPackages = new List<AssignPackagesVM>();
@@ -62,10 +62,10 @@ namespace ParcelDistributionCenter.Logic.Services
         }
 
 
-        public void AssignPackage(string id, string packageNumber)
+        public void AssignPackage(string packageNumber, string CourierId)
         {
             var package = _memoryRepository.PackagesList.First(p => p.PackageNumber == Int32.Parse(packageNumber));
-            package.CourierId = id;
+            package.CourierId = CourierId;
 
         }
     }

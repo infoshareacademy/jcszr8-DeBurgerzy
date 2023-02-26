@@ -6,6 +6,6 @@ namespace ParcelDistributionCenter.Logic.Services
     public interface IPackageServices
     {
         List<Package> GetCourierPackages(string courierId);
-        List<AssignPackagesVM> GetCouriersPackages();
+        List<AssignPackagesVM> GetUnassignedPackages();
         public void AssignPackage(string id, string packageNumber) { }   }
 }

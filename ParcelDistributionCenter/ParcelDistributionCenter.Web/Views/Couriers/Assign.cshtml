@@ -44,7 +44,7 @@
                     @Html.DisplayFor(modelItem => item.Phone)
                 </td>
                 <td>
-                    @Html.ActionLink("Assign", "Assign2", new {id=item.CourierId, packageNumber=ViewContext.RouteData.Values["id"]}) |
+                    <a asp-action="Assign" asp-route-packageNumber=@(Context.Request.Query["packageNumber"]) asp-route-CourierId=@item.CourierId>Assign2</a>
                 </td>
             </tr>
         }

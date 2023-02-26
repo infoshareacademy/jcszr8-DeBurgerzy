@@ -13,9 +13,10 @@ namespace ParcelDistributionCenter.Web
             builder.Services.AddControllersWithViews();
             builder.Services.AddSingleton<IMemoryRepository, MemoryRepository>();
             builder.Services.AddTransient<IAddNewPackageHandler, AddNewPackageHandler>();
+            builder.Services.AddTransient<IAddNewCourierHandler, AddNewCourierHandler>();
             builder.Services.AddTransient<IPackageHandler, PackageHandler>();
             builder.Services.AddTransient<ICourierHandler, CourierHandler>();
-            builder.Services.AddTransient<IPackageServices, PackageServices > ();
+            builder.Services.AddTransient<IPackageServices, PackageServices>();
 
             var app = builder.Build();
 
@@ -36,7 +37,7 @@ namespace ParcelDistributionCenter.Web
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "/{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
         }

@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<ParcelDistributionCenter.Model.Models.Courier>
 
 @{
-    ViewData["Title"] = "DisplayCouriers";
+    ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>List of Couriers</h1>
 
 <p>
     <a asp-action="Create">Add new courier</a>
@@ -44,11 +44,15 @@
             </td>
 
             <td>
-                @Html.ActionLink("Packages", "CourierPackages", new { id=item.CourierId}) | 
-                @Html.ActionLink("Edit", "Edit", new { id=item.CourierId}) |
-                @Html.ActionLink("Details", "Details", new { id=item.CourierId }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.CourierId })
+                @Html.ActionLink("Show Packages", "CourierPackages", new { id=item.CourierId})
+                
             </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id=item.CourierId}) |
+                    @Html.ActionLink("Details", "Details", new { id=item.CourierId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id=item.CourierId })
+                </td>
+
         </tr>
 }
     </tbody>

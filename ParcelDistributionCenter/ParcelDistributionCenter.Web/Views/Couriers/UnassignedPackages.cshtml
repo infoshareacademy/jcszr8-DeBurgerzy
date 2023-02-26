@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<ParcelDistributionCenter.Web.Models.AssignPackagesVM>
 
 @{
-    ViewData["Title"] = "CouriersPackages";
+    ViewData["Title"] = "UnassignedPackages";
 }
 
-<h1>Couriers Packages</h1>
+<h1>Unassigned Packages</h1>
 
 <table class="table">
     <thead>
@@ -66,7 +66,7 @@
                         @Html.DisplayFor(modelItem => item.SenderEmail)
                     </td>
             <td>
-                @Html.ActionLink("Assign", "Assign", new { id=item.PackageNumber}) |
+                @Html.ActionLink("Assign", "Assign", new { packageNumber=item.PackageNumber, courierId=ViewContext.RouteData.Values["id"]}) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>
