@@ -8,7 +8,7 @@ namespace ParcelDistributionCenter.Model.Models
     {
         private const string AddressErrorMessage = "Address should contain at least 1 digit, 2 letters and 1 space separator!";
 
-        public Package(int packageNumber, Status status, string courierId, string senderName, string recipientName, PackageSize size, string senderEmail, string senderPhone,
+        public Package(int packageNumber, Status? status, string courierId, string senderName, string recipientName, PackageSize? size, string senderEmail, string senderPhone,
             string recipientEmail, string recipientPhone, string senderAddress, string deliveryAddress, string deliveryMacineId, DateTime registered)
         {
             PackageNumber = packageNumber;
@@ -26,6 +26,7 @@ namespace ParcelDistributionCenter.Model.Models
             DeliveryMachineId = deliveryMacineId;
             Registered = registered;
         }
+
         public Package()
         {
         }
@@ -56,8 +57,12 @@ namespace ParcelDistributionCenter.Model.Models
         [Display(Name = "Recipient Name and Surname/Company Name")]
         public string RecipientName { get; set; }
 
+        // PORPAWIĆ TO REGULAR EXPRESSION
         [JsonProperty("recipient_phone")]
         [Display(Name = "Recipient Phone")]
+        [Required(ErrorMessage = "A Recipient Phone is required.")]
+        [DataType(DataType.PhoneNumber, ErrorMessage = "Invalid Phone Number")]
+        [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Phone Number.")]
         [Phone]
         public string RecipientPhone { get; set; }
 
@@ -78,14 +83,20 @@ namespace ParcelDistributionCenter.Model.Models
         [Display(Name = "Sender Name and Surname/Company Name")]
         public string SenderName { get; set; }
 
+        // PORPAWIĆ TO REGULAR EXPRESSION
         [JsonProperty("sender_phone")]
         [Display(Name = "Sender Phone")]
-        [Phone]
+        [Required(ErrorMessage = "A Sender Phone is required.")]
+        [DataType(DataType.PhoneNumber, ErrorMessage = "Invalid Phone Number")]
+        [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Phone Number.")]
         public string SenderPhone { get; set; }
 
         [Display(Name = "Package Size")]
-        public PackageSize Size { get; init; }
+        [Required(ErrorMessage = "Package Size must be selected!")]
+        public PackageSize? Size { get; init; } = null;
 
-        public Status Status { get; set; }
+        [Display(Name = "Package Status")]
+        [Required(ErrorMessage = "Package Status must be selected!")]
+        public Status? Status { get; set; } = null;
     }
 }

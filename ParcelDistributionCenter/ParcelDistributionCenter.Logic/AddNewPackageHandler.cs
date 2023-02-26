@@ -20,6 +20,7 @@ namespace ParcelDistributionCenter.Logic
         {
             int packageNumber = GeneratePackageNumber();
             ValidatePackageStatus(package.Status);
+            ValidatePackageSize(package.Size);
             string courierID = AssignCourierID();
             ValidateFullName(package.SenderName);
             ValidateEmail(package.SenderEmail);
@@ -40,11 +41,6 @@ namespace ParcelDistributionCenter.Logic
                 package.RecipientEmail, package.RecipientPhone, package.SenderAddress, package.DeliveryAddress, deliveryMachineID, DateTime.Now);
             _memoryRepository.PackagesList.Add(newPackage);
             return true;
-        }
-
-        private void ValidatePackageStatus(Status status)
-        {
-            throw new NotImplementedException();
         }
 
         protected string AssignCourierID()
@@ -79,7 +75,6 @@ namespace ParcelDistributionCenter.Logic
 
         protected void ValidateFullName(string name)
         {
-            // Validate here name and surnmae together (so 2 capital letter, one space and at least 6 characters all together)
             bool fullNameValidation = _packageValidator.ValidateName(name);
             validations.Add(fullNameValidation);
         }
@@ -101,6 +96,18 @@ namespace ParcelDistributionCenter.Logic
         {
             bool addressValidation = _packageValidator.ValidateAddress(address);
             validations.Add(addressValidation);
+        }
+
+        private void ValidatePackageSize(PackageSize? packageSize)
+        {
+            bool packageSizeValidation = packageSize != null;
+            validations.Add(packageSizeValidation);
+        }
+
+        private void ValidatePackageStatus(Status? status)
+        {
+            bool statusValidation = status != null;
+            validations.Add(statusValidation);
         }
     }
 }

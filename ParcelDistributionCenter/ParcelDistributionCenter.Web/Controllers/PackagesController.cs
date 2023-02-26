@@ -16,6 +16,7 @@ namespace ParcelDistributionCenter.Web.Controllers
             _memoryRepository = memoryRepository;
             _addNewPackageHandler = addNewPackageHandler;
             _packageHandler = packageHandler;
+            _memoryRepository.LoadData();
         }
 
         // GET: PackagesController/AddPackage
@@ -31,17 +32,18 @@ namespace ParcelDistributionCenter.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                return View(package);
+                bool added = _addNewPackageHandler.AddNewPackage(package);
+                if (added)
+                {
+                    //TUTAJ DODAĆ PRZEKIEROWANIE NA WYŚWIETLANIE PACZKI
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    return View();
+                }
             }
-            bool added = _addNewPackageHandler.AddNewPackage(package);
-            if (added)
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            else
-            {
-                return View();
-            }
+            return View(package);
         }
 
         // POST: PackagesController/Create
@@ -63,7 +65,6 @@ namespace ParcelDistributionCenter.Web.Controllers
         // GET: PackagesController/DisplayPackages
         public ActionResult DisplayPackages()
         {
-            _memoryRepository.LoadData();
             var model = _packageHandler.FindAll();
             return View(model);
         }
