@@ -7,7 +7,7 @@
 <h1>Couriers Packages List</h1>
 
 <p>
-    <a asp-action="UnassignedPackages" asp-route-id=@ViewContext.RouteData.Values["id"]>Assign new package</a>
+    <a asp-action="UnassignedPackages" asp-route-id=@ViewContext.RouteData.Values["id"]>Assign unassigned package</a>
 </p>
 
 <div class="card-body">
@@ -69,8 +69,7 @@
                         
                         </td>
                     <td>
-                        @Html.ActionLink("Unassign", "Unassign", new { id=item.PackageNumber}) |
-                        <a asp-controller="Packages" asp-action="Details" asp-route-id=@item.PackageNumber>Detail</a>
+                        @Html.ActionLink("Unassign", "UnassignPackage", new { packageNumber=item.PackageNumber, CourierId=item.CourierId})
                     </td>
                 </tr>
             }

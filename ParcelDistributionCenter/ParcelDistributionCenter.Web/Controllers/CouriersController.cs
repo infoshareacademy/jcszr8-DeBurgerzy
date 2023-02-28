@@ -88,12 +88,13 @@ namespace ParcelDistributionCenter.Web.Controllers
         // GET: CouriersController/Delete/5
         public ActionResult Delete(string id)
         {
-            var model =_courierHandler.FindById(id);
+            var model = _courierHandler.FindById(id);
+
             _courierHandler.Delete(model);
             return RedirectToAction(nameof(Index));
         }
 
-   
+
         public ActionResult CourierPackages(string id)
         {
             _memoryRepository.LoadData();
@@ -107,19 +108,29 @@ namespace ParcelDistributionCenter.Web.Controllers
             return View(model);
         }
 
-        public ActionResult Assign(string packageNumber, string CourierId)
+        public ActionResult Assign(string packageNumber, string CourierId, string From)
         {
             _memoryRepository.LoadData();
             if (CourierId != null)
             {
                 _packageServices.AssignPackage(packageNumber, CourierId);
-                return RedirectToAction("CourierPackages", new {id = CourierId});
+                return From=="UnassignedPackages"? RedirectToAction(From) : RedirectToAction("CourierPackages", new { id = CourierId });
             }
             else
             {
-            var model = _courierHandler.FindAll();
-            return View(model);
+                var model = _courierHandler.FindAll();
+                return View(model);
             }
         }
-      }
+
+
+        public ActionResult UnassignPackage(string packageNumber, string CourierId)
+        {
+            _memoryRepository.LoadData();
+            _packageServices.UnassignPackage(packageNumber);
+            var model = _packageServices.GetCourierPackages(CourierId);
+            return RedirectToAction("CourierPackages", new { id = CourierId });
+        }
+    }
 }
+

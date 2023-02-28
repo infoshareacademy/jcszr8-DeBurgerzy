@@ -1,4 +1,5 @@
-﻿using ParcelDistributionCenter.Model.Models;
+﻿using ParcelDistributionCenter.Logic.Services;
+using ParcelDistributionCenter.Model.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,12 @@ namespace ParcelDistributionCenter.Logic
     public class CourierHandler : ICourierHandler
     {
         private readonly IMemoryRepository _memoryRepository;
+        private readonly IPackageServices _packageServices;
 
-        public CourierHandler(IMemoryRepository memoryRepository)
+        public CourierHandler(IMemoryRepository memoryRepository, IPackageServices packageServices)
         {
             _memoryRepository = memoryRepository;
+            _packageServices = packageServices;
         }
         public IEnumerable<Courier> FindAll() => _memoryRepository.CouriersList;
 
@@ -31,6 +34,7 @@ namespace ParcelDistributionCenter.Logic
         public void Delete(Courier model)
         {
             var courier = FindById(model.CourierId);
+            _packageServices.UnassignCouriersPackages(courier.CourierId);
             _memoryRepository.CouriersList.Remove(courier);
         }
     }

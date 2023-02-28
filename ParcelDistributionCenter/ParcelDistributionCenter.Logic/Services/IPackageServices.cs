@@ -7,5 +7,10 @@ namespace ParcelDistributionCenter.Logic.Services
     {
         List<Package> GetCourierPackages(string courierId);
         List<AssignPackagesVM> GetUnassignedPackages();
-        public void AssignPackage(string id, string packageNumber) { }   }
+        public void AssignPackage(string id, string packageNumber) { }
+        public void UnassignPackage(string packageNumber){ }
+        public void UnassignCouriersPackages(string CourierId) { }
+
+    }
+
 }
