@@ -42,7 +42,7 @@ namespace ParcelDistributionCenter.Web.Controllers
                     return View(package);
                 }
             }
-            // To zakomentwoane bo IsValid zwraca false caly czas
+            // To jest zakomentowane bo IsValid zwraca false caly czas
             //return View(package);
             return RedirectToAction(nameof(DisplaySinglePackage), package);
         }
