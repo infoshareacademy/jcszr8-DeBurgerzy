@@ -35,15 +35,15 @@ namespace ParcelDistributionCenter.Web.Controllers
                 bool added = _addNewPackageHandler.AddNewPackage(package);
                 if (added)
                 {
-                    //TUTAJ DODAĆ PRZEKIEROWANIE NA WYŚWIETLANIE PACZKI
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(DisplaySinglePackage), package);
                 }
                 else
                 {
-                    return View();
+                    return View(package);
                 }
             }
-            return View(package);
+            //return View(package);
+            return RedirectToAction(nameof(DisplaySinglePackage), package);
         }
 
         // POST: PackagesController/Create
@@ -67,6 +67,12 @@ namespace ParcelDistributionCenter.Web.Controllers
         {
             var model = _packageHandler.FindAll();
             return View(model);
+        }
+
+        // GET: PackagesController/DisplayPackages
+        public ActionResult DisplaySinglePackage(Package package)
+        {
+            return View(package);
         }
 
         // GET: PackagesController/Edit/5

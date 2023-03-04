@@ -62,8 +62,7 @@ namespace ParcelDistributionCenter.Model.Models
         [Display(Name = "Recipient Phone")]
         [Required(ErrorMessage = "A Recipient Phone is required.")]
         [DataType(DataType.PhoneNumber, ErrorMessage = "Invalid Phone Number")]
-        [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Phone Number.")]
-        [Phone]
+        [RegularExpression(@"\(?\d{3}\)?-? *\d{3}-? *-?\d{4}", ErrorMessage = "Invalid Phone Number.")]
         public string RecipientPhone { get; set; }
 
         [Display(Name = "Registration date")]
@@ -88,7 +87,7 @@ namespace ParcelDistributionCenter.Model.Models
         [Display(Name = "Sender Phone")]
         [Required(ErrorMessage = "A Sender Phone is required.")]
         [DataType(DataType.PhoneNumber, ErrorMessage = "Invalid Phone Number")]
-        [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Phone Number.")]
+        [RegularExpression(@"\(?\d{3}\)?-? *\d{3}-? *-?\d{4}", ErrorMessage = "Invalid Phone Number.")]
         public string SenderPhone { get; set; }
 
         [Display(Name = "Package Size")]
