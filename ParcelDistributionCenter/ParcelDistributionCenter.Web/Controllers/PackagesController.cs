@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ParcelDistributionCenter.Logic;
+using ParcelDistributionCenter.Logic.Models;
 using ParcelDistributionCenter.Model.Models;
-using ParcelDistributionCenter.Web.Models;
 
 namespace ParcelDistributionCenter.Web.Controllers
 {
@@ -28,7 +28,7 @@ namespace ParcelDistributionCenter.Web.Controllers
         // POST: PackagesController/AddPackage
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddPackage(Package package)
+        public ActionResult AddPackage(PackageVM package)
         {
             if (ModelState.IsValid)
             {
@@ -42,22 +42,6 @@ namespace ParcelDistributionCenter.Web.Controllers
             // To jest zakomentowane bo IsValid zwraca false caly czas
             //return View(package);
             return RedirectToAction(nameof(DisplaySinglePackage), package);
-        }
-
-        // POST: PackagesController/Create
-        [HttpPost]
-        public ActionResult Create(FindPackageByNumberVM findPackageByNumberVM)
-        {
-            // walidacja ze stringa do inta
-            Package package = _packageHandler.FindPackageByNumber(int.Parse(findPackageByNumberVM.PackageNumber));
-            try
-            {
-                return View("DisplayPackage", package);
-            }
-            catch
-            {
-                return View();
-            }
         }
 
         // GET: PackagesController/AddPackage

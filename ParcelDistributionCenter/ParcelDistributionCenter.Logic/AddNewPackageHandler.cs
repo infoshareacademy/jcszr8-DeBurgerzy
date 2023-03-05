@@ -1,4 +1,5 @@
-﻿using ParcelDistributionCenter.Logic.Validators;
+﻿using ParcelDistributionCenter.Logic.Models;
+using ParcelDistributionCenter.Logic.Validators;
 using ParcelDistributionCenter.Model.Enums;
 using ParcelDistributionCenter.Model.Models;
 
@@ -16,7 +17,7 @@ namespace ParcelDistributionCenter.Logic
             _packageValidator = packageValidator;
         }
 
-        public bool AddNewPackage(Package package)
+        public bool AddNewPackage(PackageVM package)
         {
             int packageNumber = GeneratePackageNumber();
             ValidatePackageStatus(package.Status);

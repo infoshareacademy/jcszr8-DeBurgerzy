@@ -1,9 +1,9 @@
-﻿using ParcelDistributionCenter.Model.Models;
+﻿using ParcelDistributionCenter.Logic.Models;
 
 namespace ParcelDistributionCenter.Logic
 {
     public interface IAddNewPackageHandler
     {
-        bool AddNewPackage(Package package);
+        bool AddNewPackage(PackageVM package);
     }
 }
