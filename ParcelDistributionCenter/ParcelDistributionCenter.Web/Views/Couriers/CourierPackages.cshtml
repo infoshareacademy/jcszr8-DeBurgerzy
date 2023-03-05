@@ -1,0 +1,81 @@
+﻿@model IEnumerable<ParcelDistributionCenter.Model.Models.Package>
+
+@{
+    ViewData["Title"] = "CourierPackages";
+}
+
+<h1>Couriers Packages List</h1>
+
+<p>
+    <a asp-action="UnassignedPackages" asp-route-id=@ViewContext.RouteData.Values["id"]>Assign unassigned package</a>
+</p>
+
+<div class="card-body">
+    <table id="datatablesSimple">
+        <thead>
+            <tr>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.PackageNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Registered)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Size)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DeliveryAddress)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RecipientEmail)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SenderEmail)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PackageNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Registered)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Size)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DeliveryAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RecipientEmail)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SenderEmail)
+                    </td>
+
+                    <td>
+                        
+                        </td>
+                    <td>
+                        @Html.ActionLink("Unassign", "UnassignPackage", new { packageNumber=item.PackageNumber, CourierId=item.CourierId})
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
