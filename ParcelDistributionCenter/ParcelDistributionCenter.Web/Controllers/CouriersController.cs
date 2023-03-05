@@ -50,15 +50,15 @@ namespace ParcelDistributionCenter.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Courier courier)
         {
-            bool added = _addNewCourierHandler.AddNewCourier(courier);
-            if (added)
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                bool added = _addNewCourierHandler.AddNewCourier(courier);
+                if (added)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
             }
-            else
-            {
-                return View();
-            }
+            return View();
         }
 
         // GET: CouriersController/Edit/5
@@ -114,7 +114,7 @@ namespace ParcelDistributionCenter.Web.Controllers
             if (CourierId != null)
             {
                 _packageServices.AssignPackage(packageNumber, CourierId);
-                return From=="UnassignedPackages"? RedirectToAction(From) : RedirectToAction("CourierPackages", new { id = CourierId });
+                return From == "UnassignedPackages" ? RedirectToAction(From) : RedirectToAction("CourierPackages", new { id = CourierId });
             }
             else
             {
