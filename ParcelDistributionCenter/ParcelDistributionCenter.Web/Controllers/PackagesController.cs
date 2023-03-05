@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ParcelDistributionCenter.Logic;
+using ParcelDistributionCenter.Logic.Models;
 using ParcelDistributionCenter.Model.Models;
-using ParcelDistributionCenter.Web.Models;
 
 namespace ParcelDistributionCenter.Web.Controllers
 {
@@ -16,6 +16,7 @@ namespace ParcelDistributionCenter.Web.Controllers
             _memoryRepository = memoryRepository;
             _addNewPackageHandler = addNewPackageHandler;
             _packageHandler = packageHandler;
+            _memoryRepository.LoadData();
         }
 
         // GET: PackagesController/AddPackage
@@ -27,41 +28,45 @@ namespace ParcelDistributionCenter.Web.Controllers
         // POST: PackagesController/AddPackage
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddPackage(Package package)
+        public ActionResult AddPackage(PackageVM package)
         {
-            bool added = _addNewPackageHandler.AddNewPackage(package);
-            if (added)
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                bool added = _addNewPackageHandler.AddNewPackage(package);
+                if (added)
+                {
+                    return RedirectToAction(nameof(DisplaySinglePackage), package);
+                }
+                return View(package);
             }
-            else
-            {
-                return View();
-            }
+            // To jest zakomentowane bo IsValid zwraca false caly czas
+            //return View(package);
+            return RedirectToAction(nameof(DisplaySinglePackage), package);
         }
 
-        // POST: PackagesController/Create
-        [HttpPost]
-        public ActionResult Create(FindPackageByNumberVM findPackageByNumberVM)
+        // GET: PackagesController/AddPackage
+        public ActionResult DeletePackage(int packageNumber)
         {
-            // walidacja ze stringa do inta
-            Package package = _packageHandler.FindPackageByNumber(int.Parse(findPackageByNumberVM.PackageNumber));
-            try
+            bool deleted = _packageHandler.DeletePackageByNumber(packageNumber);
+            if (deleted)
             {
-                return View("DisplayPackage", package);
+                return RedirectToAction(nameof(AddPackage));
             }
-            catch
-            {
-                return View();
-            }
+            // TUTAJ ZMIENIĆ, ŻEBY BYŁ JAKIŚ KOMUNIKAT, ŻE NIE USUNĄŁ
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: PackagesController/DisplayPackages
         public ActionResult DisplayPackages()
         {
-            _memoryRepository.LoadData();
             var model = _packageHandler.FindAll();
             return View(model);
+        }
+
+        // GET: PackagesController/DisplayPackages
+        public ActionResult DisplaySinglePackage(Package package)
+        {
+            return View(package);
         }
 
         // GET: PackagesController/Edit/5

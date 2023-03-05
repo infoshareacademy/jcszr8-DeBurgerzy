@@ -2,73 +2,79 @@
 
 namespace ParcelDistributionCenter.Logic.Validators
 {
-    public class PackageValidator
+    public class PackageValidator : IPackageValidator
     {
-        public static bool ValidateAddress(string address)
+        public bool ValidateAddress(string address)
         {
-            int numberCount = 0;
-            int letterCount = 0;
-            int separatorCount = 0;
-            foreach (var ch in address)
+            if (address != null)
             {
-                if (char.IsNumber(ch))
+                int numberCount = 0;
+                int letterCount = 0;
+                int separatorCount = 0;
+                foreach (var ch in address)
                 {
-                    numberCount++;
+                    if (char.IsNumber(ch))
+                    {
+                        numberCount++;
+                    }
+                    else if (char.IsLetter(ch))
+                    {
+                        letterCount++;
+                    }
+                    else if (char.IsSeparator(ch))
+                    {
+                        separatorCount++;
+                    }
                 }
-                else if (char.IsLetter(ch))
+                if (numberCount >= 1 & letterCount >= 2 & separatorCount >= 1)
                 {
-                    letterCount++;
+                    return true;
                 }
-                else if (char.IsSeparator(ch))
-                {
-                    separatorCount++;
-                }
-            }
-            if (numberCount >= 1 & letterCount >= 2 & separatorCount >= 1)
-            {
-                return true;
             }
             return false;
         }
 
-        public static bool ValidateEmail(string email)
+        public bool ValidateEmail(string email)
         {
-            bool monkeyChar = email.Contains('@');
-            bool dotchar = email.Contains('.');
-            bool whiteSpaceChar = email.Contains(' ');
-
-            if (monkeyChar & dotchar & !whiteSpaceChar & email.Length > 6)
+            if (email != null)
             {
-                return true;
+                bool monkeyChar = email.Contains('@');
+                bool dotchar = email.Contains('.');
+                bool whiteSpaceChar = email.Contains(' ');
+
+                if (monkeyChar & dotchar & !whiteSpaceChar & email.Length > 6)
+                {
+                    return true;
+                }
             }
             return false;
         }
 
-        public static bool ValidateName(string name)
+        public bool ValidateName(string name)
         {
-            bool isAnyCharUpper = name.Any(c => char.IsUpper(c));
-            if (isAnyCharUpper & name.Length >= 3)
+            if (name != null)
             {
-                return true;
+                bool isAnyCharUpper = name.Any(c => char.IsUpper(c));
+                if (isAnyCharUpper & name.Length >= 3)
+                {
+                    return true;
+                }
             }
             return false;
         }
 
-        public static bool ValidatePackageNumber(int packageNumber) => packageNumber >= 1_000_000 && packageNumber <= 9_999_999;
+        public bool ValidatePackageNumber(int packageNumber) => packageNumber >= 1_000_000 && packageNumber <= 9_999_999;
 
-        public static bool ValidatePhoneNumber(string phoneNumber)
+        public bool ValidatePhoneNumber(string phoneNumber)
         {
-            if (string.IsNullOrEmpty(phoneNumber))
+            if (!string.IsNullOrEmpty(phoneNumber))
             {
-                return false;
+                var cleaned = RemoveNonNumeric(phoneNumber);
+                return cleaned.Length > 7 && cleaned.Length < 14;
             }
-            var cleaned = RemoveNonNumeric(phoneNumber);
-            return cleaned.Length > 7 && cleaned.Length < 14;
+            return false;
         }
 
-        private static string RemoveNonNumeric(string phone)
-        {
-            return Regex.Replace(phone, @"[^0-9]+", "");
-        }
+        private static string RemoveNonNumeric(string phone) => Regex.Replace(phone, @"[^0-9]+", "");
     }
 }

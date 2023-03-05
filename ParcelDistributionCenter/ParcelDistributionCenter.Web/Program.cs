@@ -1,4 +1,5 @@
 using ParcelDistributionCenter.Logic;
+using ParcelDistributionCenter.Logic.Validators;
 using ParcelDistributionCenter.Logic.Services;
 
 namespace ParcelDistributionCenter.Web
@@ -12,12 +13,12 @@ namespace ParcelDistributionCenter.Web
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddSingleton<IMemoryRepository, MemoryRepository>();
-            builder.Services.AddTransient<IAddNewPackageHandler, AddNewPackageHandler>();
+            builder.Services.AddScoped<IAddNewPackageHandler, AddNewPackageHandler>();
+            builder.Services.AddScoped<IPackageHandler, PackageHandler>();
+            builder.Services.AddScoped<IPackageValidator, PackageValidator>();
             builder.Services.AddTransient<IAddNewCourierHandler, AddNewCourierHandler>();
-            builder.Services.AddTransient<IPackageHandler, PackageHandler>();
             builder.Services.AddTransient<ICourierHandler, CourierHandler>();
             builder.Services.AddTransient<IPackageServices, PackageServices>();
-
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

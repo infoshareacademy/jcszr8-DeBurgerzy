@@ -11,6 +11,17 @@ namespace ParcelDistributionCenter.Logic
             _memoryRepository = memoryRepository;
         }
 
+        public bool DeletePackageByNumber(int packageNumber)
+        {
+            Package package = FindPackageByNumber(packageNumber);
+            if (package != null)
+            {
+                _memoryRepository.PackagesList.Remove(package);
+                return true;
+            }
+            return false;
+        }
+
         public IEnumerable<Package> FindAll() => _memoryRepository.PackagesList;
 
         public Package FindPackageByNumber(int packageNumber)
