@@ -56,9 +56,13 @@
 
 
                         <div class="sb-sidenav-menu-heading">Manage Couriers</div>
-                        <a class="nav-link" href="charts.html">
+                        <a class="nav-link" asp-area="" asp-controller="Couriers" asp-action="Index">
+                           <div class="sb-nav-link-icon"><i class="fas fa-dolly"></i></div>
+                            Couriers List
+                        </a>
+                        <a class="nav-link" asp-area="" asp-controller="Couriers" asp-action="UnassignedPackages">
                             <div class="sb-nav-link-icon"><i class="fas fa-dolly"></i></div>
-                            Assign Packages
+                            Unassigned Packages
                         </a>
                     </div>
                 </div>
