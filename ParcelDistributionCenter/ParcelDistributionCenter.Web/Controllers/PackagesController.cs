@@ -37,10 +37,7 @@ namespace ParcelDistributionCenter.Web.Controllers
                 {
                     return RedirectToAction(nameof(DisplaySinglePackage), package);
                 }
-                else
-                {
-                    return View(package);
-                }
+                return View(package);
             }
             // To jest zakomentowane bo IsValid zwraca false caly czas
             //return View(package);
@@ -61,6 +58,18 @@ namespace ParcelDistributionCenter.Web.Controllers
             {
                 return View();
             }
+        }
+
+        // GET: PackagesController/AddPackage
+        public ActionResult DeletePackage(int packageNumber)
+        {
+            bool deleted = _packageHandler.DeletePackageByNumber(packageNumber);
+            if (deleted)
+            {
+                return RedirectToAction(nameof(AddPackage));
+            }
+            // TUTAJ ZMIENIĆ, ŻEBY BYŁ JAKIŚ KOMUNIKAT, ŻE NIE USUNĄŁ
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: PackagesController/DisplayPackages
