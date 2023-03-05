@@ -46,10 +46,10 @@ namespace ParcelDistributionCenter.Logic.Models
 
         [Display(Name = "Package Size")]
         [Required(ErrorMessage = "Package Size must be selected!")]
-        public PackageSize? Size { get; init; } = null;
+        public PackageSize Size { get; init; }
 
         [Display(Name = "Package Status")]
         [Required(ErrorMessage = "Package Status must be selected!")]
-        public Status? Status { get; set; } = null;
+        public Status Status { get; set; }
     }
 }

@@ -5,7 +5,7 @@ namespace ParcelDistributionCenter.Model.Models
 {
     public class Package
     {
-        public Package(int packageNumber, Status? status, string courierId, string senderName, string recipientName, PackageSize? size, string senderEmail, string senderPhone,
+        public Package(int packageNumber, Status status, string courierId, string senderName, string recipientName, PackageSize size, string senderEmail, string senderPhone,
             string recipientEmail, string recipientPhone, string senderAddress, string deliveryAddress, string deliveryMacineId, DateTime registered)
         {
             PackageNumber = packageNumber;
@@ -63,8 +63,8 @@ namespace ParcelDistributionCenter.Model.Models
         [JsonProperty("sender_phone")]
         public string SenderPhone { get; set; }
 
-        public PackageSize? Size { get; init; } = null;
+        public PackageSize Size { get; init; }
 
-        public Status? Status { get; set; } = null;
+        public Status Status { get; set; }
     }
 }
