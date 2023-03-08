@@ -28,20 +28,18 @@ namespace ParcelDistributionCenter.Web.Controllers
         // POST: PackagesController/AddPackage
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddPackage(PackageVM package)
+        public ActionResult AddPackage(PackageVM packageVM)
         {
             if (ModelState.IsValid)
             {
-                bool added = _addNewPackageHandler.AddNewPackage(package);
+                bool added = _addNewPackageHandler.AddNewPackage(packageVM, out Package package);
                 if (added)
                 {
                     return RedirectToAction(nameof(DisplaySinglePackage), package);
                 }
-                return View(package);
+                return View(packageVM);
             }
-            // To jest zakomentowane bo IsValid zwraca false caly czas
-            //return View(package);
-            return RedirectToAction(nameof(DisplaySinglePackage), package);
+            return View(packageVM);
         }
 
         // GET: PackagesController/AddPackage

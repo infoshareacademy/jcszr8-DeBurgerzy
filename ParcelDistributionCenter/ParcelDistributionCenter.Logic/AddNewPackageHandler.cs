@@ -17,29 +17,30 @@ namespace ParcelDistributionCenter.Logic
             _packageValidator = packageValidator;
         }
 
-        public bool AddNewPackage(PackageVM package)
+        public bool AddNewPackage(PackageVM packageVM, out Package? newPackage)
         {
             int packageNumber = GeneratePackageNumber();
-            ValidatePackageStatus(package.Status);
-            ValidatePackageSize(package.Size);
+            ValidatePackageStatus(packageVM.Status);
+            ValidatePackageSize(packageVM.Size);
             string courierID = AssignCourierID();
-            ValidateFullName(package.SenderName);
-            ValidateEmail(package.SenderEmail);
-            ValidatePhone(package.SenderPhone);
-            ValidateAddress(package.SenderAddress);
-            ValidateFullName(package.RecipientName);
-            ValidateEmail(package.RecipientEmail);
-            ValidatePhone(package.RecipientPhone);
-            ValidateAddress(package.DeliveryAddress);
+            ValidateFullName(packageVM.SenderName);
+            ValidateEmail(packageVM.SenderEmail);
+            ValidatePhone(packageVM.SenderPhone);
+            ValidateAddress(packageVM.SenderAddress);
+            ValidateFullName(packageVM.RecipientName);
+            ValidateEmail(packageVM.RecipientEmail);
+            ValidatePhone(packageVM.RecipientPhone);
+            ValidateAddress(packageVM.DeliveryAddress);
             string deliveryMachineID = AssignDeliveryMachineID();
 
             if (validations.Any(v => v == false))
             {
+                newPackage = null;
                 return false;
             }
 
-            Package newPackage = new(packageNumber, package.Status, courierID, package.SenderName, package.RecipientName, package.Size, package.SenderEmail, package.SenderPhone,
-                package.RecipientEmail, package.RecipientPhone, package.SenderAddress, package.DeliveryAddress, deliveryMachineID, DateTime.Now);
+            newPackage = new(packageNumber, packageVM.Status, courierID, packageVM.SenderName, packageVM.RecipientName, packageVM.Size, packageVM.SenderEmail, packageVM.SenderPhone,
+                packageVM.RecipientEmail, packageVM.RecipientPhone, packageVM.SenderAddress, packageVM.DeliveryAddress, deliveryMachineID, DateTime.Now);
             _memoryRepository.PackagesList.Add(newPackage);
             return true;
         }
