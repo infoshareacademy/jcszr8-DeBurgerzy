@@ -4,6 +4,13 @@
     ViewData["Title"] = "Package added";
 }
 
+@if (TempData["Message"] != null)
+{
+        <div class="alert @TempData["MessageClass"]">
+        @TempData["Message"]
+        </div>
+}
+
 <h1 class="text-center text-success" style="font-weight: bold; margin-top: 8px">Package successfully added!</h1>
 
 <h3 class="text-center">Package Number: @Model.PackageNumber</h3>

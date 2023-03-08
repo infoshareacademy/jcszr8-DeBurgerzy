@@ -48,10 +48,13 @@ namespace ParcelDistributionCenter.Web.Controllers
             bool deleted = _packageHandler.DeletePackageByNumber(packageNumber);
             if (deleted)
             {
+                TempData["Message"] = "Package successfully deleted";
+                TempData["MessageClass"] = "alert-success";
                 return RedirectToAction(nameof(AddPackage));
             }
-            // TUTAJ ZMIENIĆ, ŻEBY BYŁ JAKIŚ KOMUNIKAT, ŻE NIE USUNĄŁ
-            return RedirectToAction("Index", "Home");
+            TempData["Message"] = "Package not deleted! Something went wrong";
+            TempData["MessageClass"] = "alert-danger";
+            return RedirectToAction(nameof(DisplaySinglePackage));
         }
 
         // GET: PackagesController/DisplayPackages

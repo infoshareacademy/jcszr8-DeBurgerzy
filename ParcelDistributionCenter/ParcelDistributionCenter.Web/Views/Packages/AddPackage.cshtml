@@ -10,6 +10,14 @@
 
 <hr />
 
+@if (TempData["Message"] != null)
+{
+    <div class="alert @TempData["MessageClass"]">
+        @TempData["Message"]
+    </div>
+}
+
+
 <form asp-action="AddPackage">
     <div class="row align-items-center justify-content-center">
         <div class="col-md-3 align-self-center">
