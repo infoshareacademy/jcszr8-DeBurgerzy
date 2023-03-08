@@ -2,6 +2,7 @@
 using ParcelDistributionCenter.Logic;
 using ParcelDistributionCenter.Logic.Models;
 using ParcelDistributionCenter.Model.Models;
+using System.Drawing;
 
 namespace ParcelDistributionCenter.Web.Controllers
 {
@@ -97,5 +98,19 @@ namespace ParcelDistributionCenter.Web.Controllers
         {
             return View();
         }
+
+        ////////////
+        public ActionResult FindPackageByCourierID(string CourierId)
+        {
+            var model = _packageHandler.FindPackagesByCourierID(CourierId);
+            return View(model);
+        }
+        public ActionResult InsertCourierID()
+        {
+            return View();
+        }
+
+
+
     }
 }
