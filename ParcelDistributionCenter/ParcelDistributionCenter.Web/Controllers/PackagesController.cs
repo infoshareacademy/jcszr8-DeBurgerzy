@@ -2,6 +2,7 @@
 using ParcelDistributionCenter.Logic;
 using ParcelDistributionCenter.Logic.Models;
 using ParcelDistributionCenter.Model.Models;
+using System.Reflection;
 
 namespace ParcelDistributionCenter.Web.Controllers
 {
@@ -97,5 +98,28 @@ namespace ParcelDistributionCenter.Web.Controllers
         {
             return View();
         }
-    }
+        public ActionResult FindByPackageID(int packageID)
+        {
+            try
+            {
+               
+                var model = _packageHandler.FindPackageByNumber(packageID);
+
+                if (model == null) 
+                {
+                  return  RedirectToAction("InsertPackageID", "Packages"); 
+                }
+                return View(model);
+
+            }
+            catch
+            {
+                return RedirectToAction("InsertPackageID", "Packages");
+            }
+        }
+        public ActionResult InsertPackageID(int packageID)
+        {
+            return View();
+        }
+     }
 }
