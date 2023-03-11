@@ -99,18 +99,19 @@ namespace ParcelDistributionCenter.Web.Controllers
             return View();
         }
 
-        ////////////
         public ActionResult FindPackageByCourierID(string CourierId)
         {
             var model = _packageHandler.FindPackagesByCourierID(CourierId);
+
+            if (model == null)
+            {
+                return RedirectToAction("InsertCourierID", "Packages");
+            }
             return View(model);
         }
         public ActionResult InsertCourierID()
         {
             return View();
         }
-
-
-
     }
 }
