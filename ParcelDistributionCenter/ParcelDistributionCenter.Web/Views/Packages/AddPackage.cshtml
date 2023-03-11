@@ -2,23 +2,13 @@
 @using ParcelDistributionCenter.Model.Enums
 @model PackageVM
 
-<div style="position: fixed; z-index: -1; opacity: 0.3">
-    <img src="@Url.Content("~/assets/parcel-package.jpeg")" style="width: stretch; height: stretch; filter: grayscale(60%);" alt="">
-</div>
-
 <h1 class="text-center" style="font-weight: bold; margin-top: 10px">Add Package</h1>
 
 <hr />
 
-@if (TempData["Message"] != null)
-{
-    <div class="alert @TempData["MessageClass"]">
-        @TempData["Message"]
-    </div>
-}
-
-
 <form asp-action="AddPackage">
+    <img src="@Url.Content("~/assets/parcel-package.jpeg")" style="width: stretch; height: stretch; filter: grayscale(60%); position: fixed; z-index: -1; opacity: 0.3" alt="">
+
     <div class="row align-items-center justify-content-center">
         <div class="col-md-3 align-self-center">
             <h2 class="text-center">Sender</h2>

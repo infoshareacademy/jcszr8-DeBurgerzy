@@ -70,6 +70,12 @@
         </div>
         <div id="layoutSidenav_content">
             <main>
+                @if (TempData["Message"] != null)
+                {
+                    <div class="alert @TempData["MessageClass"]">
+                        @TempData["Message"]
+                    </div>
+                }
                 @RenderBody()
             </main>
             <footer class="py-4 bg-light mt-auto">

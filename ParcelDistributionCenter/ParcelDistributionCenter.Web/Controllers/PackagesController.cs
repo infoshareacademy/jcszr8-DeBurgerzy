@@ -37,6 +37,8 @@ namespace ParcelDistributionCenter.Web.Controllers
                 {
                     return RedirectToAction(nameof(DisplaySinglePackage), package);
                 }
+                TempData["Message"] = "Something went wrong. Please ensure that provided data is correct.";
+                TempData["MessageClass"] = "alert-danger";
                 return View(packageVM);
             }
             return View(packageVM);
@@ -54,7 +56,7 @@ namespace ParcelDistributionCenter.Web.Controllers
             }
             TempData["Message"] = "Package not deleted! Something went wrong";
             TempData["MessageClass"] = "alert-danger";
-            return RedirectToAction(nameof(DisplaySinglePackage));
+            return RedirectToAction(nameof(DisplayPackages));
         }
 
         // GET: PackagesController/DisplayPackages
@@ -71,9 +73,9 @@ namespace ParcelDistributionCenter.Web.Controllers
         }
 
         // GET: PackagesController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int packageNumber)
         {
-            var model = _packageHandler.FindPackageByNumber(id);
+            var model = _packageHandler.FindPackageByNumber(packageNumber);
             return View(model);
         }
 
