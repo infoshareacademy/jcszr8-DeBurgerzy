@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ParcelDistributionCenter.Logic;
 using ParcelDistributionCenter.Logic.Models;
 using ParcelDistributionCenter.Model.Models;
 using System.Drawing;
+using System.Reflection;
 
 namespace ParcelDistributionCenter.Web.Controllers
 {
@@ -29,20 +30,20 @@ namespace ParcelDistributionCenter.Web.Controllers
         // POST: PackagesController/AddPackage
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddPackage(PackageVM package)
+        public ActionResult AddPackage(PackageVM packageVM)
         {
             if (ModelState.IsValid)
             {
-                bool added = _addNewPackageHandler.AddNewPackage(package);
+                bool added = _addNewPackageHandler.AddNewPackage(packageVM, out Package package);
                 if (added)
                 {
                     return RedirectToAction(nameof(DisplaySinglePackage), package);
                 }
-                return View(package);
+                TempData["Message"] = "Something went wrong. Please ensure that provided data is correct.";
+                TempData["MessageClass"] = "alert-danger";
+                return View(packageVM);
             }
-            // To jest zakomentowane bo IsValid zwraca false caly czas
-            //return View(package);
-            return RedirectToAction(nameof(DisplaySinglePackage), package);
+            return View(packageVM);
         }
 
         // GET: PackagesController/AddPackage
@@ -51,10 +52,13 @@ namespace ParcelDistributionCenter.Web.Controllers
             bool deleted = _packageHandler.DeletePackageByNumber(packageNumber);
             if (deleted)
             {
+                TempData["Message"] = "Package successfully deleted";
+                TempData["MessageClass"] = "alert-success";
                 return RedirectToAction(nameof(AddPackage));
             }
-            // TUTAJ ZMIENIĆ, ŻEBY BYŁ JAKIŚ KOMUNIKAT, ŻE NIE USUNĄŁ
-            return RedirectToAction("Index", "Home");
+            TempData["Message"] = "Package not deleted! Something went wrong";
+            TempData["MessageClass"] = "alert-danger";
+            return RedirectToAction(nameof(DisplayPackages));
         }
 
         // GET: PackagesController/DisplayPackages
@@ -71,9 +75,9 @@ namespace ParcelDistributionCenter.Web.Controllers
         }
 
         // GET: PackagesController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int packageNumber)
         {
-            var model = _packageHandler.FindPackageByNumber(id);
+            var model = _packageHandler.FindPackageByNumber(packageNumber);
             return View(model);
         }
 
@@ -114,4 +118,20 @@ namespace ParcelDistributionCenter.Web.Controllers
             return View();
         }
     }
+
+        public ActionResult FindByPackageID(int packageID)
+        {                     
+                var model = _packageHandler.FindPackageByNumber(packageID);
+
+                if (model == null) 
+                {
+                  return  RedirectToAction("InsertPackageID", "Packages"); 
+                }
+                return View(model);                     
+        }
+        public ActionResult InsertPackageID(int packageID)
+        {
+            return View();
+        }
+     }
 }

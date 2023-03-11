@@ -1,4 +1,4 @@
-﻿namespace ParcelDistributionCenter.Web.Models
+namespace ParcelDistributionCenter.Web.Models
 {
     public class CourierID
     {
