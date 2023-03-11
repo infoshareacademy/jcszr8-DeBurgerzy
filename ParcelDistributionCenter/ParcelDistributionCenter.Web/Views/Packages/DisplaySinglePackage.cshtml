@@ -105,7 +105,7 @@
         <div class="text-center">
             <a asp-action="Edit" asp-route-packageNumber="@Model.PackageNumber" class="btn btn-primary">Edit</a>
             <a asp-action="DeletePackage" asp-route-packageNumber="@Model.PackageNumber" class="btn btn-danger" onclick="return confirmDelete();">Delete</a>
-            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Back to Home</a>
         </div>
     </form>
 
