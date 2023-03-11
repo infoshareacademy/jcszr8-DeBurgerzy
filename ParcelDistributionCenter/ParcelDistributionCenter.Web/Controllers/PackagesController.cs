@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ParcelDistributionCenter.Logic;
 using ParcelDistributionCenter.Logic.Models;
 using ParcelDistributionCenter.Model.Models;
+using System.Drawing;
 using System.Reflection;
 
 namespace ParcelDistributionCenter.Web.Controllers
@@ -101,6 +102,23 @@ namespace ParcelDistributionCenter.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult FindPackageByCourierID(string CourierId)
+        {
+            var model = _packageHandler.FindPackagesByCourierID(CourierId);
+
+            if (model == null)
+            {
+                return RedirectToAction("InsertCourierID", "Packages");
+            }
+            return View(model);
+        }
+        public ActionResult InsertCourierID()
+        {
+            return View();
+        }
+    }
+
         public ActionResult FindByPackageID(int packageID)
         {                     
                 var model = _packageHandler.FindPackageByNumber(packageID);
