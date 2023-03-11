@@ -34,6 +34,7 @@ namespace ParcelDistributionCenter.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 bool added = _addNewPackageHandler.AddNewPackage(packageVM, out Package package);
                 if (added)
                 {
@@ -117,9 +118,7 @@ namespace ParcelDistributionCenter.Web.Controllers
         {
             return View();
         }
-    }
-
-        public ActionResult FindByPackageID(int packageID)
+          public ActionResult FindByPackageID(int packageID)
         {                     
                 var model = _packageHandler.FindPackageByNumber(packageID);
 
