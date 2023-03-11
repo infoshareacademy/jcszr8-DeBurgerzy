@@ -101,8 +101,7 @@ namespace ParcelDistributionCenter.Web.Controllers
         public ActionResult FindByPackageID(int packageID)
         {
             try
-            {
-               
+            {             
                 var model = _packageHandler.FindPackageByNumber(packageID);
 
                 if (model == null) 
@@ -110,7 +109,6 @@ namespace ParcelDistributionCenter.Web.Controllers
                   return  RedirectToAction("InsertPackageID", "Packages"); 
                 }
                 return View(model);
-
             }
             catch
             {

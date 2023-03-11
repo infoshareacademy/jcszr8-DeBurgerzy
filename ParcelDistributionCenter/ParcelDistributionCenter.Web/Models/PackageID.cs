@@ -1,6 +1,6 @@
 ﻿namespace ParcelDistributionCenter.Web.Models
 {
-    public class PackageNumberVM
+    public class PackageID
     {
         public int packageID { get; set; }
     }
