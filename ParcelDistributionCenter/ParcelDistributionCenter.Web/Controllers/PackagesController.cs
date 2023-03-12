@@ -2,8 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using ParcelDistributionCenter.Logic;
 using ParcelDistributionCenter.Logic.Models;
 using ParcelDistributionCenter.Model.Models;
-using System.Drawing;
-using System.Reflection;
 
 namespace ParcelDistributionCenter.Web.Controllers
 {
@@ -18,7 +16,6 @@ namespace ParcelDistributionCenter.Web.Controllers
             _memoryRepository = memoryRepository;
             _addNewPackageHandler = addNewPackageHandler;
             _packageHandler = packageHandler;
-            _memoryRepository.LoadData();
         }
 
         // GET: PackagesController/AddPackage
@@ -34,7 +31,6 @@ namespace ParcelDistributionCenter.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 bool added = _addNewPackageHandler.AddNewPackage(packageVM, out Package package);
                 if (added)
                 {
@@ -98,10 +94,15 @@ namespace ParcelDistributionCenter.Web.Controllers
             }
         }
 
-        // GET: PackagesController
-        public ActionResult Index()
+        public ActionResult FindByPackageID(int packageID)
         {
-            return View();
+            var model = _packageHandler.FindPackageByNumber(packageID);
+
+            if (model == null)
+            {
+                return RedirectToAction("InsertPackageID", "Packages");
+            }
+            return View(model);
         }
 
         public ActionResult FindPackageByCourierID(string CourierId)
@@ -114,23 +115,21 @@ namespace ParcelDistributionCenter.Web.Controllers
             }
             return View(model);
         }
+
+        // GET: PackagesController
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         public ActionResult InsertCourierID()
         {
             return View();
         }
-          public ActionResult FindByPackageID(int packageID)
-        {                     
-                var model = _packageHandler.FindPackageByNumber(packageID);
 
-                if (model == null) 
-                {
-                  return  RedirectToAction("InsertPackageID", "Packages"); 
-                }
-                return View(model);                     
-        }
         public ActionResult InsertPackageID(int packageID)
         {
             return View();
         }
-     }
+    }
 }

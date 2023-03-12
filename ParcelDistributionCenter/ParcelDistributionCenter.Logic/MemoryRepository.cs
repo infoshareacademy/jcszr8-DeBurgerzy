@@ -11,24 +11,29 @@ namespace ParcelDistributionCenter.Logic
         private const string packagesJsonName = "packages.json";
         private static readonly string appDomainPath = AppDomain.CurrentDomain.BaseDirectory;
 
+        public MemoryRepository(List<Courier> couriersList, List<DeliveryMachine> deliveryMachinesList, List<Package> packagesList)
+        {
+            CouriersList = couriersList;
+            DeliveryMachinesList = deliveryMachinesList;
+            PackagesList = packagesList;
+        }
+
         public List<Courier> CouriersList { get; private set; }
         public List<DeliveryMachine> DeliveryMachinesList { get; private set; }
         public List<Package> PackagesList { get; private set; }
 
-        public void LoadData()
+        public static MemoryRepository LoadData()
         {
-            if (PackagesList != null)
-            {
-                return;
-            }
             string couriers = File.ReadAllText(Path.Combine(appDomainPath, jsonFolderName, couriersJsonName));
-            CouriersList = JsonConvert.DeserializeObject<List<Courier>>(couriers);
+            List<Courier> couriersList = JsonConvert.DeserializeObject<List<Courier>>(couriers);
 
             string lockers = File.ReadAllText(Path.Combine(appDomainPath, jsonFolderName, deliveryMachinesJsonName));
-            DeliveryMachinesList = JsonConvert.DeserializeObject<List<DeliveryMachine>>(lockers);
+            List<DeliveryMachine> deliveryMachinesList = JsonConvert.DeserializeObject<List<DeliveryMachine>>(lockers);
 
             string parcels = File.ReadAllText(Path.Combine(appDomainPath, jsonFolderName, packagesJsonName));
-            PackagesList = JsonConvert.DeserializeObject<List<Package>>(parcels);
+            List<Package> packagesList = JsonConvert.DeserializeObject<List<Package>>(parcels);
+
+            return new MemoryRepository(couriersList, deliveryMachinesList, packagesList);
         }
     }
 }
