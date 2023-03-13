@@ -118,7 +118,7 @@ namespace ParcelDistributionCenter.Web.Controllers
         {
             return View();
         }
-          public ActionResult FindByPackageID(int packageID)
+          public ActionResult FindPackageByPackageID(int packageID)
         {                     
                 var model = _packageHandler.FindPackageByNumber(packageID);
 
@@ -132,5 +132,20 @@ namespace ParcelDistributionCenter.Web.Controllers
         {
             return View();
         }
-     }
+        //FindPackagesByDeliveryMachineID
+        public ActionResult FindPackageByDeliveryMachineID(string DeliveryMachineId)
+        {
+            var model = _packageHandler.FindPackagesByDeliveryMachineID(DeliveryMachineId);
+
+            if (model == null)
+            {
+                return RedirectToAction("InsertDeliveryMachineID", "Packages");
+            }
+            return View(model);
+        }
+        public ActionResult InsertDeliveryMachineID()
+        {
+            return View();
+        }
+    }
 }

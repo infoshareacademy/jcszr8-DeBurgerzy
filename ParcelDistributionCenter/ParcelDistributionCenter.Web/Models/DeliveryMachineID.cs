@@ -2,5 +2,6 @@
 {
     public class DeliveryMachineID
     {
+        public string DeliveryMachineId { get; set; }
     }
 }
