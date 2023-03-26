@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ParcelDistributionCenter.Logic.Models.PackageVM>
+﻿@model IEnumerable<ParcelDistributionCenter.Model.Models.Package>
 
 @{
     ViewData["Title"] = "FindPackageByDeliveryMachineID";
@@ -13,7 +13,16 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.CourierId)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.DeliveryAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeliveryMachineId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PackageNumber)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.RecipientEmail)
@@ -23,6 +32,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.RecipientPhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Registered)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.SenderAddress)
@@ -49,7 +61,16 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.CourierId)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.DeliveryAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeliveryMachineId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PackageNumber)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RecipientEmail)
@@ -59,6 +80,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RecipientPhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Registered)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SenderAddress)
