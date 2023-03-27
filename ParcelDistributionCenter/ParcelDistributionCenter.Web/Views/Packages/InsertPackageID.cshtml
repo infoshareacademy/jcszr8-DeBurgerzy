@@ -4,16 +4,15 @@
     ViewData["Title"] = "InsertPackageID";
 }
 
-<h1>InsertPackageID</h1>
+<h1>Find package by package ID</h1>
 
-<h4>PackageID</h4>
+<h4>Insert package ID:</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="FindPackageByPackageID">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="packageID" class="control-label"></label>
+            <div class="form-group">               
                 <input asp-for="packageID" class="form-control" />
                 <span asp-validation-for="packageID" class="text-danger"></span>
             </div>

@@ -1,14 +1,12 @@
 ﻿@model IEnumerable<ParcelDistributionCenter.Model.Models.Package>
 
 @{
-    ViewData["Title"] = "FindPackageByCourierID";
+    ViewData["Title"] = "Pacages found by Courier ID";
 }
 
 <h1>Pacages found by Courier ID</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
@@ -117,3 +115,6 @@
 }
     </tbody>
 </table>
+<div>
+    <a asp-controller="Packages" asp-action="InsertCourierID" class="btn btn-secondary">Back</a>
+</div>

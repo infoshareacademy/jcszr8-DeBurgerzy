@@ -97,6 +97,6 @@
     </dl>
 </div>
 <div>  
-    @Html.ActionLink("Edit", "Edit", new {package = Model.PackageNumber })
-    <a asp-action="Index">Back to List</a>
+    @Html.ActionLink("Edit", "Edit", new {package = Model.PackageNumber })    
+    <a asp-controller="Packages" asp-action="InsertPackageID" class="btn btn-secondary">Back</a>      
 </div>
