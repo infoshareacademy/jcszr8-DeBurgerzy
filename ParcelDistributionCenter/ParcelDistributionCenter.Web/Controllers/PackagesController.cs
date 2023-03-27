@@ -110,6 +110,8 @@ namespace ParcelDistributionCenter.Web.Controllers
 
             if (model == null)
             {
+                TempData["Message"] = "Package not found.";
+                TempData["MessageClass"] = "alert-danger";
                 return RedirectToAction("InsertCourierID", "Packages");
             }
             return View(model);
@@ -124,7 +126,9 @@ namespace ParcelDistributionCenter.Web.Controllers
 
                 if (model == null) 
                 {
-                  return  RedirectToAction("InsertPackageID", "Packages"); 
+                TempData["Message"] = "Package not found.";
+                TempData["MessageClass"] = "alert-danger";
+                return  RedirectToAction("InsertPackageID", "Packages"); 
                 }
                 return View(model);                     
         }
@@ -139,6 +143,8 @@ namespace ParcelDistributionCenter.Web.Controllers
 
             if (model == null)
             {
+                TempData["Message"] = "Package not found.";
+                TempData["MessageClass"] = "alert-danger";
                 return RedirectToAction("InsertDeliveryMachineID", "Packages");
             }
             return View(model);
