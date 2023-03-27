@@ -78,6 +78,7 @@ namespace ParcelDistributionCenter.Web.Controllers
         // GET: PackagesController/Edit/5
         public ActionResult Edit(int packageNumber)
         {
+            _memoryRepository.LoadData();
             var model = _packageHandler.FindPackageByNumber(packageNumber);
             return View(model);
         }
