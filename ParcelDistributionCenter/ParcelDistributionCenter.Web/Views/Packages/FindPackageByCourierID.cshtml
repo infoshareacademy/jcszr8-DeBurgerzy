@@ -102,15 +102,11 @@
             </td>
 
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id=item.PackageNumber}) |
-                    @Html.ActionLink("Details", "Details", new { id=item.PackageNumber}) |
-                    @Html.ActionLink("Delete", "DeletePackage", new { id=item.PackageNumber})
+                    @Html.ActionLink("Edit", "Edit", new { packageNumber=item.PackageNumber}) |
+                    @Html.ActionLink("Details", "Details", new { packageNumber=item.PackageNumber}) |
+                    <a asp-action="Delete" asp-route-id="@item.PackageNumber">Delete</a>
                 </td>                 
-           @* <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>*@
+                
         </tr>
 }
     </tbody>

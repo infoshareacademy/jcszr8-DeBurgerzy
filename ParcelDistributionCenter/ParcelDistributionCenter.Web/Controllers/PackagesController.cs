@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using ParcelDistributionCenter.Logic;
 using ParcelDistributionCenter.Logic.Models;
 using ParcelDistributionCenter.Model.Models;
+using ParcelDistributionCenter.Web.Models;
 using System.Drawing;
 using System.Reflection;
 
@@ -61,6 +62,34 @@ namespace ParcelDistributionCenter.Web.Controllers
             TempData["MessageClass"] = "alert-danger";
             return RedirectToAction(nameof(DisplayPackages));
         }
+      
+        // GET: ProductsController/Delete/5
+        public ActionResult Delete(int id)
+        {
+            var model = _packageHandler.FindPackageByNumber(id);
+            return View(model);
+        }
+
+        // POST: ProductsController/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id, Package model)
+        {
+            try
+            {
+                _packageHandler.DeletePackageByNumber(id);
+                return RedirectToAction(nameof(DeleteConfirmScreen));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        public ActionResult DeleteConfirmScreen()
+        {
+            return View();
+        }
 
         // GET: PackagesController/DisplayPackages
         public ActionResult DisplayPackages()
@@ -97,6 +126,13 @@ namespace ParcelDistributionCenter.Web.Controllers
             {
                 return View(nameof(DisplayPackages));
             }
+        }
+        // GET: PackagesController/Details/5
+        public ActionResult Details(int packageNumber)
+        {
+            _memoryRepository.LoadData();
+            var model = _packageHandler.FindPackageByNumber(packageNumber);
+            return View(model);
         }
 
         // GET: PackagesController

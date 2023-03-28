@@ -97,6 +97,9 @@
     </dl>
 </div>
 <div>  
-    @Html.ActionLink("Edit", "Edit", new {package = Model.PackageNumber })    
+    @Html.ActionLink("Edit", "Edit", new {packageNumber = Model.PackageNumber })
+    @Html.ActionLink("Details", "Details", new { packageNumber=Model.PackageNumber})
+    <a asp-action="Delete" asp-route-id="@Model.PackageNumber">Delete</a>
+
     <a asp-controller="Packages" asp-action="InsertPackageID" class="btn btn-secondary">Back</a>      
 </div>
