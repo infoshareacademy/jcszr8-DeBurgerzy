@@ -1,6 +1,8 @@
+using AutoMapper;
 using ParcelDistributionCenter.Logic;
 using ParcelDistributionCenter.Logic.Services;
 using ParcelDistributionCenter.Logic.Validators;
+using ParcelDistributionCenter.Web.DTOs;
 
 namespace ParcelDistributionCenter.Web
 {
@@ -20,7 +22,11 @@ namespace ParcelDistributionCenter.Web
             builder.Services.AddTransient<ICourierHandler, CourierHandler>();
             builder.Services.AddTransient<IPackageServices, PackageServices>();
             builder.Services.AddTransient<IDeliveryMachinesService, DeliveryMachinesService>();
+            builder.Services.AddAutoMapper(typeof(DeliveryMachineDTO));
             var app = builder.Build();
+
+            var mapper = (IMapper)app.Services.GetRequiredService(typeof(IMapper));
+            mapper.ConfigurationProvider.AssertConfigurationIsValid();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
