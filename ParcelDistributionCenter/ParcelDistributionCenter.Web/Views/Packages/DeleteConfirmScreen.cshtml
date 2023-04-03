@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewData["Title"] = "DeleteConfirmScreen";
+}
+
+<h1>The package has been deleted.</h1>
+<h2>Select next task:</h2>
+
+<a asp-controller="Packages" asp-action="InsertCourierID" class="btn btn-secondary">New search by courier ID</a>
+<a asp-controller="Packages" asp-action="InsertDeliveryMachineID" class="btn btn-secondary">New search by delivery machine ID</a>
+<a asp-controller="Packages" asp-action="InsertPackageID" class="btn btn-secondary">New search by package ID</a>
+<a asp-controller="Packages" asp-action="DisplayPackages" class="btn btn-secondary">Go go list</a>
+<a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Back to Home</a>
