@@ -97,6 +97,6 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new {packageNumber = Model.PackageNumber}) |
+    <a asp-action="Edit" asp-route-packageNumber="@Model.PackageNumber">Edit</a> |
     <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Back to Home</a>
 </div>

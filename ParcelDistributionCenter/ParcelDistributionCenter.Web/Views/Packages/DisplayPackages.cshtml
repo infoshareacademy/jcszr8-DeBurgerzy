@@ -70,8 +70,8 @@
             </td>
 
             <td>
-               @Html.ActionLink("Edit", "Edit", new {packageNumber = item.PackageNumber }) |
-               @Html.ActionLink("Details", "Details", new { packageNumber=item.PackageNumber}) |
+               <a asp-action="Edit" asp-route-packageNumber="@item.PackageNumber">Edit</a> |
+               <a asp-action="Details" asp-route-packageNumber="@item.PackageNumber">Details</a>|
                <a asp-action="Delete" asp-route-id="@item.PackageNumber">Delete</a>
             </td>
         </tr>
