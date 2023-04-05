@@ -70,9 +70,9 @@
             </td>
 
             <td>
-               <a asp-action="Edit" asp-route-packageNumber="@item.PackageNumber">Edit</a> |
-               <a asp-action="Details" asp-route-packageNumber="@item.PackageNumber">Details</a>|
-               <a asp-action="Delete" asp-route-id="@item.PackageNumber">Delete</a>
+               <a asp-action="Edit" asp-route-packageNumber="@item.PackageNumber" class="btn btn-secondary">Edit</a> |
+               <a asp-action="Details" asp-route-packageNumber="@item.PackageNumber" class="btn btn-primary">Details</a>|
+               <a asp-action="Delete" asp-route-id="@item.PackageNumber" class="btn btn-danger ">Delete</a>
             </td>
         </tr>
 }

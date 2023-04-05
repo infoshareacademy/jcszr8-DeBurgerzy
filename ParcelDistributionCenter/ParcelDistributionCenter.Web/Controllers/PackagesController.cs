@@ -10,6 +10,9 @@ namespace ParcelDistributionCenter.Web.Controllers
 {
     public class PackagesController : Controller
     {
+        //Message list:(temporary location)
+        string messagePackageNotFound = "Package not found.";
+
         private readonly IAddNewPackageHandler _addNewPackageHandler;
         private readonly IMemoryRepository _memoryRepository;
         private readonly IPackageHandler _packageHandler;
@@ -67,7 +70,14 @@ namespace ParcelDistributionCenter.Web.Controllers
         public ActionResult Delete(int id)
         {
             var model = _packageHandler.FindPackageByNumber(id);
+            if (model == null)
+                {
+                TempData["Message"] = messagePackageNotFound;
+                TempData["MessageClass"] = "alert-danger";
+                return View();
+                }          
             return View(model);
+
         }
 
         // POST: ProductsController/Delete/5
@@ -75,15 +85,14 @@ namespace ParcelDistributionCenter.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, Package model)
         {
-            try
+            bool deleted = _packageHandler.DeletePackageByNumber(id);
+            if  (deleted)
             {
-                _packageHandler.DeletePackageByNumber(id);
                 return RedirectToAction(nameof(DeleteConfirmScreen));
             }
-            catch
-            {
-                return View();
-            }
+            TempData["Message"] = "Package not deleted! Something went wrong";
+            TempData["MessageClass"] = "alert-danger";
+            return View();  
         }
 
         public ActionResult DeleteConfirmScreen()
@@ -109,6 +118,12 @@ namespace ParcelDistributionCenter.Web.Controllers
         {
             _memoryRepository.LoadData();
             var model = _packageHandler.FindPackageByNumber(packageNumber);
+            if (model == null)
+            {
+                TempData["Message"] = messagePackageNotFound;
+                TempData["MessageClass"] = "alert-danger";
+                return View();
+            }
             return View(model);
         }
 
@@ -132,6 +147,12 @@ namespace ParcelDistributionCenter.Web.Controllers
         {
             _memoryRepository.LoadData();
             var model = _packageHandler.FindPackageByNumber(packageNumber);
+            if (model == null)
+            {
+                TempData["Message"] = messagePackageNotFound;
+                TempData["MessageClass"] = "alert-danger";
+                return View();
+            }
             return View(model);
         }
 
@@ -147,7 +168,7 @@ namespace ParcelDistributionCenter.Web.Controllers
 
             if (model == null)
             {
-                TempData["Message"] = "Package not found.";
+                TempData["Message"] = messagePackageNotFound;
                 TempData["MessageClass"] = "alert-danger";
                 return RedirectToAction("InsertCourierID", "Packages");
             }
@@ -163,7 +184,7 @@ namespace ParcelDistributionCenter.Web.Controllers
 
                 if (model == null) 
                 {
-                TempData["Message"] = "Package not found.";
+                TempData["Message"] = messagePackageNotFound;
                 TempData["MessageClass"] = "alert-danger";
                 return  RedirectToAction("InsertPackageID", "Packages"); 
                 }
@@ -180,7 +201,7 @@ namespace ParcelDistributionCenter.Web.Controllers
 
             if (model == null)
             {
-                TempData["Message"] = "Package not found.";
+                TempData["Message"] = messagePackageNotFound;
                 TempData["MessageClass"] = "alert-danger";
                 return RedirectToAction("InsertDeliveryMachineID", "Packages");
             }
