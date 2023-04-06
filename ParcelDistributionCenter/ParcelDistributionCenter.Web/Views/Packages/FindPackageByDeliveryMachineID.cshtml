@@ -1,115 +1,82 @@
 ﻿@model IEnumerable<ParcelDistributionCenter.Model.Models.Package>
 
 @{
-    ViewData["Title"] = "FindPackageByDeliveryMachineID";
+    ViewData["Title"] = "DisplayPackages";
 }
 
-<h1>FindPackageByDeliveryMachineID</h1>
+<h1>Packages List</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CourierId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DeliveryAddress)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DeliveryMachineId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PackageNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RecipientEmail)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RecipientName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RecipientPhone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Registered)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SenderAddress)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SenderEmail)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SenderName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SenderPhone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Size)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CourierId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeliveryAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeliveryMachineId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PackageNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RecipientEmail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RecipientName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RecipientPhone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Registered)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SenderAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SenderEmail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SenderName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SenderPhone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Size)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<div class="card-body">
+    <table id="datatablesSimple">
+        <thead>
+            <tr>
 
-                    <a asp-action="Edit" asp-route-packageNumber="@item.PackageNumber" class="btn btn-secondary">Edit</a>|
-                    <a asp-action="Details" asp-route-packageNumber="@item.PackageNumber" class="btn btn-primary">Details</a>|
-                    <a asp-action="Delete" asp-route-id="@item.PackageNumber" class="btn btn-danger">Delete</a>
-                    
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
-<div>   
-    <a asp-controller="Packages" asp-action="InsertDeliveryMachineID" class="btn btn-secondary">Back</a>
+                <th>
+                    @Html.DisplayNameFor(model => model.PackageNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Registered)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Size)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CourierId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DeliveryAddress)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RecipientEmail)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SenderEmail)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PackageNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Registered)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Size)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CourierId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DeliveryAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RecipientEmail)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SenderEmail)
+                    </td>
+
+                    <td>
+                        <a asp-action="Edit" asp-route-packageNumber="@item.PackageNumber" class="btn btn-secondary">Edit</a> |
+                        <a asp-action="Details" asp-route-packageNumber="@item.PackageNumber" class="btn btn-primary">Details</a>|
+                        <a asp-action="Delete" asp-route-id="@item.PackageNumber" class="btn btn-danger ">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
