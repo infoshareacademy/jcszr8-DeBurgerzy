@@ -162,9 +162,9 @@ namespace ParcelDistributionCenter.Web.Controllers
             return View();
         }
 
-        public ActionResult FindPackageByCourierID(string CourierId)
+        public ActionResult FindPackageByCourierID(string IdString)
         {
-            var model = _packageHandler.FindPackagesByCourierID(CourierId);
+            var model = _packageHandler.FindPackagesByCourierID(IdString);
 
             if (model == null)
             {
@@ -172,32 +172,32 @@ namespace ParcelDistributionCenter.Web.Controllers
                 TempData["MessageClass"] = "alert-danger";
                 return RedirectToAction("InsertCourierID", "Packages");
             }
-            return View(model);
+            return View(model);      
         }
         public ActionResult InsertCourierID()
         {
             return View();
         }
-          public ActionResult FindPackageByPackageID(int packageID)
+          public ActionResult FindPackageByPackageID(int IdNumber)
         {                     
-                var model = _packageHandler.FindPackageByNumber(packageID);
+                var model = _packageHandler.FindPackageByNumber(IdNumber);
 
                 if (model == null) 
                 {
                 TempData["Message"] = messagePackageNotFound;
                 TempData["MessageClass"] = "alert-danger";
                 return  RedirectToAction("InsertPackageID", "Packages"); 
-                }
-                return View(model);                     
+                }         
+            return View(model);                     
         }
-        public ActionResult InsertPackageID(int packageID)
+        public ActionResult InsertPackageID()
         {
             return View();
         }
         //FindPackagesByDeliveryMachineID
-        public ActionResult FindPackageByDeliveryMachineID(string DeliveryMachineId)
+        public ActionResult FindPackageByDeliveryMachineID(string IdString)
         {
-            var model = _packageHandler.FindPackagesByDeliveryMachineID(DeliveryMachineId);
+            var model = _packageHandler.FindPackagesByDeliveryMachineID(IdString);
 
             if (model == null)
             {

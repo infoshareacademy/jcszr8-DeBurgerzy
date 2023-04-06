@@ -1,4 +1,4 @@
-﻿@model ParcelDistributionCenter.Web.Models.PackageID
+﻿@model ParcelDistributionCenter.Web.Models.InsertNumberViewModel
 
 @{
     ViewData["Title"] = "InsertPackageID";
@@ -13,8 +13,8 @@
         <form asp-action="FindPackageByPackageID">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">               
-                <input asp-for="packageID" class="form-control" />
-                <span asp-validation-for="packageID" class="text-danger"></span>
+                <input asp-for="IdNumber" class="form-control" />
+                <span asp-validation-for="IdNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Find" class="btn btn-primary" />
