@@ -13,10 +13,22 @@ namespace ParcelDistributionCenter.Model.Context
         public DbSet<DeliveryMachine> DeliveryMachines { get; set; }
         public DbSet<Package> Packages { get; set; }
 
-        // TODO: TO BE CHANGED
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Package>()
+                .HasOne(p => p.Courier)
+                .WithMany(p => p.Packages)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Package>()
+                .HasOne(p => p.DeliveryMachine)
+                .WithMany(p => p.Packages)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Courier>()
+                .HasOne(c => c.DeliveryMachine)
+                .WithOne(c => c.Courier)
+                .HasForeignKey<Courier>(c => c.DeliveryMachineId);
         }
     }
 }

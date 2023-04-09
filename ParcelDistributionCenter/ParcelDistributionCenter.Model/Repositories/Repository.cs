@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ParcelDistributionCenter.Model.Context;
 using ParcelDistributionCenter.Model.Models.BaseEntity;
-using System.Linq.Expressions;
 
 namespace ParcelDistributionCenter.Model.Repositories
 {
@@ -25,9 +24,9 @@ namespace ParcelDistributionCenter.Model.Repositories
             }
         }
 
-        public T Get(string id, Expression<Func<T, object>>? include = null) => _entities.Include(include).SingleOrDefault(e => e.Id == id);
+        public T Get(string id) => _entities.SingleOrDefault(e => e.Id == id);
 
-        public IEnumerable<T> GetAll(Expression<Func<T, object>>? include = null) => _entities.Include(include);
+        public IEnumerable<T> GetAll() => _entities;
 
         public void Insert(T entity)
         {

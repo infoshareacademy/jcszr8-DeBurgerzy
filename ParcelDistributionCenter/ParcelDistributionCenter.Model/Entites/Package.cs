@@ -7,16 +7,22 @@ namespace ParcelDistributionCenter.Model.Models
 {
     public class Package : Entity
     {
+        // TODO: Think if nullable values are needed
+        public Courier? Courier { get; set; }
+
         [NotMapped]
         [JsonProperty("courier_id")]
-        public string CourierId { get; set; }
+        public string CourierJsonId { get; set; }
 
         [JsonProperty("delivery_address")]
         public string DeliveryAddress { get; set; }
 
+        // TODO: Think if nullable values are needed
+        public DeliveryMachine? DeliveryMachine { get; set; }
+
         [NotMapped]
         [JsonProperty("delivery_machine_id")]
-        public string DeliveryMachineId { get; set; }
+        public string DeliveryMachineJsonId { get; set; }
 
         [JsonProperty("package_number")]
         public int PackageNumber { get; set; }

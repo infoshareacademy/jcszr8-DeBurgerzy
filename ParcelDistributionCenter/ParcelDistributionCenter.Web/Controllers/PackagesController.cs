@@ -66,7 +66,7 @@ namespace ParcelDistributionCenter.Web.Controllers
         // GET: PackagesController/DisplayPackages
         public ActionResult DisplayPackages()
         {
-            var model = _packageHandler.FindAll();
+            IEnumerable<Package> model = _packageHandler.GetAllPackages();
             return View(model);
         }
 

@@ -1,14 +1,12 @@
-﻿using System.Linq.Expressions;
-
-namespace ParcelDistributionCenter.Model.Repositories
+﻿namespace ParcelDistributionCenter.Model.Repositories
 {
     public interface IRepository<T>
     {
         void Delete(T entity);
 
-        T Get(string id, Expression<Func<T, object>>? include = null);
+        T Get(string id);
 
-        IEnumerable<T> GetAll(Expression<Func<T, object>>? include = null);
+        IEnumerable<T> GetAll();
 
         void Insert(T entity);
 

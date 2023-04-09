@@ -6,8 +6,6 @@ namespace ParcelDistributionCenter.Logic.Services.IServices
     {
         bool DeletePackageByNumber(string packageNumber);
 
-        IEnumerable<Package> FindAll();
-
         Package FindPackageById(string packageNumber);
 
         IEnumerable<Package> FindPackagesByCourierID(string courierId);
@@ -15,6 +13,8 @@ namespace ParcelDistributionCenter.Logic.Services.IServices
         IEnumerable<Package> FindPackagesByDeliveryMachineID(string deliveryMachineID);
 
         IEnumerable<Package> FindPackagesBySenderEmail(string senderEmail);
+
+        IEnumerable<Package> GetAllPackages();
 
         void Update(Package model);
     }

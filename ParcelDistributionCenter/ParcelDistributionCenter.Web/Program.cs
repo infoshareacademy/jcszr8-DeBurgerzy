@@ -18,7 +18,7 @@ namespace ParcelDistributionCenter.Web
 
             // Add services to the container.
             builder.Services.AddDbContext<ParcelDistributionCenterContext>(opts =>
-            opts.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            opts.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("ParcelDistributionCenter.Web")));
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddControllersWithViews();
             // TODO: Wywaliæ MemoryRepository z DependencyInjection i wsadziæ ca³e do Seeda (¿eby nie zajmowa³o

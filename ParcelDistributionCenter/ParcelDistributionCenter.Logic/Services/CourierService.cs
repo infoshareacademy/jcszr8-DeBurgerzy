@@ -4,6 +4,7 @@ using ParcelDistributionCenter.Model.Repositories;
 
 namespace ParcelDistributionCenter.Logic.Services
 {
+    // TODO: Prevent code from nullable ids coming form json
     public class CourierService : ICourierService
     {
         private readonly IPackageServices _packageServices;
@@ -17,8 +18,8 @@ namespace ParcelDistributionCenter.Logic.Services
 
         public void Delete(Courier model)
         {
-            var courier = FindById(model.CourierId);
-            _packageServices.UnassignCouriersPackages(courier.CourierId);
+            var courier = FindById(model.CourierJsonId);
+            _packageServices.UnassignCouriersPackages(courier.CourierJsonId);
             _repository.Delete(courier);
         }
 
@@ -28,7 +29,7 @@ namespace ParcelDistributionCenter.Logic.Services
 
         public void Update(Courier model)
         {
-            var courier = FindById(model.CourierId);
+            var courier = FindById(model.CourierJsonId);
             courier.Name = model.Name;
             courier.Surname = model.Surname;
             courier.Email = model.Email;

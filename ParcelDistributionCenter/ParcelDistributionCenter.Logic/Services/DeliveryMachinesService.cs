@@ -4,6 +4,7 @@ using ParcelDistributionCenter.Model.Repositories;
 
 namespace ParcelDistributionCenter.Logic.Services
 {
+    // TODO: Prevent code from nullable ids coming form json
     public class DeliveryMachinesService : IDeliveryMachinesService
     {
         private readonly IRepository<DeliveryMachine> _repository;

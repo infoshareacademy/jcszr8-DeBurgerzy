@@ -6,6 +6,7 @@ using ParcelDistributionCenter.Model.Repositories;
 
 namespace ParcelDistributionCenter.Logic.Services
 {
+    // TODO: Prevent code from nullable ids coming form json
     public class AddNewPackageService : IAddNewPackageService
     {
         private readonly IRepository<Courier> _courierRepository;
@@ -48,7 +49,7 @@ namespace ParcelDistributionCenter.Logic.Services
 
         protected string AssignCourierID()
         {
-            IEnumerable<string> courierIDs = _courierRepository.GetAll().Select(c => c.CourierId);
+            IEnumerable<string> courierIDs = _courierRepository.GetAll().Select(c => c.CourierJsonId);
             return GenerateRandomID(courierIDs);
         }
 
@@ -61,7 +62,7 @@ namespace ParcelDistributionCenter.Logic.Services
 
         private string AssignDeliveryMachineID(PackageSize size)
         {
-            IEnumerable<string> deliveryMachineIDs = _deliverMachineRepository.GetAll().Select(c => c.DeliveryMachineId);
+            IEnumerable<string> deliveryMachineIDs = _deliverMachineRepository.GetAll().Select(c => c.DeliveryMachineJsonId);
             string generatedId = GenerateRandomID(deliveryMachineIDs);
             DeliveryMachine deliveryMachine = _deliverMachineRepository.Get(generatedId);
             switch (size)

@@ -4,6 +4,7 @@ using ParcelDistributionCenter.Model.Repositories;
 
 namespace ParcelDistributionCenter.Logic.Services
 {
+    // TODO: Prevent code from nullable ids coming form json
     public class PackageService : IPackageService
     {
         private readonly IRepository<Package> _repository;
@@ -24,8 +25,6 @@ namespace ParcelDistributionCenter.Logic.Services
             return false;
         }
 
-        public IEnumerable<Package> FindAll() => _repository.GetAll();
-
         public Package FindPackageById(string id)
         {
             Package package = _repository.Get(id);
@@ -36,17 +35,19 @@ namespace ParcelDistributionCenter.Logic.Services
             return null;
         }
 
-        public IEnumerable<Package> FindPackagesByCourierID(string courierId) => ReturnPackages(p => p.CourierId == courierId);
+        public IEnumerable<Package> FindPackagesByCourierID(string courierId) => ReturnPackages(p => p.CourierJsonId == courierId);
 
-        public IEnumerable<Package> FindPackagesByDeliveryMachineID(string deliveryMachineID) => ReturnPackages(p => p.DeliveryMachineId == deliveryMachineID);
+        public IEnumerable<Package> FindPackagesByDeliveryMachineID(string deliveryMachineID) => ReturnPackages(p => p.DeliveryMachineJsonId == deliveryMachineID);
 
         public IEnumerable<Package> FindPackagesBySenderEmail(string senderEmail) => ReturnPackages(p => p.SenderEmail == senderEmail);
+
+        public IEnumerable<Package> GetAllPackages() => _repository.GetAll();
 
         public void Update(Package model)
         {
             var package = FindPackageById(model.Id);
             package.Status = model.Status;
-            package.CourierId = model.CourierId;
+            package.CourierJsonId = model.CourierJsonId;
             package.SenderName = model.SenderName;
             package.RecipientName = model.RecipientName;
             package.SenderEmail = model.SenderEmail;
@@ -55,7 +56,7 @@ namespace ParcelDistributionCenter.Logic.Services
             package.RecipientPhone = model.RecipientPhone;
             package.SenderAddress = model.SenderAddress;
             package.DeliveryAddress = model.DeliveryAddress;
-            package.DeliveryMachineId = model.DeliveryMachineId;
+            package.DeliveryMachineJsonId = model.DeliveryMachineJsonId;
             package.Registered = model.Registered;
         }
 
