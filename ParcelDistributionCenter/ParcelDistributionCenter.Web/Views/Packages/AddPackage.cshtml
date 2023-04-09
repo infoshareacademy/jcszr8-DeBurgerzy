@@ -7,7 +7,7 @@
 <hr />
 
 <form asp-action="AddPackage">
-    <img src="@Url.Content("~/assets/parcel-package.jpeg")" style="width: stretch; height: stretch; filter: grayscale(60%); position: fixed; z-index: -1; opacity: 0.3" alt="">
+    <img src="~/assets/parcel-package.jpeg" style="width: stretch; height: stretch; filter: grayscale(60%); position: fixed; z-index: -1; opacity: 0.3" alt="">
 
     <div class="row align-items-center justify-content-center">
         <div class="col-md-3 align-self-center">
@@ -23,10 +23,8 @@
             <table class="table align-content-center">
                 <tr>
                     <div>
-                        <label asp-for="SenderAddress" class="control-label">
-                            <i class="bi bi-house-fill"></i>
-                            @Html.DisplayNameFor(model => model.SenderAddress)
-                        </label>
+                        <i class="bi bi-house-fill"></i>
+                        <label asp-for="SenderAddress" class="control-label"></label>
                     </div>
                     <div>
                         <input asp-for="SenderAddress" class="form-control" />
@@ -35,10 +33,8 @@
                 </tr>
                 <tr>
                     <div>
-                        <label asp-for="SenderEmail" class="control-label">
-                            <i class="bi bi-envelope-fill"></i>
-                            @Html.DisplayNameFor(model => model.SenderEmail)
-                        </label>
+                        <i class="bi bi-envelope-fill"></i>
+                        <label asp-for="SenderEmail" class="control-label"></label>
                     </div>
                     <div>
                         <input asp-for="SenderEmail" class="form-control" />
@@ -47,10 +43,8 @@
                 </tr>
                 <tr>
                     <div>
-                        <label asp-for="SenderName" class="control-label">
-                            <i class="bi bi-person-fill"></i>
-                            @Html.DisplayNameFor(model => model.SenderName)
-                        </label>
+                        <i class="bi bi-person-fill"></i>
+                        <label asp-for="SenderName" class="control-label"></label>
                     </div>
                     <div>
                         <input asp-for="SenderName" class="form-control" />
@@ -60,10 +54,8 @@
                 </tr>
                 <tr>
                     <div>
-                        <label asp-for="SenderPhone" class="control-label">
-                            <i class="bi bi-telephone-fill"></i>
-                                @Html.DisplayNameFor(model => model.SenderPhone)
-                        </label>
+                        <i class="bi bi-telephone-fill"></i>
+                        <label asp-for="SenderPhone" class="control-label"></label>
                     </div>
                     <div>
                         <input asp-for="SenderPhone" class="form-control" data-val="true" data-val-phone="The phone number format is invalid." />
@@ -76,10 +68,8 @@
             <table class="table">
                 <tr>
                     <div>
-                        <label asp-for="DeliveryAddress" class="control-label">
-                            <i class="bi bi-house-fill"></i>
-                            @Html.DisplayNameFor(model => model.DeliveryAddress)
-                        </label>
+                        <i class="bi bi-house-fill"></i>
+                        <label asp-for="DeliveryAddress" class="control-label"></label>
                     </div>
                     <div>
                         <input asp-for="DeliveryAddress" class="form-control" />
@@ -88,10 +78,8 @@
                 </tr>
                 <tr>
                     <div>
-                        <label asp-for="RecipientEmail" class="control-label">
-                            <i class="bi bi-envelope-fill"></i>
-                            @Html.DisplayNameFor(model => model.RecipientEmail)
-                        </label>
+                        <i class="bi bi-envelope-fill"></i>
+                        <label asp-for="RecipientEmail" class="control-label"></label>
                     </div>
                     <div>
                         <input asp-for="RecipientEmail" class="form-control" />
@@ -100,10 +88,8 @@
                 </tr>
                 <tr>
                     <div>
-                        <label asp-for="RecipientName" class="control-label">
-                            <i class="bi bi-person-fill"></i>
-                            @Html.DisplayNameFor(model => model.RecipientName)
-                        </label>
+                        <i class="bi bi-person-fill"></i>
+                        <label asp-for="RecipientName" class="control-label"></label>
                     </div>
                     <div>
                         <input asp-for="RecipientName" class="form-control" />
@@ -113,10 +99,8 @@
                 </tr>
                 <tr>
                     <div>
-                        <label asp-for="RecipientPhone" class="control-label">
-                            <i class="bi bi-telephone-fill"></i>
-                                @Html.DisplayNameFor(model => model.RecipientPhone)
-                        </label>
+                        <i class="bi bi-telephone-fill"></i>
+                        <label asp-for="RecipientPhone" class="control-label"></label>
                     </div>
                     <div>
                         <input asp-for="RecipientPhone" class="form-control" />
@@ -139,10 +123,8 @@
                 <tr>
                     <td>
                         <div class="dropdown">
-                            <label asp-for="Size" class="control-label">
-                                <i class="fas fa-compress-arrows-alt"></i>
-                                @Html.DisplayNameFor(model => model.Size)
-                            </label>
+                            <i class="fas fa-compress-arrows-alt"></i>
+                            <label asp-for="Size" class="control-label"></label>
                             <select asp-for="Size" class="form-control">
                                 <option value="">-- Select Size --</option>
                                 @foreach (var size in Enum.GetValues(typeof(PackageSize)))
@@ -157,10 +139,8 @@
                 <tr>
                     <td>
                         <div class="dropdown">
-                            <label asp-for="Status" class="control-label">
-                                <i class="fas fa-clock"></i>
-                                @Html.DisplayNameFor(model => model.Status)
-                            </label>
+                            <i class="fas fa-clock"></i>
+                            <label asp-for="Status" class="control-label"></label>
                             <select asp-for="Status" class="form-control">
                                 <option value="">-- Select Size --</option>
                                 @foreach (var status in Enum.GetValues(typeof(Status)))
@@ -186,7 +166,7 @@
 </form>
 
 
-@section Scripts {
+@section Scripts{
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

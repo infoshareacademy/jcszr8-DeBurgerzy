@@ -31,9 +31,9 @@ namespace ParcelDistributionCenter.Logic
             ValidateEmail(packageVM.RecipientEmail);
             ValidatePhone(packageVM.RecipientPhone);
             ValidateAddress(packageVM.DeliveryAddress);
-            string deliveryMachineID = AssignDeliveryMachineID();
+            string deliveryMachineID = AssignDeliveryMachineID(packageVM.Size);
 
-            if (validations.Any(v => v == false))
+            if (validations.Any(v => v == false) || deliveryMachineID == null)
             {
                 newPackage = null;
                 return false;
@@ -51,10 +51,37 @@ namespace ParcelDistributionCenter.Logic
             return GenerateRandomID(courierIDs);
         }
 
-        protected string AssignDeliveryMachineID()
+        protected string AssignDeliveryMachineID(PackageSize size)
         {
             IEnumerable<string> deliveryMachineIDs = _memoryRepository.DeliveryMachinesList.Select(c => c.DeliveryMachineId);
-            return GenerateRandomID(deliveryMachineIDs);
+            string generatedId = GenerateRandomID(deliveryMachineIDs);
+            DeliveryMachine deliveryMachine = _memoryRepository.DeliveryMachinesList.First(d => d.DeliveryMachineId == generatedId);
+            switch (size)
+            {
+                case PackageSize.Big:
+                    if (deliveryMachine.BigLockersCount > 0)
+                    {
+                        return generatedId;
+                    }
+                    return null;
+
+                case PackageSize.Medium:
+                    if (deliveryMachine.MediumLockersCount > 0)
+                    {
+                        return generatedId;
+                    }
+                    return null;
+
+                case PackageSize.Small:
+                    if (deliveryMachine.SmallLockersCount > 0)
+                    {
+                        return generatedId;
+                    }
+                    return null;
+
+                default:
+                    return null;
+            }
         }
 
         protected int GeneratePackageNumber()

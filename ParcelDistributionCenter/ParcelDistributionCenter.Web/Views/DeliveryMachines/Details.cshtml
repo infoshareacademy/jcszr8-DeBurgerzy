@@ -1,0 +1,62 @@
+﻿@model IEnumerable<ParcelDistributionCenter.Model.Models.DeliveryMachine>
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <label asp-for="First().Address"></label>
+            </th>
+            <th>
+                <label asp-for="First().IsActive"></label>
+            </th>
+            <th>
+                <label asp-for="First().SmallLockersCount"></label>
+            </th>
+            <th>
+                <label asp-for="First().MediumLockersCount"></label>
+            </th>
+            <th>
+                <label asp-for="First().BigLockersCount"></label>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Address
+                </td>
+                <td>
+                    @item.IsActive
+                </td>
+                <td>
+                    @item.SmallLockersCount
+                </td>
+                <td>
+                    @item.MediumLockersCount
+                </td>
+                <td>
+                    @item.BigLockersCount
+                </td>
+                <td>
+                    <div class="text-center">
+                            <a asp-action="EditDeliveryMachine" asp-route-deliveryMachineId="@item.DeliveryMachineId" class="btn btn-primary">Edit</a>
+                        <a asp-action="DeleteDeliveryMachine" asp-route-deliveryMachineId="@item.DeliveryMachineId" class="btn btn-danger" onclick="return confirmDelete();">Delete</a>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Back to Home</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
