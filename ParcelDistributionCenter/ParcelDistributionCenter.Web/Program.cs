@@ -1,6 +1,8 @@
+using AutoMapper;
 using ParcelDistributionCenter.Logic;
-using ParcelDistributionCenter.Logic.Validators;
 using ParcelDistributionCenter.Logic.Services;
+using ParcelDistributionCenter.Logic.Validators;
+using ParcelDistributionCenter.Web.DTOs;
 
 namespace ParcelDistributionCenter.Web
 {
@@ -12,14 +14,19 @@ namespace ParcelDistributionCenter.Web
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddSingleton<IMemoryRepository, MemoryRepository>();
+            builder.Services.AddSingleton<IMemoryRepository>(MemoryRepository.LoadData());
             builder.Services.AddScoped<IAddNewPackageHandler, AddNewPackageHandler>();
             builder.Services.AddScoped<IPackageHandler, PackageHandler>();
             builder.Services.AddScoped<IPackageValidator, PackageValidator>();
             builder.Services.AddTransient<IAddNewCourierHandler, AddNewCourierHandler>();
             builder.Services.AddTransient<ICourierHandler, CourierHandler>();
             builder.Services.AddTransient<IPackageServices, PackageServices>();
+            builder.Services.AddTransient<IDeliveryMachinesService, DeliveryMachinesService>();
+            builder.Services.AddAutoMapper(typeof(DeliveryMachineDTO));
             var app = builder.Build();
+
+            var mapper = (IMapper)app.Services.GetRequiredService(typeof(IMapper));
+            mapper.ConfigurationProvider.AssertConfigurationIsValid();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
