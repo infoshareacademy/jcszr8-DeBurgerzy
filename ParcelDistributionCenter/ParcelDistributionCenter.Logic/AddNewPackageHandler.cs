@@ -1,61 +1,68 @@
-﻿using ParcelDistributionCenter.Logic.Models;
-using ParcelDistributionCenter.Logic.Validators;
+﻿using ParcelDistributionCenter.Logic.Validators;
 using ParcelDistributionCenter.Model.Enums;
 using ParcelDistributionCenter.Model.Models;
+using ParcelDistributionCenter.Model.Repositories;
 
 namespace ParcelDistributionCenter.Logic
 {
     public class AddNewPackageHandler : IAddNewPackageHandler
     {
-        private readonly IMemoryRepository _memoryRepository;
+        private readonly IRepository<Courier> _courierRepository;
+        private readonly IRepository<DeliveryMachine> _deliverMachineRepository;
+        private readonly IRepository<Package> _packageRepository;
         private readonly IPackageValidator _packageValidator;
         private readonly List<bool> validations = new();
 
-        public AddNewPackageHandler(IMemoryRepository memoryRepository, IPackageValidator packageValidator)
+        public AddNewPackageHandler(IRepository<Package> packageRepository, IRepository<Courier> courierRepository, IRepository<DeliveryMachine> deliverMachineRepository, IPackageValidator packageValidator)
         {
-            _memoryRepository = memoryRepository;
+            _packageRepository = packageRepository;
+            _courierRepository = courierRepository;
+            _deliverMachineRepository = deliverMachineRepository;
             _packageValidator = packageValidator;
         }
 
-        public bool AddNewPackage(PackageVM packageVM, out Package? newPackage)
+        public bool AddNewPackage(ref Package package)
         {
             int packageNumber = GeneratePackageNumber();
-            ValidatePackageStatus(packageVM.Status);
-            ValidatePackageSize(packageVM.Size);
+            ValidatePackageStatus(package.Status);
+            ValidatePackageSize(package.Size);
             string courierID = AssignCourierID();
-            ValidateFullName(packageVM.SenderName);
-            ValidateEmail(packageVM.SenderEmail);
-            ValidatePhone(packageVM.SenderPhone);
-            ValidateAddress(packageVM.SenderAddress);
-            ValidateFullName(packageVM.RecipientName);
-            ValidateEmail(packageVM.RecipientEmail);
-            ValidatePhone(packageVM.RecipientPhone);
-            ValidateAddress(packageVM.DeliveryAddress);
-            string deliveryMachineID = AssignDeliveryMachineID(packageVM.Size);
+            ValidateFullName(package.SenderName);
+            ValidateEmail(package.SenderEmail);
+            ValidatePhone(package.SenderPhone);
+            ValidateAddress(package.SenderAddress);
+            ValidateFullName(package.RecipientName);
+            ValidateEmail(package.RecipientEmail);
+            ValidatePhone(package.RecipientPhone);
+            ValidateAddress(package.DeliveryAddress);
+            string deliveryMachineID = AssignDeliveryMachineID(package.Size);
 
             if (validations.Any(v => v == false) || deliveryMachineID == null)
             {
-                newPackage = null;
                 return false;
             }
-
-            newPackage = new(packageNumber, packageVM.Status, courierID, packageVM.SenderName, packageVM.RecipientName, packageVM.Size, packageVM.SenderEmail, packageVM.SenderPhone,
-                packageVM.RecipientEmail, packageVM.RecipientPhone, packageVM.SenderAddress, packageVM.DeliveryAddress, deliveryMachineID, DateTime.Now);
-            _memoryRepository.PackagesList.Add(newPackage);
+            _packageRepository.Insert(package);
             return true;
         }
 
         protected string AssignCourierID()
         {
-            IEnumerable<string> courierIDs = _memoryRepository.CouriersList.Select(c => c.CourierId);
+            IEnumerable<string> courierIDs = _courierRepository.GetAll().Select(c => c.CourierId);
             return GenerateRandomID(courierIDs);
         }
 
-        protected string AssignDeliveryMachineID(PackageSize size)
+        private static string GenerateRandomID(IEnumerable<string> IdCollection)
         {
-            IEnumerable<string> deliveryMachineIDs = _memoryRepository.DeliveryMachinesList.Select(c => c.DeliveryMachineId);
+            Random rnd = new();
+            int selectedIndex = rnd.Next(IdCollection.Count());
+            return IdCollection.ToArray()[selectedIndex];
+        }
+
+        private string AssignDeliveryMachineID(PackageSize size)
+        {
+            IEnumerable<string> deliveryMachineIDs = _deliverMachineRepository.GetAll().Select(c => c.DeliveryMachineId);
             string generatedId = GenerateRandomID(deliveryMachineIDs);
-            DeliveryMachine deliveryMachine = _memoryRepository.DeliveryMachinesList.First(d => d.DeliveryMachineId == generatedId);
+            DeliveryMachine deliveryMachine = _deliverMachineRepository.Get(generatedId);
             switch (size)
             {
                 case PackageSize.Big:
@@ -84,9 +91,9 @@ namespace ParcelDistributionCenter.Logic
             }
         }
 
-        protected int GeneratePackageNumber()
+        private int GeneratePackageNumber()
         {
-            IEnumerable<int> packagesNumbers = _memoryRepository.PackagesList.Select(c => c.PackageNumber);
+            IEnumerable<int> packagesNumbers = _packageRepository.GetAll().Select(c => c.PackageNumber);
             Random rnd = new();
             int generatedNumber;
             do
@@ -96,35 +103,22 @@ namespace ParcelDistributionCenter.Logic
             return generatedNumber;
         }
 
-        protected void ValidateEmail(string email)
+        private void ValidateAddress(string address)
+        {
+            bool addressValidation = _packageValidator.ValidateAddress(address);
+            validations.Add(addressValidation);
+        }
+
+        private void ValidateEmail(string email)
         {
             bool emailValidation = _packageValidator.ValidateEmail(email);
             validations.Add(emailValidation);
         }
 
-        protected void ValidateFullName(string name)
+        private void ValidateFullName(string name)
         {
             bool fullNameValidation = _packageValidator.ValidateName(name);
             validations.Add(fullNameValidation);
-        }
-
-        protected void ValidatePhone(string phoneNumber)
-        {
-            bool phoneValidation = _packageValidator.ValidatePhoneNumber(phoneNumber);
-            validations.Add(phoneValidation);
-        }
-
-        private static string GenerateRandomID(IEnumerable<string> IdCollection)
-        {
-            Random rnd = new();
-            int selectedIndex = rnd.Next(IdCollection.Count());
-            return IdCollection.ToArray()[selectedIndex];
-        }
-
-        private void ValidateAddress(string address)
-        {
-            bool addressValidation = _packageValidator.ValidateAddress(address);
-            validations.Add(addressValidation);
         }
 
         private void ValidatePackageSize(PackageSize? packageSize)
@@ -137,6 +131,12 @@ namespace ParcelDistributionCenter.Logic
         {
             bool statusValidation = status != null;
             validations.Add(statusValidation);
+        }
+
+        private void ValidatePhone(string phoneNumber)
+        {
+            bool phoneValidation = _packageValidator.ValidatePhoneNumber(phoneNumber);
+            validations.Add(phoneValidation);
         }
     }
 }

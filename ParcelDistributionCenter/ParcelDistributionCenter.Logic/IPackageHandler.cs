@@ -4,11 +4,11 @@ namespace ParcelDistributionCenter.Logic
 {
     public interface IPackageHandler
     {
-        bool DeletePackageByNumber(int packageNumber);
+        bool DeletePackageByNumber(string packageNumber);
 
         IEnumerable<Package> FindAll();
 
-        Package FindPackageByNumber(int packageNumber);
+        Package FindPackageById(string packageNumber);
 
         IEnumerable<Package> FindPackagesByCourierID(string courierId);
 

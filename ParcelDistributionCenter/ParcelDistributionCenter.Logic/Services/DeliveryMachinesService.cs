@@ -1,58 +1,41 @@
-﻿using ParcelDistributionCenter.Model.Models;
+﻿using ParcelDistributionCenter.Logic.Services.IServices;
+using ParcelDistributionCenter.Model.Models;
+using ParcelDistributionCenter.Model.Repositories;
 
 namespace ParcelDistributionCenter.Logic.Services
 {
     public class DeliveryMachinesService : IDeliveryMachinesService
     {
-        private readonly IMemoryRepository _memoryRepository;
+        private readonly IRepository<DeliveryMachine> _repository;
 
-        public DeliveryMachinesService(IMemoryRepository memoryRepository)
+        public DeliveryMachinesService(IRepository<DeliveryMachine> repository)
         {
-            _memoryRepository = memoryRepository;
+            _repository = repository;
         }
 
-        public void CreateNewDeliveryMachine(DeliveryMachine deliveryMachine)
-        {
-            string deliveryMachineID = AssignDeliveryMachineID();
-            DeliveryMachine newDeliveryMachine = new DeliveryMachine(deliveryMachineID, deliveryMachine.Address, deliveryMachine.IsActive, deliveryMachine.BigLockersCount,
-                deliveryMachine.MediumLockersCount, deliveryMachine.SmallLockersCount);
-            _memoryRepository.DeliveryMachinesList.Add(newDeliveryMachine);
-        }
+        public void CreateNewDeliveryMachine(DeliveryMachine deliveryMachine) => _repository.Insert(deliveryMachine);
 
         public bool DeleteDeliveryMachineById(string deliveryMachineId)
         {
             DeliveryMachine deliveryMachine = FindDeliveryMachineById(deliveryMachineId);
             if (deliveryMachine != null)
             {
-                _memoryRepository.DeliveryMachinesList.Remove(deliveryMachine);
+                _repository.Delete(deliveryMachine);
                 return true;
             }
             return false;
         }
 
-        public IEnumerable<DeliveryMachine> GetAll() => _memoryRepository.DeliveryMachinesList;
-
-        private string AssignDeliveryMachineID()
-        {
-            IEnumerable<string> deliveryMachineIDs = _memoryRepository.DeliveryMachinesList.Select(c => c.DeliveryMachineId);
-            return GenerateRandomID(deliveryMachineIDs);
-        }
+        public IEnumerable<DeliveryMachine> GetAll() => _repository.GetAll();
 
         private DeliveryMachine FindDeliveryMachineById(string deliveryMachineId)
         {
-            DeliveryMachine deliveryMachine = _memoryRepository.DeliveryMachinesList.FirstOrDefault(p => p.DeliveryMachineId == deliveryMachineId);
+            DeliveryMachine deliveryMachine = _repository.Get(deliveryMachineId);
             if (deliveryMachine == default)
             {
                 return null;
             }
             return deliveryMachine;
-        }
-
-        private string GenerateRandomID(IEnumerable<string> IdCollection)
-        {
-            Random rnd = new();
-            int selectedIndex = rnd.Next(IdCollection.Count());
-            return IdCollection.ToArray()[selectedIndex];
         }
     }
 }

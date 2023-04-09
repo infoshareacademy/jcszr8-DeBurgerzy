@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using ParcelDistributionCenter.Logic.Services;
+using ParcelDistributionCenter.Logic.Services.IServices;
 using ParcelDistributionCenter.Model.Models;
-using ParcelDistributionCenter.Web.DTOs;
+using ParcelDistributionCenter.Web.ViewModels;
 
 namespace ParcelDistributionCenter.Web.Controllers
 {
@@ -48,9 +48,9 @@ namespace ParcelDistributionCenter.Web.Controllers
         // POST: DeliveryMachinesController/EditDeliveryMachineConfirmed
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditDeliveryMachineConfirmed(DeliveryMachineDTO deliveryMachineDTO)
+        public ActionResult EditDeliveryMachineConfirmed(DeliveryMachineViewModel deliveryMachineViewModel)
         {
-            DeliveryMachine deliveryMachine = _mapper.Map<DeliveryMachine>(deliveryMachineDTO);
+            DeliveryMachine deliveryMachine = _mapper.Map<DeliveryMachine>(deliveryMachineViewModel);
             _deliveryMachinesService.CreateNewDeliveryMachine(deliveryMachine);
             return RedirectToAction(nameof(Details));
         }

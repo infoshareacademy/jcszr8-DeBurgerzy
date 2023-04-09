@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ParcelDistributionCenter.Logic.Models
 {
-    public class PackageVM
+    public class PackageViewModel
     {
         private const string AddressErrorMessage = "Address should contain at least 1 digit, 2 letters and 1 space separator!";
 

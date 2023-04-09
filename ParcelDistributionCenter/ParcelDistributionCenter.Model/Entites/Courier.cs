@@ -1,9 +1,11 @@
 ﻿using Newtonsoft.Json;
+using ParcelDistributionCenter.Model.Models.BaseEntity;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ParcelDistributionCenter.Model.Models
 {
-    public class Courier
-    { 
+    public class Courier : Entity
+    {
         [JsonConstructor]
         public Courier(string courierId, string name, string surname, string email, string phone)
         {
@@ -23,8 +25,10 @@ namespace ParcelDistributionCenter.Model.Models
             Phone = phone;
         }
 
-        public Courier() { }
+        public Courier()
+        { }
 
+        [NotMapped]
         [JsonProperty("courier_id")]
         public string CourierId { get; init; }
 

@@ -1,6 +1,6 @@
 ﻿using ParcelDistributionCenter.Model.Models;
 
-namespace ParcelDistributionCenter.Logic.Services
+namespace ParcelDistributionCenter.Logic.Services.IServices
 {
     public interface IDeliveryMachinesService
     {

@@ -1,41 +1,38 @@
-﻿using ParcelDistributionCenter.Logic.Services;
+﻿using ParcelDistributionCenter.Logic.Services.IServices;
 using ParcelDistributionCenter.Model.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using ParcelDistributionCenter.Model.Repositories;
 
 namespace ParcelDistributionCenter.Logic
 {
     public class CourierHandler : ICourierHandler
     {
-        private readonly IMemoryRepository _memoryRepository;
         private readonly IPackageServices _packageServices;
+        private readonly IRepository<Courier> _repository;
 
-        public CourierHandler(IMemoryRepository memoryRepository, IPackageServices packageServices)
+        public CourierHandler(IRepository<Courier> repository, IPackageServices packageServices)
         {
-            _memoryRepository = memoryRepository;
+            _repository = repository;
             _packageServices = packageServices;
         }
-        public IEnumerable<Courier> FindAll() => _memoryRepository.CouriersList;
 
-        public Courier FindById(string id) => _memoryRepository.CouriersList.FirstOrDefault(c => c.CourierId == id);
-    
-        public void Update(Courier model)
-        {
-            var courier = FindById(model.CourierId);
-            courier.Name= model.Name;
-            courier.Surname= model.Surname;
-            courier.Email= model.Email;
-            courier.Phone= model.Phone;
-        }
         public void Delete(Courier model)
         {
             var courier = FindById(model.CourierId);
             _packageServices.UnassignCouriersPackages(courier.CourierId);
-            _memoryRepository.CouriersList.Remove(courier);
+            _repository.Delete(courier);
+        }
+
+        public IEnumerable<Courier> FindAll() => _repository.GetAll();
+
+        public Courier FindById(string id) => _repository.Get(id);
+
+        public void Update(Courier model)
+        {
+            var courier = FindById(model.CourierId);
+            courier.Name = model.Name;
+            courier.Surname = model.Surname;
+            courier.Email = model.Email;
+            courier.Phone = model.Phone;
         }
     }
 }

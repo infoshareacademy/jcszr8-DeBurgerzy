@@ -1,37 +1,38 @@
 ﻿using ParcelDistributionCenter.Model.Models;
+using ParcelDistributionCenter.Model.Repositories;
 
 namespace ParcelDistributionCenter.Logic
 {
     public class PackageHandler : IPackageHandler
     {
-        private readonly IMemoryRepository _memoryRepository;
+        private readonly IRepository<Package> _repository;
 
-        public PackageHandler(IMemoryRepository memoryRepository)
+        public PackageHandler(IRepository<Package> repository)
         {
-            _memoryRepository = memoryRepository;
+            _repository = repository;
         }
 
-        public bool DeletePackageByNumber(int packageNumber)
+        public bool DeletePackageByNumber(string id)
         {
-            Package package = FindPackageByNumber(packageNumber);
+            Package package = FindPackageById(id);
             if (package != null)
             {
-                _memoryRepository.PackagesList.Remove(package);
+                _repository.Delete(package);
                 return true;
             }
             return false;
         }
 
-        public IEnumerable<Package> FindAll() => _memoryRepository.PackagesList;
+        public IEnumerable<Package> FindAll() => _repository.GetAll();
 
-        public Package FindPackageByNumber(int packageNumber)
+        public Package FindPackageById(string id)
         {
-            Package package = _memoryRepository.PackagesList.FirstOrDefault(p => p.PackageNumber == packageNumber);
-            if (package == default)
+            Package package = _repository.Get(id);
+            if (package != null)
             {
-                return null;
+                return package;
             }
-            return package;
+            return null;
         }
 
         public IEnumerable<Package> FindPackagesByCourierID(string courierId) => ReturnPackages(p => p.CourierId == courierId);
@@ -42,7 +43,7 @@ namespace ParcelDistributionCenter.Logic
 
         public void Update(Package model)
         {
-            var package = FindPackageByNumber(model.PackageNumber);
+            var package = FindPackageById(model.Id);
             package.Status = model.Status;
             package.CourierId = model.CourierId;
             package.SenderName = model.SenderName;
@@ -59,7 +60,7 @@ namespace ParcelDistributionCenter.Logic
 
         private IEnumerable<Package> ReturnPackages(Func<Package, bool> predicate)
         {
-            IEnumerable<Package> packages = _memoryRepository.PackagesList.Where(predicate);
+            IEnumerable<Package> packages = _repository.GetAll().Where(predicate);
             if (!packages.Any())
             {
                 return null;

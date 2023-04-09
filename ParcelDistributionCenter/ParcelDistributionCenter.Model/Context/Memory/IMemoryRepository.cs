@@ -1,6 +1,6 @@
 ﻿using ParcelDistributionCenter.Model.Models;
 
-namespace ParcelDistributionCenter.Logic
+namespace ParcelDistributionCenter.Model.Context.Memory
 {
     public interface IMemoryRepository
     {

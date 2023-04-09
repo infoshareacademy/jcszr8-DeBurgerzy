@@ -1,31 +1,26 @@
 ﻿using ParcelDistributionCenter.Model.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+using ParcelDistributionCenter.Model.Repositories;
 
 namespace ParcelDistributionCenter.Logic
 {
     public class AddNewCourierHandler : IAddNewCourierHandler
     {
-        private readonly IMemoryRepository _memoryRepository;
+        private readonly IRepository<Courier> _repository;
 
-        public AddNewCourierHandler(IMemoryRepository memoryRepository)
+        public AddNewCourierHandler(IRepository<Courier> repository)
         {
-            _memoryRepository = memoryRepository;
+            _repository = repository;
         }
 
         public bool AddNewCourier(Courier courier)
         {
-            Dictionary<string,bool> validator= new Dictionary<string,bool>();
-            validator["Name"] = Validators.CommonValidator.ValidateName(courier.Name);
-            validator["Surname"] = Validators.CommonValidator.ValidateName(courier.Surname);
-            validator["Email"] = Validators.CommonValidator.ValidateEmail(courier.Email);
-            validator["Phone"] = Validators.CommonValidator.ValidatePhoneNumber(courier.Phone);
+            Dictionary<string, bool> validator = new()
+            {
+                ["Name"] = Validators.CommonValidator.ValidateName(courier.Name),
+                ["Surname"] = Validators.CommonValidator.ValidateName(courier.Surname),
+                ["Email"] = Validators.CommonValidator.ValidateEmail(courier.Email),
+                ["Phone"] = Validators.CommonValidator.ValidatePhoneNumber(courier.Phone)
+            };
 
             if (validator.Any(v => v.Value == false))
             {
@@ -34,7 +29,7 @@ namespace ParcelDistributionCenter.Logic
             }
             else
             {
-                _memoryRepository.CouriersList.Add(new Courier(courier.Name, courier.Surname, courier.Email, courier.Phone));
+                _repository.Insert(new Courier(courier.Name, courier.Surname, courier.Email, courier.Phone));
                 return true;
             }
         }
