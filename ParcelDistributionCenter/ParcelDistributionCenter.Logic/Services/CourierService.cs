@@ -2,14 +2,14 @@
 using ParcelDistributionCenter.Model.Models;
 using ParcelDistributionCenter.Model.Repositories;
 
-namespace ParcelDistributionCenter.Logic
+namespace ParcelDistributionCenter.Logic.Services
 {
-    public class CourierHandler : ICourierHandler
+    public class CourierService : ICourierService
     {
         private readonly IPackageServices _packageServices;
         private readonly IRepository<Courier> _repository;
 
-        public CourierHandler(IRepository<Courier> repository, IPackageServices packageServices)
+        public CourierService(IRepository<Courier> repository, IPackageServices packageServices)
         {
             _repository = repository;
             _packageServices = packageServices;

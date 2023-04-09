@@ -1,13 +1,14 @@
-﻿using ParcelDistributionCenter.Model.Models;
+﻿using ParcelDistributionCenter.Logic.Services.IServices;
+using ParcelDistributionCenter.Model.Models;
 using ParcelDistributionCenter.Model.Repositories;
 
-namespace ParcelDistributionCenter.Logic
+namespace ParcelDistributionCenter.Logic.Services
 {
-    public class PackageHandler : IPackageHandler
+    public class PackageService : IPackageService
     {
         private readonly IRepository<Package> _repository;
 
-        public PackageHandler(IRepository<Package> repository)
+        public PackageService(IRepository<Package> repository)
         {
             _repository = repository;
         }

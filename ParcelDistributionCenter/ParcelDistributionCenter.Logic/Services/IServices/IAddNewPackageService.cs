@@ -1,8 +1,8 @@
 ﻿using ParcelDistributionCenter.Model.Models;
 
-namespace ParcelDistributionCenter.Logic
+namespace ParcelDistributionCenter.Logic.Services.IServices
 {
-    public interface IAddNewPackageHandler
+    public interface IAddNewPackageService
     {
         bool AddNewPackage(ref Package package);
     }

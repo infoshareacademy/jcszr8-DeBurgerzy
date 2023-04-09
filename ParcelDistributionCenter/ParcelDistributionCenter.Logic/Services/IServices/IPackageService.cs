@@ -1,8 +1,8 @@
 ﻿using ParcelDistributionCenter.Model.Models;
 
-namespace ParcelDistributionCenter.Logic
+namespace ParcelDistributionCenter.Logic.Services.IServices
 {
-    public interface IPackageHandler
+    public interface IPackageService
     {
         bool DeletePackageByNumber(string packageNumber);
 

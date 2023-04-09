@@ -1,11 +1,12 @@
-﻿using ParcelDistributionCenter.Logic.Validators;
+﻿using ParcelDistributionCenter.Logic.Services.IServices;
+using ParcelDistributionCenter.Logic.Validators;
 using ParcelDistributionCenter.Model.Enums;
 using ParcelDistributionCenter.Model.Models;
 using ParcelDistributionCenter.Model.Repositories;
 
-namespace ParcelDistributionCenter.Logic
+namespace ParcelDistributionCenter.Logic.Services
 {
-    public class AddNewPackageHandler : IAddNewPackageHandler
+    public class AddNewPackageService : IAddNewPackageService
     {
         private readonly IRepository<Courier> _courierRepository;
         private readonly IRepository<DeliveryMachine> _deliverMachineRepository;
@@ -13,7 +14,7 @@ namespace ParcelDistributionCenter.Logic
         private readonly IPackageValidator _packageValidator;
         private readonly List<bool> validations = new();
 
-        public AddNewPackageHandler(IRepository<Package> packageRepository, IRepository<Courier> courierRepository, IRepository<DeliveryMachine> deliverMachineRepository, IPackageValidator packageValidator)
+        public AddNewPackageService(IRepository<Package> packageRepository, IRepository<Courier> courierRepository, IRepository<DeliveryMachine> deliverMachineRepository, IPackageValidator packageValidator)
         {
             _packageRepository = packageRepository;
             _courierRepository = courierRepository;

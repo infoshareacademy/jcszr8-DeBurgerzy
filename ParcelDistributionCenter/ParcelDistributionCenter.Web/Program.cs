@@ -1,6 +1,5 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using ParcelDistributionCenter.Logic;
 using ParcelDistributionCenter.Logic.Services;
 using ParcelDistributionCenter.Logic.Services.IServices;
 using ParcelDistributionCenter.Logic.Validators;
@@ -25,11 +24,11 @@ namespace ParcelDistributionCenter.Web
             // TODO: Wywaliæ MemoryRepository z DependencyInjection i wsadziæ ca³e do Seeda (¿eby nie zajmowa³o
             // pamiêci niepotrzebnie przez okres dzia³ania ca³ego programu
             builder.Services.AddSingleton<IMemoryRepository>(MemoryRepository.LoadData());
-            builder.Services.AddScoped<IAddNewPackageHandler, AddNewPackageHandler>();
-            builder.Services.AddScoped<IPackageHandler, PackageHandler>();
+            builder.Services.AddScoped<IAddNewPackageService, AddNewPackageService>();
+            builder.Services.AddScoped<IPackageService, PackageService>();
             builder.Services.AddScoped<IPackageValidator, PackageValidator>();
-            builder.Services.AddTransient<IAddNewCourierHandler, AddNewCourierHandler>();
-            builder.Services.AddTransient<ICourierHandler, CourierHandler>();
+            builder.Services.AddTransient<IAddNewCourierService, AddNewCourierService>();
+            builder.Services.AddTransient<ICourierService, CourierService>();
             builder.Services.AddTransient<IPackageServices, PackageServices>();
             builder.Services.AddTransient<IDeliveryMachinesService, DeliveryMachinesService>();
             builder.Services.AddAutoMapper(typeof(DeliveryMachineViewModel));

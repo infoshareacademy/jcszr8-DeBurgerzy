@@ -1,13 +1,14 @@
-﻿using ParcelDistributionCenter.Model.Models;
+﻿using ParcelDistributionCenter.Logic.Services.IServices;
+using ParcelDistributionCenter.Model.Models;
 using ParcelDistributionCenter.Model.Repositories;
 
-namespace ParcelDistributionCenter.Logic
+namespace ParcelDistributionCenter.Logic.Services
 {
-    public class AddNewCourierHandler : IAddNewCourierHandler
+    public class AddNewCourierService : IAddNewCourierService
     {
         private readonly IRepository<Courier> _repository;
 
-        public AddNewCourierHandler(IRepository<Courier> repository)
+        public AddNewCourierService(IRepository<Courier> repository)
         {
             _repository = repository;
         }

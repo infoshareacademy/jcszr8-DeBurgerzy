@@ -1,7 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using ParcelDistributionCenter.Logic;
 using ParcelDistributionCenter.Logic.Models;
+using ParcelDistributionCenter.Logic.Services.IServices;
 using ParcelDistributionCenter.Model.Context.Memory;
 using ParcelDistributionCenter.Model.Models;
 
@@ -9,12 +9,12 @@ namespace ParcelDistributionCenter.Web.Controllers
 {
     public class PackagesController : Controller
     {
-        private readonly IAddNewPackageHandler _addNewPackageHandler;
+        private readonly IAddNewPackageService _addNewPackageHandler;
         private readonly IMapper _mapper;
         private readonly IMemoryRepository _memoryRepository;
-        private readonly IPackageHandler _packageHandler;
+        private readonly IPackageService _packageHandler;
 
-        public PackagesController(IMemoryRepository memoryRepository, IAddNewPackageHandler addNewPackageHandler, IPackageHandler packageHandler, IMapper mapper)
+        public PackagesController(IMemoryRepository memoryRepository, IAddNewPackageService addNewPackageHandler, IPackageService packageHandler, IMapper mapper)
         {
             _memoryRepository = memoryRepository;
             _addNewPackageHandler = addNewPackageHandler;

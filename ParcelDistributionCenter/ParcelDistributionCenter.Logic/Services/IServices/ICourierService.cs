@@ -1,8 +1,8 @@
 ﻿using ParcelDistributionCenter.Model.Models;
 
-namespace ParcelDistributionCenter.Logic
+namespace ParcelDistributionCenter.Logic.Services
 {
-    public interface ICourierHandler
+    public interface ICourierService
     {
         IEnumerable<Courier> FindAll();
         Courier FindById(string id);
