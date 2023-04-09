@@ -40,12 +40,12 @@ namespace ParcelDistributionCenter.Logic.Services
 
         private DeliveryMachine FindDeliveryMachineById(string deliveryMachineId)
         {
-            DeliveryMachine package = _memoryRepository.DeliveryMachinesList.FirstOrDefault(p => p.DeliveryMachineId == deliveryMachineId);
-            if (package == default)
+            DeliveryMachine deliveryMachine = _memoryRepository.DeliveryMachinesList.FirstOrDefault(p => p.DeliveryMachineId == deliveryMachineId);
+            if (deliveryMachine == default)
             {
                 return null;
             }
-            return package;
+            return deliveryMachine;
         }
 
         private string GenerateRandomID(IEnumerable<string> IdCollection)
