@@ -4,8 +4,10 @@ namespace ParcelDistributionCenter.Logic.Services
 {
     public interface ICourierService
     {
-        IEnumerable<Courier> GetAll();
-        Courier FindById(string id);
+        public IEnumerable<Courier> GetAll();
+        public List<Package> GetCourierPackages(string courierId);
+
+        public Courier FindById(string id);
         public void Update(Courier model) { }
         public void Delete(Courier courier) { }
     }

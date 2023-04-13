@@ -10,9 +10,8 @@ namespace ParcelDistributionCenter.Model.Models
         // TODO: Think if nullable values are needed
         public Courier? Courier { get; set; }
 
-        [NotMapped]
         [JsonProperty("courier_id")]
-        public string CourierJsonId { get; set; }
+        public string CourierId { get; set; }
 
         [JsonProperty("delivery_address")]
         public string DeliveryAddress { get; set; }

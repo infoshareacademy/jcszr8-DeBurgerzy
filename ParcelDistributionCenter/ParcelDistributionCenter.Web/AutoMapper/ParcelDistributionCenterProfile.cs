@@ -15,7 +15,7 @@ namespace ParcelDistributionCenter.Web.AutoMapper
             CreateMap<PackageViewModel, Package>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.TimeCreated, opt => opt.Ignore())
-                .ForMember(dest => dest.CourierJsonId, opt => opt.Ignore())
+                .ForMember(dest => dest.CourierId, opt => opt.Ignore())
                 .ForMember(dest => dest.DeliveryMachineJsonId, opt => opt.Ignore())
                 .ForMember(dest => dest.PackageNumber, opt => opt.Ignore())
                 .ForMember(dest => dest.Registered, opt => opt.Ignore())
@@ -26,7 +26,7 @@ namespace ParcelDistributionCenter.Web.AutoMapper
 
 
             CreateMap<Courier, CourierViewModel>()
-                 .ForMember(dest => dest.CourierId, opt => opt.MapFrom(src => src.CourierJsonId));
+                 .ForMember(dest => dest.CourierId, opt => opt.MapFrom(src => src.Id));
         }
     }
 }

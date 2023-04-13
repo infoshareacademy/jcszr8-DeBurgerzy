@@ -11,13 +11,13 @@ namespace ParcelDistributionCenter.Web.Controllers
     public class CouriersController : Controller
     {
         //private readonly IAddNewCourierService _addNewCourierHandler;
-        private readonly ICourierService _courierServices;
+        private readonly ICourierService _courierService;
         //private readonly IPackageServices _packageServices;
         private readonly IMapper _mapper;
 
-        public CouriersController(ICourierService courierServices, IPackageServices packageServices, IAddNewCourierService addNewCourierHandler, IMapper mapper)
+        public CouriersController(ICourierService courierService, IPackageServices packageServices, IAddNewCourierService addNewCourierHandler, IMapper mapper)
         {
-            _courierServices = courierServices;
+            _courierService = courierService;
             //_packageServices = packageServices;
             _mapper = mapper;
             //_addNewCourierHandler = addNewCourierHandler;
@@ -25,11 +25,19 @@ namespace ParcelDistributionCenter.Web.Controllers
 
         public ActionResult Index()
         {
-            var courier = _courierServices.GetAll().ToList();
+            var courier = _courierService.GetAll().ToList();
             List<CourierViewModel> model = _mapper.Map<List<Courier>, List<CourierViewModel>>(courier);
                         
             return View(model);
         }
+
+           public ActionResult CourierPackages(string id)
+         {
+            List<Package> model = _courierService.GetCourierPackages(id);
+
+             //var model = _packageServices.GetCourierPackages(id);
+             return View(model);
+         }
 
         /* public ActionResult Assign(string packageNumber, string CourierId, string From)
          {
@@ -45,11 +53,7 @@ namespace ParcelDistributionCenter.Web.Controllers
              }
          }
 
-         public ActionResult CourierPackages(string id)
-         {
-             var model = _packageServices.GetCourierPackages(id);
-             return View(model);
-         }
+      
 
          // GET: CouriersController/Create
          public ActionResult Create()

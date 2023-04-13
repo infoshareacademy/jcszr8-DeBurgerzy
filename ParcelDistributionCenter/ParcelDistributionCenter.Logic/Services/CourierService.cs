@@ -8,11 +8,13 @@ namespace ParcelDistributionCenter.Logic.Services
     public class CourierService : ICourierService
     {
         private readonly IPackageServices _packageServices;
-        private readonly IRepository<Courier> _repository;
+        private readonly IRepository<Courier> _courierRepository;
+        private readonly IRepository<Package> _packageRepository;
 
-        public CourierService(IRepository<Courier> repository, IPackageServices packageServices)
+        public CourierService(IRepository<Courier> courierRepository, IRepository<Package> packageRepository, IPackageServices packageServices)
         {
-            _repository = repository;
+            _courierRepository = courierRepository;
+            _packageRepository = packageRepository;
             _packageServices = packageServices;
         }
 
@@ -20,12 +22,19 @@ namespace ParcelDistributionCenter.Logic.Services
         {
             var courier = FindById(model.CourierJsonId);
             _packageServices.UnassignCouriersPackages(courier.CourierJsonId);
-            _repository.Delete(courier);
+            _courierRepository.Delete(courier);
         }
 
-        public IEnumerable<Courier> GetAll() => _repository.GetAll();
+        public IEnumerable<Courier> GetAll() => _courierRepository.GetAll();
 
-        public Courier FindById(string id) => _repository.Get(id);
+        public List<Package> GetCourierPackages(string courierId)
+        {
+            var packages = _packageRepository.GetAll().Where(p => p.CourierId == courierId).ToList();
+
+            return packages;
+        }
+
+        public Courier FindById(string id) => _courierRepository.Get(id);
 
         public void Update(Courier model)
         {

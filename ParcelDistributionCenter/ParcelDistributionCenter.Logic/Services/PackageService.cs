@@ -35,7 +35,7 @@ namespace ParcelDistributionCenter.Logic.Services
             return null;
         }
 
-        public IEnumerable<Package> FindPackagesByCourierID(string courierId) => ReturnPackages(p => p.CourierJsonId == courierId);
+        public IEnumerable<Package> FindPackagesByCourierID(string courierId) => ReturnPackages(p => p.CourierId == courierId);
 
         public IEnumerable<Package> FindPackagesByDeliveryMachineID(string deliveryMachineID) => ReturnPackages(p => p.DeliveryMachineJsonId == deliveryMachineID);
 
@@ -47,7 +47,7 @@ namespace ParcelDistributionCenter.Logic.Services
         {
             var package = FindPackageById(model.Id);
             package.Status = model.Status;
-            package.CourierJsonId = model.CourierJsonId;
+            package.CourierId = model.CourierId;
             package.SenderName = model.SenderName;
             package.RecipientName = model.RecipientName;
             package.SenderEmail = model.SenderEmail;

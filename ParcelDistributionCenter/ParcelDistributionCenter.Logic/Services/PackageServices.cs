@@ -20,14 +20,7 @@ namespace ParcelDistributionCenter.Logic.Services
         public void AssignPackage(string packageNumber, string CourierId)
         {
             var package = _packageRepository.GetAll().First(p => p.PackageNumber == Int32.Parse(packageNumber));
-            package.CourierJsonId = CourierId;
-        }
-
-        public List<Package> GetCourierPackages(string courierId)
-        {
-            var packages = _packageRepository.GetAll().Where(p => p.CourierJsonId == courierId).ToList();
-
-            return packages;
+            package.CourierId = CourierId;
         }
 
         public List<AssignPackagesVM> GetUnassignedPackages()
@@ -36,8 +29,8 @@ namespace ParcelDistributionCenter.Logic.Services
             var assignPackages = new List<AssignPackagesVM>();
             foreach (Package package in _packageRepository.GetAll())
             {
-                List<string> CourisrsIds = _courierRepository.GetAll().Select(c => c.CourierJsonId).ToList();
-                Courier courier = _courierRepository.GetAll().FirstOrDefault(c => c.CourierJsonId == package.CourierJsonId);
+                List<string> CourisrsIds = _courierRepository.GetAll().Select(c => c.Id).ToList();
+                Courier courier = _courierRepository.GetAll().FirstOrDefault(c => c.Id == package.CourierId);
                 if (courier == null)
                 {
                     courier = unknownCourier;
@@ -63,13 +56,13 @@ namespace ParcelDistributionCenter.Logic.Services
 
         public void UnassignCouriersPackages(string CourierId)
         {
-            _packageRepository.GetAll().Where(p => p.CourierJsonId == CourierId).Select(p => p.CourierJsonId = "Unassigned");
+            _packageRepository.GetAll().Where(p => p.CourierId == CourierId).Select(p => p.CourierId = "Unassigned");
         }
 
         public void UnassignPackage(string packageNumber)
         {
             var package = _packageRepository.GetAll().First(p => p.PackageNumber == Int32.Parse(packageNumber));
-            package.CourierJsonId = "Unassigned";
+            package.CourierId = "Unassigned";
         }
     }
 }
