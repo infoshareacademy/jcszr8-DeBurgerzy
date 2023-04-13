@@ -11,7 +11,7 @@ namespace ParcelDistributionCenter.Model.Models
         public Courier? Courier { get; set; }
 
         [JsonProperty("courier_id")]
-        public string CourierId { get; set; }
+        public string? CourierId { get; set; }
 
         [JsonProperty("delivery_address")]
         public string DeliveryAddress { get; set; }
