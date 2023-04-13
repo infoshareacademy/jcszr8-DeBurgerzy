@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ParcelDistributionCenter.Model.Models.Courier>
+﻿@model IEnumerable<ParcelDistributionCenter.Web.ViewModels.CourierViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -44,13 +44,12 @@
             </td>
 
             <td>
-                @Html.ActionLink("Show Packages", "CourierPackages", new { id=item.CourierJsonId})
+                @Html.ActionLink("Show Packages", "CourierPackages", new { id=item.CourierId})
                 
             </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id=item.CourierJsonId}) |
-                    @Html.ActionLink("Details", "Details", new { id=item.CourierJsonId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id=item.CourierJsonId })
+                    @Html.ActionLink("Edit", "Edit", new { id=item.CourierId}) |
+                    @Html.ActionLink("Delete", "Delete", new { id=item.CourierId })
                 </td>
 
         </tr>

@@ -23,6 +23,10 @@ namespace ParcelDistributionCenter.Web.AutoMapper
                 .ForMember(dest => dest.Courier, opt => opt.Ignore())
                 // TODO: Delete this, ensure to be displayed in Views
                 .ForMember(dest => dest.DeliveryMachine, opt => opt.Ignore());
+
+
+            CreateMap<Courier, CourierViewModel>()
+                 .ForMember(dest => dest.CourierId, opt => opt.MapFrom(src => src.CourierJsonId));
         }
     }
 }

@@ -35,9 +35,11 @@ namespace ParcelDistributionCenter.Model.Models
         public string CourierJsonId { get; init; }
 
         // TODO: Think if nullable values are needed
+        [NotMapped]
         public DeliveryMachine? DeliveryMachine { get; set; }
 
         // TODO: Think if nullable values are needed
+        [NotMapped]
         public string? DeliveryMachineId { get; set; }
 
         [JsonProperty("email")]

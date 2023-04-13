@@ -35,6 +35,8 @@ namespace ParcelDistributionCenter.Web
             var app = builder.Build();
             CreateDbIfNotExists(app);
 
+
+
             var mapper = (IMapper)app.Services.GetRequiredService(typeof(IMapper));
             mapper.ConfigurationProvider.AssertConfigurationIsValid();
 

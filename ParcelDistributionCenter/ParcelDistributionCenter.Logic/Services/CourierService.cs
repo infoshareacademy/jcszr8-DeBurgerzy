@@ -23,7 +23,7 @@ namespace ParcelDistributionCenter.Logic.Services
             _repository.Delete(courier);
         }
 
-        public IEnumerable<Courier> FindAll() => _repository.GetAll();
+        public IEnumerable<Courier> GetAll() => _repository.GetAll();
 
         public Courier FindById(string id) => _repository.Get(id);
 
