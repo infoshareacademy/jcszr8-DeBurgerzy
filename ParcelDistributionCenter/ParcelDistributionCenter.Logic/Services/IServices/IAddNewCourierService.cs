@@ -1,8 +1,8 @@
 ﻿using ParcelDistributionCenter.Model.Models;
 
-namespace ParcelDistributionCenter.Logic
+namespace ParcelDistributionCenter.Logic.Services.IServices
 {
-    public interface IAddNewCourierHandler
+    public interface IAddNewCourierService
     {
         bool AddNewCourier(Courier courier);
     }

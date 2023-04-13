@@ -51,8 +51,8 @@
                 </td>
                 <td>
                     <div class="text-center">
-                            <a asp-action="EditDeliveryMachine" asp-route-deliveryMachineId="@item.DeliveryMachineId" class="btn btn-primary">Edit</a>
-                        <a asp-action="DeleteDeliveryMachine" asp-route-deliveryMachineId="@item.DeliveryMachineId" class="btn btn-danger" onclick="return confirmDelete();">Delete</a>
+                            <a asp-action="EditDeliveryMachine" asp-route-deliveryMachineId="@item.DeliveryMachineJsonId" class="btn btn-primary">Edit</a>
+                        <a asp-action="DeleteDeliveryMachine" asp-route-deliveryMachineId="@item.DeliveryMachineJsonId" class="btn btn-danger" onclick="return confirmDelete();">Delete</a>
                         <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Back to Home</a>
                     </div>
                 </td>

@@ -11,71 +11,72 @@
 </p>
 <div class="card-body">
     <table id="datatablesSimple">
-    <thead>
-        <tr>
+        <thead>
+            <tr>
 
-            <th>
-                @Html.DisplayNameFor(model => model.PackageNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Registered)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Size)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CourierId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DeliveryAddress)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RecipientEmail)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SenderEmail)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.PackageNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Registered)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Size)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CourierId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeliveryAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RecipientEmail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SenderEmail)
-            </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.PackageNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Registered)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Size)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CourierJsonId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DeliveryAddress)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RecipientEmail)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SenderEmail)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PackageNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Registered)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Size)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CourierJsonId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DeliveryAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RecipientEmail)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SenderEmail)
+                    </td>
 
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.PackageNumber}) |
-                @Html.ActionLink("Details", "Details", new { id=item.PackageNumber  }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.PackageNumber  })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id=item.PackageNumber}) |
+                        @Html.ActionLink("Details", "Details", new { id=item.PackageNumber  }) |
+                        @Html.ActionLink("Delete", "Delete", new { id=item.PackageNumber  })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>

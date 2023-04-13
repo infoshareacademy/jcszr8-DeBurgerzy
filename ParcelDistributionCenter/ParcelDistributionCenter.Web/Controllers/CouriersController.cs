@@ -1,17 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ParcelDistributionCenter.Logic;
 using ParcelDistributionCenter.Logic.Services;
+using ParcelDistributionCenter.Logic.Services.IServices;
+using ParcelDistributionCenter.Model.Context.Memory;
 using ParcelDistributionCenter.Model.Models;
 
 namespace ParcelDistributionCenter.Web.Controllers
 {
     public class CouriersController : Controller
     {
-        private readonly IAddNewCourierHandler _addNewCourierHandler;
-        private readonly ICourierHandler _courierHandler;
+        private readonly IAddNewCourierService _addNewCourierHandler;
+        private readonly ICourierService _courierHandler;
         private readonly IMemoryRepository _memoryRepository;
         private readonly IPackageServices _packageServices;
-        public CouriersController(IMemoryRepository memoryRepository, ICourierHandler courierHandler, IPackageServices packageServices, IAddNewCourierHandler addNewCourierHandler)
+        public CouriersController(IMemoryRepository memoryRepository, ICourierService courierHandler, IPackageServices packageServices, IAddNewCourierService addNewCourierHandler)
         {
             _memoryRepository = memoryRepository;
             _courierHandler = courierHandler;

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using ParcelDistributionCenter.Model.Models;
 
-namespace ParcelDistributionCenter.Logic
+namespace ParcelDistributionCenter.Model.Context.Memory
 {
     public class MemoryRepository : IMemoryRepository
     {

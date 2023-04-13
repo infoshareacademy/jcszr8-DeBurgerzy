@@ -1,21 +1,25 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using ParcelDistributionCenter.Logic;
 using ParcelDistributionCenter.Logic.Models;
+using ParcelDistributionCenter.Logic.Services.IServices;
+using ParcelDistributionCenter.Model.Context.Memory;
 using ParcelDistributionCenter.Model.Models;
 
 namespace ParcelDistributionCenter.Web.Controllers
 {
     public class PackagesController : Controller
     {
-        private readonly IAddNewPackageHandler _addNewPackageHandler;
+        private readonly IAddNewPackageService _addNewPackageHandler;
+        private readonly IMapper _mapper;
         private readonly IMemoryRepository _memoryRepository;
-        private readonly IPackageHandler _packageHandler;
+        private readonly IPackageService _packageHandler;
 
-        public PackagesController(IMemoryRepository memoryRepository, IAddNewPackageHandler addNewPackageHandler, IPackageHandler packageHandler)
+        public PackagesController(IMemoryRepository memoryRepository, IAddNewPackageService addNewPackageHandler, IPackageService packageHandler, IMapper mapper)
         {
             _memoryRepository = memoryRepository;
             _addNewPackageHandler = addNewPackageHandler;
             _packageHandler = packageHandler;
+            _mapper = mapper;
         }
 
         // GET: PackagesController/AddPackage
@@ -27,26 +31,27 @@ namespace ParcelDistributionCenter.Web.Controllers
         // POST: PackagesController/AddPackage
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddPackage(PackageVM packageVM)
+        public ActionResult AddPackage(PackageViewModel packageViewModel)
         {
             if (ModelState.IsValid)
             {
-                bool added = _addNewPackageHandler.AddNewPackage(packageVM, out Package package);
+                Package package = _mapper.Map<Package>(packageViewModel);
+                bool added = _addNewPackageHandler.AddNewPackage(ref package);
                 if (added)
                 {
                     return RedirectToAction(nameof(DisplaySinglePackage), package);
                 }
                 TempData["Message"] = "Something went wrong. Please ensure that provided data is correct.";
                 TempData["MessageClass"] = "alert-danger";
-                return View(packageVM);
+                return View(packageViewModel);
             }
-            return View(packageVM);
+            return View(packageViewModel);
         }
 
         // GET: PackagesController/AddPackage
-        public ActionResult DeletePackage(int packageNumber)
+        public ActionResult DeletePackage(string id)
         {
-            bool deleted = _packageHandler.DeletePackageByNumber(packageNumber);
+            bool deleted = _packageHandler.DeletePackageByNumber(id);
             if (deleted)
             {
                 TempData["Message"] = "Package successfully deleted";
@@ -61,7 +66,7 @@ namespace ParcelDistributionCenter.Web.Controllers
         // GET: PackagesController/DisplayPackages
         public ActionResult DisplayPackages()
         {
-            var model = _packageHandler.FindAll();
+            IEnumerable<Package> model = _packageHandler.GetAllPackages();
             return View(model);
         }
 
@@ -72,9 +77,9 @@ namespace ParcelDistributionCenter.Web.Controllers
         }
 
         // GET: PackagesController/Edit/5
-        public ActionResult Edit(int packageNumber)
+        public ActionResult Edit(string id)
         {
-            var model = _packageHandler.FindPackageByNumber(packageNumber);
+            var model = _packageHandler.FindPackageById(id);
             return View(model);
         }
 
@@ -94,9 +99,9 @@ namespace ParcelDistributionCenter.Web.Controllers
             }
         }
 
-        public ActionResult FindByPackageID(int packageID)
+        public ActionResult FindByPackageID(string packageID)
         {
-            var model = _packageHandler.FindPackageByNumber(packageID);
+            var model = _packageHandler.FindPackageById(packageID);
 
             if (model == null)
             {
