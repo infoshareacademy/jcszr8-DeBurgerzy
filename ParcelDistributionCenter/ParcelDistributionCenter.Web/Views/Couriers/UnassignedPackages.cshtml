@@ -53,7 +53,7 @@
                 @Html.DisplayFor(modelItem => item.SenderEmail)
             </td>
             <td>
-                @Html.ActionLink("Assign", "Assign", new { packageNumber=item.PackageNumber, courierId=ViewContext.RouteData.Values["id"]})
+                <a asp-action="Assign" asp-route-packageNumber=@item.PackageNumber asp-route-courierId=@ViewContext.RouteData.Values["id"] class="btn btn-primary">Assign</a>
             </td>
         </tr>
 }
