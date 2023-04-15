@@ -69,5 +69,12 @@ namespace ParcelDistributionCenter.Logic.Services
         {
             return _packageRepository.GetAll().Where(p => p.CourierId == null);
         }
+
+        public void AssignPackage(string packageNumber, string CourierId)
+        {
+            var package = _packageRepository.GetAll().First(p => p.PackageNumber == Int32.Parse(packageNumber));
+            package.CourierId = CourierId;
+            _packageRepository.Update(package);
+        }
     }
 }

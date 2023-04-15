@@ -13,7 +13,7 @@ namespace ParcelDistributionCenter.Logic.Services
         public Courier FindById(string id);
         public void Update(Courier model) { }
         public void Delete(Courier courier) { }
-
+        public void AssignPackage(string packageNumber, string CourierId) { }
         public IEnumerable<Package> GetUnassignedPackages();
     }
 }

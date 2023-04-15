@@ -96,6 +96,21 @@ namespace ParcelDistributionCenter.Web.Controllers
             List<PackageViewModel> packageVM = _mapper.Map<List<Package>, List<PackageViewModel>>(package);
             return View(packageVM);
         }
+
+        public ActionResult Assign(string packageNumber, string CourierId, string From)
+        {
+            if (CourierId != null)
+            {
+                _courierService.AssignPackage(packageNumber, CourierId);
+                return From == "UnassignedPackages" ? RedirectToAction(From) : RedirectToAction("CourierPackages", new { id = CourierId });
+            }
+            else
+            {
+                var model = _courierService.GetAll();
+                return View(model);
+            }
+        }
+
         /*public ActionResult UnassignPackage(string packageNumber, string CourierId)
         {
             _packageService.UnassignPackage(packageNumber);
@@ -103,19 +118,7 @@ namespace ParcelDistributionCenter.Web.Controllers
             return RedirectToAction("CourierPackages", new { id = CourierId });
         }
 
-         public ActionResult Assign(string packageNumber, string CourierId, string From)
-         {
-             if (CourierId != null)
-             {
-                 _packageServices.AssignPackage(packageNumber, CourierId);
-                 return From == "UnassignedPackages" ? RedirectToAction(From) : RedirectToAction("CourierPackages", new { id = CourierId });
-             }
-             else
-             {
-                 var model = _courierHandler.FindAll();
-                 return View(model);
-             }
-         }
+        
 
       
 
