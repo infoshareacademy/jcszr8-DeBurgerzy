@@ -33,13 +33,8 @@ namespace ParcelDistributionCenter.Logic.Services
 
         public IEnumerable<Courier> GetAll() => _courierRepository.GetAll();
 
-        public List<Package> GetCourierPackages(string courierId)
-        {
-            var packages = _packageRepository.GetAll().Where(p => p.CourierId == courierId).ToList();
-
-            return packages;
-        }
-
+        public List<Package> GetCourierPackages(string courierId) => _packageRepository.GetAll().Where(p => p.CourierId == courierId).ToList();
+        
         public Courier FindById(string id) => _courierRepository.Get(id);
 
         public void UnassignCouriersPackages(string CourierId)
@@ -63,14 +58,11 @@ namespace ParcelDistributionCenter.Logic.Services
 
         }
 
-        public IEnumerable<Package> GetUnassignedPackages()
-        {
-            return _packageRepository.GetAll().Where(p => p.CourierId == null);
-        }
+        public IEnumerable<Package> GetUnassignedPackages() => _packageRepository.GetAll().Where(p => p.CourierId == null);
 
         public void AssignPackage(string packageNumber, string CourierId)
         {
-            var package = _packageRepository.GetAll().First(p => p.PackageNumber == Int32.Parse(packageNumber));
+            var package = _packageRepository.GetAll().First(p => p.PackageNumber == int.Parse(packageNumber));
             package.CourierId = CourierId;
             _packageRepository.Update(package);
         }
