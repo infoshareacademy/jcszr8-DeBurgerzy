@@ -13,8 +13,20 @@ namespace ParcelDistributionCenter.Logic.Services
         {
             _repository = repository;
         }
+        public IEnumerable<Package> GetAllPackages() => _repository.GetAll();
 
-        public bool DeletePackageByNumber(string id)
+        public Package FindPackageByPackageNumber(int packageNumber)
+        {
+            var packages = _repository.GetAll();
+            Package package = packages.FirstOrDefault(x => x.PackageNumber == packageNumber);
+            if (package != null)
+            {
+                return package;
+            }
+            return null;
+        }
+
+        /*public bool DeletePackageByNumber(string id)
         {
             Package package = FindPackageById(id);
             if (package != null)
@@ -25,15 +37,7 @@ namespace ParcelDistributionCenter.Logic.Services
             return false;
         }
 
-        public Package FindPackageById(string id)
-        {
-            Package package = _repository.Get(id);
-            if (package != null)
-            {
-                return package;
-            }
-            return null;
-        }
+    
 
         public IEnumerable<Package> FindPackagesByCourierID(string courierId) => ReturnPackages(p => p.CourierId == courierId);
 
@@ -41,7 +45,6 @@ namespace ParcelDistributionCenter.Logic.Services
 
         public IEnumerable<Package> FindPackagesBySenderEmail(string senderEmail) => ReturnPackages(p => p.SenderEmail == senderEmail);
 
-        public IEnumerable<Package> GetAllPackages() => _repository.GetAll();
 
         public void Update(Package model)
         {
@@ -69,5 +72,6 @@ namespace ParcelDistributionCenter.Logic.Services
             }
             return packages;
         }
+        */
     }
 }
