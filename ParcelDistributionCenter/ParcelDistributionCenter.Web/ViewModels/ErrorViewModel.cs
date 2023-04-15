@@ -1,4 +1,4 @@
-namespace ParcelDistributionCenter.Web.Models
+namespace ParcelDistributionCenter.Web.ViewModels
 {
     public class ErrorViewModel
     {

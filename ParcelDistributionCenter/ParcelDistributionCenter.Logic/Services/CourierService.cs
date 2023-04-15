@@ -1,6 +1,9 @@
 ﻿using ParcelDistributionCenter.Logic.Services.IServices;
 using ParcelDistributionCenter.Model.Models;
+using ParcelDistributionCenter.Model.Models.BaseEntity;
 using ParcelDistributionCenter.Model.Repositories;
+using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 
 namespace ParcelDistributionCenter.Logic.Services
 {
@@ -18,11 +21,16 @@ namespace ParcelDistributionCenter.Logic.Services
             _packageServices = packageServices;
         }
 
-        public void Delete(Courier model)
+        public bool DeleteCourier(string id)
         {
-            var courier = FindById(model.CourierJsonId);
-            _packageServices.UnassignCouriersPackages(courier.CourierJsonId);
-            _courierRepository.Delete(courier);
+            var courier = FindById(id);
+            if (courier != null)
+            {
+                UnassignCouriersPackages(id);
+                _courierRepository.Delete(courier);
+                return true;
+            }
+            return false;
         }
 
         public IEnumerable<Courier> GetAll() => _courierRepository.GetAll();
@@ -36,13 +44,30 @@ namespace ParcelDistributionCenter.Logic.Services
 
         public Courier FindById(string id) => _courierRepository.Get(id);
 
+        public void UnassignCouriersPackages(string CourierId)
+        {
+            IEnumerable<Package> packages = _packageRepository.GetAll().Where(p => p.CourierId == CourierId);
+            packages.Select(p => p.CourierId = "Unassigned");
+            foreach(Package p in packages)
+            {
+                _packageRepository.Update(p);
+            }
+        }
+
         public void Update(Courier model)
         {
-            var courier = FindById(model.CourierJsonId);
+            var courier = FindById(model.Id);
             courier.Name = model.Name;
             courier.Surname = model.Surname;
             courier.Email = model.Email;
             courier.Phone = model.Phone;
+            _courierRepository.Update(courier);
+
+        }
+
+        public IEnumerable<Package> GetUnassignedPackages()
+        {
+            return _packageRepository.GetAll().Where(p => p.CourierId == null);
         }
     }
 }

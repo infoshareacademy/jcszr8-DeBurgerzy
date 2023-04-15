@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using ParcelDistributionCenter.Logic.Models;
 using ParcelDistributionCenter.Model.Models;
 using ParcelDistributionCenter.Web.ViewModels;
 
@@ -25,6 +24,8 @@ namespace ParcelDistributionCenter.Web.AutoMapper
                 .ForMember(dest => dest.DeliveryMachine, opt => opt.Ignore());
 
 
+            CreateMap<Package, PackageViewModel>();
+            
             CreateMap<Courier, CourierViewModel>()
                  .ForMember(dest => dest.CourierId, opt => opt.MapFrom(src => src.Id));
         }
