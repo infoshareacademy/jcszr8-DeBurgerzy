@@ -13,13 +13,11 @@ namespace ParcelDistributionCenter.Web.Controllers
     {
         private readonly IAddNewCourierService _addNewCourierService;
         private readonly ICourierService _courierService;
-        //private readonly IPackageServices _packageServices;
         private readonly IMapper _mapper;
 
-        public CouriersController(ICourierService courierService, IPackageServices packageServices, IAddNewCourierService addNewCourierService, IMapper mapper)
+        public CouriersController(ICourierService courierService, IAddNewCourierService addNewCourierService, IMapper mapper)
         {
             _courierService = courierService;
-            //_packageServices = packageServices;
             _mapper = mapper;
             _addNewCourierService = addNewCourierService;
         }
@@ -31,15 +29,11 @@ namespace ParcelDistributionCenter.Web.Controllers
                         
             return View(model);
         }
-
-           public ActionResult CourierPackages(string id)
+        public ActionResult CourierPackages(string id)
          {
             List<Package> model = _courierService.GetCourierPackages(id);
-
-             //var model = _packageServices.GetCourierPackages(id);
              return View(model);
          }
-
         // GET: CouriersController/Delete/5
         public ActionResult Delete(string id)
         {
@@ -70,7 +64,6 @@ namespace ParcelDistributionCenter.Web.Controllers
                 return View(nameof(Index));
             }
         }
-
         // GET: CouriersController/Create
         public ActionResult Create()
         {
@@ -89,14 +82,12 @@ namespace ParcelDistributionCenter.Web.Controllers
                 }
             return View();
         }
-
         public ActionResult UnassignedPackages()
         {
             var package= _courierService.GetUnassignedPackages().ToList();
             List<PackageViewModel> packageVM = _mapper.Map<List<Package>, List<PackageViewModel>>(package);
             return View(packageVM);
         }
-
         public ActionResult Assign(string packageNumber, string CourierId, string From)
         {
             if (CourierId != null)
@@ -110,30 +101,11 @@ namespace ParcelDistributionCenter.Web.Controllers
                 return View(model);
             }
         }
-
-        /*public ActionResult UnassignPackage(string packageNumber, string CourierId)
+        public ActionResult UnassignPackage(string packageNumber, string CourierId)
         {
-            _packageService.UnassignPackage(packageNumber);
-            var model = _packageServices.GetCourierPackages(CourierId);
+            _courierService.UnassignPackage(packageNumber);
+            var model = _courierService.GetCourierPackages(CourierId);
             return RedirectToAction("CourierPackages", new { id = CourierId });
         }
-
-        
-
-      
-
-        
-
-         
-
-         
-
-
-        
-     }
-        */
-
-        // GET: CouriersController
-
     }
 }

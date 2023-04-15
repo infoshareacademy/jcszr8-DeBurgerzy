@@ -10,15 +10,13 @@ namespace ParcelDistributionCenter.Logic.Services
     // TODO: Prevent code from nullable ids coming form json
     public class CourierService : ICourierService
     {
-        private readonly IPackageServices _packageServices;
         private readonly IRepository<Courier> _courierRepository;
         private readonly IRepository<Package> _packageRepository;
 
-        public CourierService(IRepository<Courier> courierRepository, IRepository<Package> packageRepository, IPackageServices packageServices)
+        public CourierService(IRepository<Courier> courierRepository, IRepository<Package> packageRepository)
         {
             _courierRepository = courierRepository;
             _packageRepository = packageRepository;
-            _packageServices = packageServices;
         }
 
         public bool DeleteCourier(string id)
@@ -74,6 +72,12 @@ namespace ParcelDistributionCenter.Logic.Services
         {
             var package = _packageRepository.GetAll().First(p => p.PackageNumber == Int32.Parse(packageNumber));
             package.CourierId = CourierId;
+            _packageRepository.Update(package);
+        }
+        public void UnassignPackage(string packageNumber)
+        {
+            var package = _packageRepository.GetAll().First(p => p.PackageNumber == Int32.Parse(packageNumber));
+            package.CourierId = null;
             _packageRepository.Update(package);
         }
     }

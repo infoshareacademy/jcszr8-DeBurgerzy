@@ -29,7 +29,6 @@ namespace ParcelDistributionCenter.Web
             builder.Services.AddScoped<IPackageValidator, PackageValidator>();
             builder.Services.AddTransient<IAddNewCourierService, AddNewCourierService>();
             builder.Services.AddTransient<ICourierService, CourierService>();
-            builder.Services.AddTransient<IPackageServices, PackageServices>();
             builder.Services.AddTransient<IDeliveryMachinesService, DeliveryMachinesService>();
             builder.Services.AddAutoMapper(typeof(DeliveryMachineViewModel));
             var app = builder.Build();
