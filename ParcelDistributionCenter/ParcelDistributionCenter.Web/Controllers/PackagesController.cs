@@ -119,21 +119,5 @@ namespace ParcelDistributionCenter.Web.Controllers
         {
           return RedirectToAction("DisplaySinglePackage", new { packageNumber = pVM.PackageNumber });
         }
-
-
-
-        /*
-        public ActionResult FindPackageByCourierID(string CourierId)
-        {
-            var model = _packageService.FindPackagesByCourierID(CourierId);
-
-            if (model == null)
-            {
-                return RedirectToAction("InsertCourierID", "Packages");
-            }
-            return View(model);
-        }
-
-        */
     }
 }

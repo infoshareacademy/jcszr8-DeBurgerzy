@@ -106,6 +106,6 @@ namespace ParcelDistributionCenter.Web.Controllers
             _courierService.UnassignPackage(packageNumber);
             var model = _courierService.GetCourierPackages(CourierId);
             return RedirectToAction("CourierPackages", new { id = CourierId });
-        }
+        }        
     }
 }

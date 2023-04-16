@@ -4,10 +4,51 @@
     ViewData["Title"] = "SinglePackageDataPartialViewModel";
 }
 
-<h3 class="text-center">Package Number: @Model.PackageNumber</h3>
-<h4 class="text-center">Registration Date: @Model.Registered</h4>
 
-<hr />
+
+
+<div class="row align-items-center justify-content-center">
+    <div class="col-md-3 align-self-center">
+        <h2 class="text-center">Main Information</h2>
+    </div>
+</div>
+
+<div class="row align-items-center justify-content-center">
+    <div class="col-md-3">
+        <table>
+                <tr>
+                    <i class="bi bi-upc-scan"></i>
+                    <label asp-for="PackageNumber" class="control-label"></label>
+                </tr>
+                <tr>
+                    <input asp-for="PackageNumber" class="form-control" readonly />
+                    <span asp-validation-for="PackageNumber" class="text-danger"></span>
+                </tr>
+                <tr>
+                    <i class="bi bi-alarm-fill"></i>
+                    <label asp-for="Registered" class="control-label"></label>
+                </tr>
+                <tr>
+                    <input asp-for="Registered" class="form-control" readonly />
+                    <span asp-validation-for="Registered" class="text-danger"></span>
+                </tr>
+            <tr>
+                    <td class="text-center">
+                        <i class="fas fa-compress-arrows-alt"></i>
+                        <label asp-for="Size" class="control-label"></label>
+                        <input asp-for=@Model.Size class="form-control" disabled="disabled" />
+                    </td>
+            </tr>
+            <tr>
+                    <td class="text-center">
+                        <i class="fas fa-clock"></i>
+                        <label asp-for="Status" class="control-label"></label>
+                        <input asp-for=@Model.Status class="form-control" disabled="disabled" />
+                    </td>
+            </tr>
+        </table>
+    </div>
+</div>
 
 <div class="row align-items-center justify-content-center">
     <div class="col-md-3 align-self-center">
@@ -98,37 +139,6 @@
                 <div>
                     <input asp-for="RecipientPhone" class="form-control" disabled="disabled"/>
                 </div>
-            </tr>
-        </table>
-    </div>
-</div>
-
-<div class="row align-items-center justify-content-center">
-    <div class="col-md-3 align-self-center">
-        <h2 class="text-center">Other</h2>
-    </div>
-</div>
-
-<div class="row align-items-center justify-content-center">
-    <div class="col-md-3">
-        <table>
-            <tr>
-                <td>
-                    <div class="text-center">
-                        <i class="fas fa-compress-arrows-alt"></i>
-                        <label asp-for="Size" class="control-label"></label>
-                        <input asp-for=@Model.Size class="form-control" disabled="disabled"/>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="text-center">
-                        <i class="fas fa-clock"></i>
-                        <label asp-for="Status" class="control-label"></label>
-                        <input asp-for=@Model.Status class="form-control" disabled="disabled"/>
-                    </div>
-                </td>
             </tr>
         </table>
     </div>
