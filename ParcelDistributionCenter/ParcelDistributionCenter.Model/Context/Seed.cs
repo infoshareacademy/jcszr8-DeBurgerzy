@@ -29,7 +29,7 @@ namespace ParcelDistributionCenter.Model.Context
             List<Courier> couriers = _memoryRepository.CouriersList;
             foreach (Courier courier in couriers)
             {
-                IEnumerable<Package> courierPackages = packages.Where(p => p.CourierId == courier.CourierJsonId);
+                IEnumerable<Package> courierPackages = packages.Where(p => p.CourierJsonId == courier.CourierJsonId);
                 foreach (Package courierPackage in courierPackages)
                 {
                     courier.Packages.Add(courierPackage);
