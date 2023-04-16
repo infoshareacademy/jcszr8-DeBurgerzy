@@ -54,7 +54,8 @@ namespace ParcelDistributionCenter.Logic.Services
             _repository.Update(package);
             return true;
         }
-
+        public IEnumerable<int> GetAllPackagesNumber() => _repository.GetAll().Select(p => p.PackageNumber);
+        
         /*
         public IEnumerable<Package> FindPackagesByCourierID(string courierId) => ReturnPackages(p => p.CourierId == courierId);
 

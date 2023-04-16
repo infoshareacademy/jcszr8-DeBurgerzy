@@ -106,21 +106,25 @@ namespace ParcelDistributionCenter.Web.Controllers
             TempData["MessageClass"] = "alert-danger";
             return View();
         }
-        /*
 
-
-
-        public ActionResult FindByPackageID(string packageID)
+        // GET: PackagesController/FindPackageByNumber
+        public ActionResult FindPackageByNumber()
         {
-            var model = _packageService.FindPackageById(packageID);
-
-            if (model == null)
-            {
-                return RedirectToAction("InsertPackageID", "Packages");
-            }
-            return View(model);
+            var packagesNumbers = _packageService.GetAllPackagesNumber();
+           PackageNumberViweModel packageNumberViewModel = new() { PackageNumbers=packagesNumbers, PackageNumber = 0 };
+            return View(packageNumberViewModel);
+        }
+        // POST: PackagesController/FindPackageBuNumber/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult FindPackageByNumber(PackageNumberViweModel pVM)
+        {
+          return RedirectToAction("DisplaySinglePackage", new { packageNumber = pVM.PackageNumber });
         }
 
+
+
+        /*
         public ActionResult FindPackageByCourierID(string CourierId)
         {
             var model = _packageService.FindPackagesByCourierID(CourierId);
@@ -132,21 +136,6 @@ namespace ParcelDistributionCenter.Web.Controllers
             return View(model);
         }
 
-        // GET: PackagesController
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        public ActionResult InsertCourierID()
-        {
-            return View();
-        }
-
-        public ActionResult InsertPackageID(int packageID)
-        {
-            return View();
-        }
         */
     }
 }

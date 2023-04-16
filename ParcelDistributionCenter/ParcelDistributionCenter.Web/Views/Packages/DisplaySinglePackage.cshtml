@@ -14,7 +14,7 @@
     <a asp-action="Edit" asp-route-PackageNumber="@Model.PackageNumber" class="btn btn-primary">Edit</a>
     <a asp-action="DeletePackage" asp-route-PackageNumber="@Model.PackageNumber" class="btn btn-danger" onclick="return confirmDelete();">Delete</a>
     <a asp-controller="Packages" asp-action="DisplayPackages" class="btn btn-secondary">Back to Packages List</a>
-</dic>
+</div>
 
 <script>
         function confirmDelete()
