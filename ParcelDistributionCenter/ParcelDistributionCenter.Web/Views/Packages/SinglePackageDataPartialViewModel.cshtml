@@ -32,20 +32,16 @@
                     <input asp-for="Registered" class="form-control" readonly />
                     <span asp-validation-for="Registered" class="text-danger"></span>
                 </tr>
-            <tr>
-                    <td class="text-center">
-                        <i class="fas fa-compress-arrows-alt"></i>
-                        <label asp-for="Size" class="control-label"></label>
-                        <input asp-for=@Model.Size class="form-control" disabled="disabled" />
-                    </td>
-            </tr>
-            <tr>
-                    <td class="text-center">
-                        <i class="fas fa-clock"></i>
-                        <label asp-for="Status" class="control-label"></label>
-                        <input asp-for=@Model.Status class="form-control" disabled="disabled" />
-                    </td>
-            </tr>
+                <tr>
+                    <i class="fas fa-compress-arrows-alt"></i>
+                    <label asp-for="Size" class="control-label"></label>
+                    <input asp-for=@Model.Size class="form-control" disabled="disabled" />
+                </tr>
+                <tr>
+                    <i class="fas fa-clock"></i>
+                    <label asp-for="Status" class="control-label"></label>
+                    <input asp-for=@Model.Status class="form-control" disabled="disabled" />
+                </tr>
         </table>
     </div>
 </div>
