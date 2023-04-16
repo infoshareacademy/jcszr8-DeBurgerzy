@@ -2,6 +2,7 @@
 
 namespace ParcelDistributionCenter.Logic.Validators
 {
+    [Obsolete("ZOBACZYĆ, CZY TO W OGÓLE JEST POTRZEBNE")]
     public class CommonValidator
     {
         public static bool ValidateAddress(string address)
@@ -33,7 +34,7 @@ namespace ParcelDistributionCenter.Logic.Validators
 
         public static bool ValidateEmail(string email)
         {
-            var regex =@"/ ^[a - zA - Z0 - 9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/";
+            var regex = @"/ ^[a - zA - Z0 - 9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/";
 
             Match match = Regex.Match(email, regex, RegexOptions.IgnoreCase);
 
@@ -41,12 +42,12 @@ namespace ParcelDistributionCenter.Logic.Validators
             {
                 return false;
             }
-                return true;
+            return true;
         }
 
         public static bool ValidateName(string name)
         {
-            if (name.Length >= 3 & name.Length<=12)
+            if (name.Length >= 3 & name.Length <= 12)
             {
                 return true;
             }

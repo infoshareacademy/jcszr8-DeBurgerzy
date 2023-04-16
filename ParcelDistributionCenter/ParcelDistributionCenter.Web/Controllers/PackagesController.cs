@@ -1,11 +1,12 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ParcelDistributionCenter.Logic.Services.IServices;
-using ParcelDistributionCenter.Model.Models;
+using ParcelDistributionCenter.Model.Entites;
 using ParcelDistributionCenter.Web.ViewModels;
 
 namespace ParcelDistributionCenter.Web.Controllers
 {
+    [Obsolete("TEMPDATA ATTRIBUTE INTO SEPARATE CLASS")]
     public class PackagesController : Controller
     {
         private readonly IAddNewPackageService _addNewPackageService;
@@ -75,7 +76,6 @@ namespace ParcelDistributionCenter.Web.Controllers
         {
             var package = _packageService.FindPackageByPackageNumber(packageNumber);
             PackageViewModel packageViewModel = _mapper.Map<Package, PackageViewModel>(package);
-
             return View(packageViewModel);
         }
 
@@ -109,15 +109,16 @@ namespace ParcelDistributionCenter.Web.Controllers
         public ActionResult FindPackageByNumber()
         {
             var packagesNumbers = _packageService.GetAllPackagesNumber();
-           PackageNumberViewModel packageNumberViewModel = new() { PackageNumbers=packagesNumbers, PackageNumber = 0 };
+            PackageNumberViewModel packageNumberViewModel = new() { PackageNumbers = packagesNumbers, PackageNumber = 0 };
             return View(packageNumberViewModel);
         }
+
         // POST: PackagesController/FindPackageBuNumber/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult FindPackageByNumber(PackageNumberViewModel pVM)
         {
-          return RedirectToAction("DisplaySinglePackage", new { packageNumber = pVM.PackageNumber });
+            return RedirectToAction("DisplaySinglePackage", new { packageNumber = pVM.PackageNumber });
         }
     }
 }

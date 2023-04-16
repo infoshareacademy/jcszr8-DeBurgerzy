@@ -1,18 +1,23 @@
-﻿using ParcelDistributionCenter.Model.Models;
-using ParcelDistributionCenter.Web.Models;
+﻿using ParcelDistributionCenter.Model.Entites;
 
-namespace ParcelDistributionCenter.Logic.Services
+namespace ParcelDistributionCenter.Logic.Services.IServices
 {
     public interface ICourierService
     {
-        public IEnumerable<Courier> GetAll();
-        public List<Package> GetCourierPackages(string courierId);
+        public void AssignPackage(string packageNumber, string CourierId);
+
         public bool DeleteCourier(string courierId);
+
         public Courier FindById(string id);
-        public void Update(Courier model) { }
-        public void Delete(Courier courier) { }
-        public void AssignPackage(string packageNumber, string CourierId) { }
-        public void UnassignPackage(string packageNumber) { }
+
+        public IEnumerable<Courier> GetAll();
+
+        public List<Package> GetCourierPackages(string courierId);
+
         public IEnumerable<Package> GetUnassignedPackages();
+
+        public void UnassignPackage(string packageNumber);
+
+        public void Update(Courier model);
     }
 }

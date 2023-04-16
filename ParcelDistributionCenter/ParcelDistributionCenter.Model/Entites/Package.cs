@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
+using ParcelDistributionCenter.Model.Entites.BaseEntity;
 using ParcelDistributionCenter.Model.Enums;
-using ParcelDistributionCenter.Model.Models.BaseEntity;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ParcelDistributionCenter.Model.Models
+namespace ParcelDistributionCenter.Model.Entites
 {
     public class Package : Entity
     {
@@ -11,6 +11,10 @@ namespace ParcelDistributionCenter.Model.Models
         public Courier? Courier { get; set; }
 
         public string? CourierId { get; set; }
+
+        [NotMapped]
+        [JsonProperty("courier_id")]
+        public string CourierJsonId { get; set; }
 
         [JsonProperty("delivery_address")]
         public string DeliveryAddress { get; set; }
@@ -21,10 +25,6 @@ namespace ParcelDistributionCenter.Model.Models
         [NotMapped]
         [JsonProperty("delivery_machine_id")]
         public string DeliveryMachineJsonId { get; set; }
-
-        [NotMapped]
-        [JsonProperty("courier_id")]
-        public string CourierJsonId { get; set; }
 
         [JsonProperty("package_number")]
         public int PackageNumber { get; set; }

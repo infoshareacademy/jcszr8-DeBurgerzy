@@ -1,5 +1,5 @@
 ﻿using ParcelDistributionCenter.Logic.Services.IServices;
-using ParcelDistributionCenter.Model.Models;
+using ParcelDistributionCenter.Model.Entites;
 using ParcelDistributionCenter.Model.Repositories;
 
 namespace ParcelDistributionCenter.Logic.Services
@@ -31,7 +31,7 @@ namespace ParcelDistributionCenter.Logic.Services
             }
             else
             {
-                _repository.Insert(new Courier(courier.Name, courier.Surname, courier.Email, courier.Phone));
+                _repository.Insert(courier);
                 return true;
             }
         }

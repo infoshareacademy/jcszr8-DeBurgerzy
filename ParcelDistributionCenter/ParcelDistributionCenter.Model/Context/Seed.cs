@@ -1,13 +1,13 @@
 ﻿using ParcelDistributionCenter.Model.Context.Memory;
-using ParcelDistributionCenter.Model.Models;
+using ParcelDistributionCenter.Model.Entites;
 
 namespace ParcelDistributionCenter.Model.Context
 {
     public class Seed
     {
-        private readonly IMemoryRepository _memoryRepository;
+        private readonly IJsonReader _memoryRepository;
 
-        public Seed(IMemoryRepository memoryRepository)
+        public Seed(IJsonReader memoryRepository)
         {
             _memoryRepository = memoryRepository;
         }

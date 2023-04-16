@@ -23,7 +23,7 @@ namespace ParcelDistributionCenter.Web
             builder.Services.AddControllersWithViews();
             // TODO: Wywaliæ MemoryRepository z DependencyInjection i wsadziæ ca³e do Seeda (¿eby nie zajmowa³o
             // pamiêci niepotrzebnie przez okres dzia³ania ca³ego programu
-            builder.Services.AddSingleton<IMemoryRepository>(MemoryRepository.LoadData());
+            builder.Services.AddSingleton<IJsonReader>(JsonReader.LoadData());
             builder.Services.AddScoped<IAddNewPackageService, AddNewPackageService>();
             builder.Services.AddScoped<IPackageService, PackageService>();
             builder.Services.AddScoped<IPackageValidator, PackageValidator>();
@@ -67,7 +67,7 @@ namespace ParcelDistributionCenter.Web
             var services = scope.ServiceProvider;
             try
             {
-                var memoryRepository = services.GetRequiredService<IMemoryRepository>();
+                var memoryRepository = services.GetRequiredService<IJsonReader>();
                 var context = services.GetRequiredService<ParcelDistributionCenterContext>();
                 Seed seed = new(memoryRepository);
                 seed.Initialize(context);

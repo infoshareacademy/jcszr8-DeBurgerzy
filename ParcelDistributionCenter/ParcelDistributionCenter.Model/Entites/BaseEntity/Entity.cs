@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ParcelDistributionCenter.Model.Models.BaseEntity
+namespace ParcelDistributionCenter.Model.Entites.BaseEntity
 {
     public class Entity
     {

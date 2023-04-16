@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
-using ParcelDistributionCenter.Model.Models.BaseEntity;
+using ParcelDistributionCenter.Model.Entites.BaseEntity;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ParcelDistributionCenter.Model.Models
+namespace ParcelDistributionCenter.Model.Entites
 {
     public class DeliveryMachine : Entity
     {

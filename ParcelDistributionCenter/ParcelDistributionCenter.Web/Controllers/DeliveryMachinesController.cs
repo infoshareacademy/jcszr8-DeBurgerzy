@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ParcelDistributionCenter.Logic.Services.IServices;
-using ParcelDistributionCenter.Model.Models;
+using ParcelDistributionCenter.Model.Entites;
 using ParcelDistributionCenter.Web.ViewModels;
 
 namespace ParcelDistributionCenter.Web.Controllers
 {
+    [Obsolete("ADD CREATE METHOD")]
     public class DeliveryMachinesController : Controller
     {
         private readonly IDeliveryMachinesService _deliveryMachinesService;
@@ -52,7 +53,7 @@ namespace ParcelDistributionCenter.Web.Controllers
                 TempData["MessageClass"] = "alert-danger";
                 return RedirectToAction(nameof(Details));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 TempData["Message"] = "Unable to delete the selected delivery machine because it is associated with one or more packages.";
                 TempData["MessageClass"] = "alert-danger";
@@ -67,6 +68,7 @@ namespace ParcelDistributionCenter.Web.Controllers
             return View(deliveryMachines);
         }
 
+        // TODO: ZABEZPIECZYĆ PRZED NULLEM
         // GET: DeliveryMachinesController/EditDeliveryMachine
         public ActionResult EditDeliveryMachine(string id)
         {

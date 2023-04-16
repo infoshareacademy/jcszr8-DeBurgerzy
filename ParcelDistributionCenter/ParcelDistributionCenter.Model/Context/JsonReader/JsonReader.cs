@@ -1,9 +1,10 @@
 ﻿using Newtonsoft.Json;
-using ParcelDistributionCenter.Model.Models;
+using ParcelDistributionCenter.Model.Entites;
 
 namespace ParcelDistributionCenter.Model.Context.Memory
 {
-    public class MemoryRepository : IMemoryRepository
+    [Obsolete("WYWALIĆ Z KONTENERA I WRZUCIC DO KOSNTRUKTORA/METODY INITIALIZE SEEDA")]
+    public class JsonReader : IJsonReader
     {
         private const string couriersJsonName = "couriers.json";
         private const string deliveryMachinesJsonName = "deliveryMachines.json";
@@ -11,7 +12,7 @@ namespace ParcelDistributionCenter.Model.Context.Memory
         private const string packagesJsonName = "packages.json";
         private static readonly string appDomainPath = AppDomain.CurrentDomain.BaseDirectory;
 
-        public MemoryRepository(List<Courier> couriersList, List<DeliveryMachine> deliveryMachinesList, List<Package> packagesList)
+        public JsonReader(List<Courier> couriersList, List<DeliveryMachine> deliveryMachinesList, List<Package> packagesList)
         {
             CouriersList = couriersList;
             DeliveryMachinesList = deliveryMachinesList;
@@ -22,7 +23,7 @@ namespace ParcelDistributionCenter.Model.Context.Memory
         public List<DeliveryMachine> DeliveryMachinesList { get; private set; }
         public List<Package> PackagesList { get; private set; }
 
-        public static MemoryRepository LoadData()
+        public static JsonReader LoadData()
         {
             string couriers = File.ReadAllText(Path.Combine(appDomainPath, jsonFolderName, couriersJsonName));
             List<Courier> couriersList = JsonConvert.DeserializeObject<List<Courier>>(couriers);
@@ -33,7 +34,7 @@ namespace ParcelDistributionCenter.Model.Context.Memory
             string parcels = File.ReadAllText(Path.Combine(appDomainPath, jsonFolderName, packagesJsonName));
             List<Package> packagesList = JsonConvert.DeserializeObject<List<Package>>(parcels);
 
-            return new MemoryRepository(couriersList, deliveryMachinesList, packagesList);
+            return new JsonReader(couriersList, deliveryMachinesList, packagesList);
         }
     }
 }

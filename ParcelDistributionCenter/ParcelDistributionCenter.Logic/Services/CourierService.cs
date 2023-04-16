@@ -1,9 +1,6 @@
 ﻿using ParcelDistributionCenter.Logic.Services.IServices;
-using ParcelDistributionCenter.Model.Models;
-using ParcelDistributionCenter.Model.Models.BaseEntity;
+using ParcelDistributionCenter.Model.Entites;
 using ParcelDistributionCenter.Model.Repositories;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
 
 namespace ParcelDistributionCenter.Logic.Services
 {
@@ -19,6 +16,13 @@ namespace ParcelDistributionCenter.Logic.Services
             _packageRepository = packageRepository;
         }
 
+        public void AssignPackage(string packageNumber, string CourierId)
+        {
+            var package = _packageRepository.GetAll().First(p => p.PackageNumber == int.Parse(packageNumber));
+            package.CourierId = CourierId;
+            _packageRepository.Update(package);
+        }
+
         public bool DeleteCourier(string id)
         {
             var courier = FindById(id);
@@ -31,20 +35,28 @@ namespace ParcelDistributionCenter.Logic.Services
             return false;
         }
 
+        public Courier FindById(string id) => _courierRepository.Get(id);
+
         public IEnumerable<Courier> GetAll() => _courierRepository.GetAll();
 
         public List<Package> GetCourierPackages(string courierId) => _packageRepository.GetAll().Where(p => p.CourierId == courierId).ToList();
-        
-        public Courier FindById(string id) => _courierRepository.Get(id);
+
+        public IEnumerable<Package> GetUnassignedPackages() => _packageRepository.GetAll().Where(p => p.CourierId == null);
 
         public void UnassignCouriersPackages(string CourierId)
         {
             IEnumerable<Package> packages = _packageRepository.GetAll().Where(p => p.CourierId == CourierId);
-            packages.Select(p => p.CourierId = "Unassigned");
-            foreach(Package p in packages)
+            foreach (Package p in packages)
             {
                 _packageRepository.Update(p);
             }
+        }
+
+        public void UnassignPackage(string packageNumber)
+        {
+            var package = _packageRepository.GetAll().First(p => p.PackageNumber == Int32.Parse(packageNumber));
+            package.CourierId = null;
+            _packageRepository.Update(package);
         }
 
         public void Update(Courier model)
@@ -55,22 +67,6 @@ namespace ParcelDistributionCenter.Logic.Services
             courier.Email = model.Email;
             courier.Phone = model.Phone;
             _courierRepository.Update(courier);
-
-        }
-
-        public IEnumerable<Package> GetUnassignedPackages() => _packageRepository.GetAll().Where(p => p.CourierId == null);
-
-        public void AssignPackage(string packageNumber, string CourierId)
-        {
-            var package = _packageRepository.GetAll().First(p => p.PackageNumber == int.Parse(packageNumber));
-            package.CourierId = CourierId;
-            _packageRepository.Update(package);
-        }
-        public void UnassignPackage(string packageNumber)
-        {
-            var package = _packageRepository.GetAll().First(p => p.PackageNumber == Int32.Parse(packageNumber));
-            package.CourierId = null;
-            _packageRepository.Update(package);
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using ParcelDistributionCenter.Logic.Services.IServices;
-using ParcelDistributionCenter.Model.Models;
+using ParcelDistributionCenter.Model.Entites;
 using ParcelDistributionCenter.Model.Repositories;
 
 namespace ParcelDistributionCenter.Logic.Services
@@ -33,14 +33,6 @@ namespace ParcelDistributionCenter.Logic.Services
 
         public void UpdateDeliveryMachine(DeliveryMachine deliveryMachine) => _repository.Update(deliveryMachine);
 
-        private DeliveryMachine FindDeliveryMachineById(string deliveryMachineId)
-        {
-            DeliveryMachine deliveryMachine = _repository.Get(deliveryMachineId);
-            if (deliveryMachine == default)
-            {
-                return null;
-            }
-            return deliveryMachine;
-        }
+        private DeliveryMachine FindDeliveryMachineById(string deliveryMachineId) => _repository.Get(deliveryMachineId);
     }
 }

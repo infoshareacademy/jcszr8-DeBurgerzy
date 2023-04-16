@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ParcelDistributionCenter.Model.Models;
+using ParcelDistributionCenter.Model.Entites;
 using ParcelDistributionCenter.Web.ViewModels;
 
 namespace ParcelDistributionCenter.Web.AutoMapper
@@ -19,9 +19,7 @@ namespace ParcelDistributionCenter.Web.AutoMapper
                 .ForMember(dest => dest.CourierId, opt => opt.Ignore())
                 .ForMember(dest => dest.DeliveryMachineJsonId, opt => opt.Ignore())
                 .ForMember(dest => dest.CourierJsonId, opt => opt.Ignore())
-                // TODO: Delete this, ensure to be displayed in Views
                 .ForMember(dest => dest.Courier, opt => opt.Ignore())
-                // TODO: Delete this, ensure to be displayed in Views
                 .ForMember(dest => dest.DeliveryMachine, opt => opt.Ignore());
 
             CreateMap<Package, PackageViewModel>();

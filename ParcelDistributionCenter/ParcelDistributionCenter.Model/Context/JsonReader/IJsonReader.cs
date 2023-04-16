@@ -1,8 +1,8 @@
-﻿using ParcelDistributionCenter.Model.Models;
+﻿using ParcelDistributionCenter.Model.Entites;
 
 namespace ParcelDistributionCenter.Model.Context.Memory
 {
-    public interface IMemoryRepository
+    public interface IJsonReader
     {
         List<Courier> CouriersList { get; }
         List<DeliveryMachine> DeliveryMachinesList { get; }

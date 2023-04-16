@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ParcelDistributionCenter.Model.Models;
+using ParcelDistributionCenter.Model.Entites;
 
 namespace ParcelDistributionCenter.Model.Context
 {

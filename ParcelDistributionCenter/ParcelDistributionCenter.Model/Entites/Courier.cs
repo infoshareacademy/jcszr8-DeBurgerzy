@@ -1,35 +1,12 @@
 ﻿using Newtonsoft.Json;
-using ParcelDistributionCenter.Model.Models.BaseEntity;
+using ParcelDistributionCenter.Model.Entites.BaseEntity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ParcelDistributionCenter.Model.Models
+namespace ParcelDistributionCenter.Model.Entites
 {
     public class Courier : Entity
     {
-        [Obsolete("Get rid of contructor")]
-        [JsonConstructor]
-        public Courier(string courierId, string name, string surname, string email, string phone)
-        {
-            CourierJsonId = courierId;
-            Name = name;
-            Surname = surname;
-            Email = email;
-            Phone = phone;
-        }
-
-        [Obsolete("Get rid of contructor")]
-        public Courier(string name, string surname, string email, string phone)
-        {
-            CourierJsonId = Guid.NewGuid().ToString();
-            Name = name;
-            Surname = surname;
-            Email = email;
-            Phone = phone;
-        }
-
-        public Courier()
-        { }
-
         [NotMapped]
         [JsonProperty("courier_id")]
         public string CourierJsonId { get; init; }
@@ -41,6 +18,7 @@ namespace ParcelDistributionCenter.Model.Models
         public string? DeliveryMachineId { get; set; }
 
         [JsonProperty("email")]
+        [EmailAddress]
         public string Email { get; set; }
 
         [JsonProperty("name")]

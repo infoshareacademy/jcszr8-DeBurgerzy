@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ParcelDistributionCenter.Model.Context;
-using ParcelDistributionCenter.Model.Models.BaseEntity;
+using ParcelDistributionCenter.Model.Entites.BaseEntity;
 
 namespace ParcelDistributionCenter.Model.Repositories
 {

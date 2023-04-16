@@ -2,6 +2,7 @@
 
 namespace ParcelDistributionCenter.Logic.Validators
 {
+    [Obsolete("MOŻLIWE, ŻE PRZEROBIĆ NA STATIC I WYWALIĆ Z KONTENERA I CZY W OGÓLE POTRZEBNE")]
     public class PackageValidator : IPackageValidator
     {
         public bool ValidateAddress(string address)
@@ -27,22 +28,6 @@ namespace ParcelDistributionCenter.Logic.Validators
                     }
                 }
                 if (numberCount >= 1 & letterCount >= 2 & separatorCount >= 1)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public bool ValidateEmail(string email)
-        {
-            if (email != null)
-            {
-                bool monkeyChar = email.Contains('@');
-                bool dotchar = email.Contains('.');
-                bool whiteSpaceChar = email.Contains(' ');
-
-                if (monkeyChar & dotchar & !whiteSpaceChar & email.Length > 6)
                 {
                     return true;
                 }

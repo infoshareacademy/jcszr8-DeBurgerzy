@@ -1,4 +1,4 @@
-﻿using ParcelDistributionCenter.Model.Models;
+﻿using ParcelDistributionCenter.Model.Entites;
 
 namespace ParcelDistributionCenter.Logic.Services.IServices
 {

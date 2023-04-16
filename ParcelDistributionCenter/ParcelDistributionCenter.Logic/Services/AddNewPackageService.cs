@@ -1,7 +1,7 @@
 ﻿using ParcelDistributionCenter.Logic.Services.IServices;
 using ParcelDistributionCenter.Logic.Validators;
+using ParcelDistributionCenter.Model.Entites;
 using ParcelDistributionCenter.Model.Enums;
-using ParcelDistributionCenter.Model.Models;
 using ParcelDistributionCenter.Model.Repositories;
 
 namespace ParcelDistributionCenter.Logic.Services
@@ -25,16 +25,14 @@ namespace ParcelDistributionCenter.Logic.Services
 
         public bool AddNewPackage(ref Package package)
         {
-            int packageNumber = GeneratePackageNumber();
+            GeneratePackageNumber();
             ValidatePackageStatus(package.Status);
             ValidatePackageSize(package.Size);
-            string courierID = AssignCourierID();
+            AssignCourierID();
             ValidateFullName(package.SenderName);
-            ValidateEmail(package.SenderEmail);
             ValidatePhone(package.SenderPhone);
             ValidateAddress(package.SenderAddress);
             ValidateFullName(package.RecipientName);
-            ValidateEmail(package.RecipientEmail);
             ValidatePhone(package.RecipientPhone);
             ValidateAddress(package.DeliveryAddress);
             string deliveryMachineID = AssignDeliveryMachineID(package.Size);
@@ -43,6 +41,7 @@ namespace ParcelDistributionCenter.Logic.Services
             {
                 return false;
             }
+
             _packageRepository.Insert(package);
             return true;
         }
@@ -74,24 +73,21 @@ namespace ParcelDistributionCenter.Logic.Services
                         {
                             return generatedId;
                         }
-                        return null;
+                        break;
 
                     case PackageSize.Medium:
                         if (deliveryMachine.MediumLockersCount > 0)
                         {
                             return generatedId;
                         }
-                        return null;
+                        break;
 
                     case PackageSize.Small:
                         if (deliveryMachine.SmallLockersCount > 0)
                         {
                             return generatedId;
                         }
-                        return null;
-
-                    default:
-                        return null;
+                        break;
                 }
             }
             return null;
@@ -113,12 +109,6 @@ namespace ParcelDistributionCenter.Logic.Services
         {
             bool addressValidation = _packageValidator.ValidateAddress(address);
             validations.Add(addressValidation);
-        }
-
-        private void ValidateEmail(string email)
-        {
-            bool emailValidation = _packageValidator.ValidateEmail(email);
-            validations.Add(emailValidation);
         }
 
         private void ValidateFullName(string name)
