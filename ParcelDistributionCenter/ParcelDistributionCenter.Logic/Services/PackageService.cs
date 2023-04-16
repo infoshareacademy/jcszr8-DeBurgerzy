@@ -25,10 +25,9 @@ namespace ParcelDistributionCenter.Logic.Services
             }
             return null;
         }
-
-        /*public bool DeletePackageByNumber(string id)
+        public bool DeletePackageByNumber(int packageNumber)
         {
-            Package package = FindPackageById(id);
+            Package package = FindPackageByPackageNumber(packageNumber);
             if (package != null)
             {
                 _repository.Delete(package);
@@ -36,21 +35,12 @@ namespace ParcelDistributionCenter.Logic.Services
             }
             return false;
         }
-
-    
-
-        public IEnumerable<Package> FindPackagesByCourierID(string courierId) => ReturnPackages(p => p.CourierId == courierId);
-
-        public IEnumerable<Package> FindPackagesByDeliveryMachineID(string deliveryMachineID) => ReturnPackages(p => p.DeliveryMachineJsonId == deliveryMachineID);
-
-        public IEnumerable<Package> FindPackagesBySenderEmail(string senderEmail) => ReturnPackages(p => p.SenderEmail == senderEmail);
-
-
-        public void Update(Package model)
+        public bool Update(Package model)
         {
-            var package = FindPackageById(model.Id);
+            var package = FindPackageByPackageNumber(model.PackageNumber);
+            if (package ==null) return false;
+
             package.Status = model.Status;
-            package.CourierId = model.CourierId;
             package.SenderName = model.SenderName;
             package.RecipientName = model.RecipientName;
             package.SenderEmail = model.SenderEmail;
@@ -59,9 +49,20 @@ namespace ParcelDistributionCenter.Logic.Services
             package.RecipientPhone = model.RecipientPhone;
             package.SenderAddress = model.SenderAddress;
             package.DeliveryAddress = model.DeliveryAddress;
-            package.DeliveryMachineJsonId = model.DeliveryMachineJsonId;
             package.Registered = model.Registered;
+            package.Size = model.Size;
+            _repository.Update(package);
+            return true;
         }
+
+        /*
+        public IEnumerable<Package> FindPackagesByCourierID(string courierId) => ReturnPackages(p => p.CourierId == courierId);
+
+        public IEnumerable<Package> FindPackagesByDeliveryMachineID(string deliveryMachineID) => ReturnPackages(p => p.DeliveryMachineJsonId == deliveryMachineID);
+
+        public IEnumerable<Package> FindPackagesBySenderEmail(string senderEmail) => ReturnPackages(p => p.SenderEmail == senderEmail);
+
+
 
         private IEnumerable<Package> ReturnPackages(Func<Package, bool> predicate)
         {

@@ -64,45 +64,49 @@ namespace ParcelDistributionCenter.Web.Controllers
             return View(packageViewModel);
         }
 
-        /*
-        // GET: PackagesController/AddPackage
-        public ActionResult DeletePackage(string id)
+        // GET: PackagesController/DeletePackage/5
+        public ActionResult DeletePackage(int packageNumber)
         {
-            bool deleted = _packageService.DeletePackageByNumber(id);
+            bool deleted =_packageService.DeletePackageByNumber(packageNumber);
             if (deleted)
             {
                 TempData["Message"] = "Package successfully deleted";
                 TempData["MessageClass"] = "alert-success";
-                return RedirectToAction(nameof(AddPackage));
+                return RedirectToAction(nameof(DisplayPackages));
             }
             TempData["Message"] = "Package not deleted! Something went wrong";
             TempData["MessageClass"] = "alert-danger";
             return RedirectToAction(nameof(DisplayPackages));
         }
-
-
         // GET: PackagesController/Edit/5
-        public ActionResult Edit(string packageNumber)
+        public ActionResult Edit(int packageNumber)
         {
-            var model = _packageService.FindPackageByPackageNumber(int.Parse(packageNumber));
-            return View(model);
+            var package = _packageService.FindPackageByPackageNumber(packageNumber);
+            PackageViewModel packageViewModel = _mapper.Map<Package, PackageViewModel>(package);
+            return View(packageViewModel);
         }
 
         // POST: PackagesController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Package package)
+        public ActionResult Edit(PackageViewModel packageViewModel)
         {
-            try
+           
+            Package package = _mapper.Map<PackageViewModel, Package>(packageViewModel);
+            bool edited=_packageService.Update(package);
+            if (edited)
             {
-                _packageService.Update(package);
+                TempData["Message"] = "Package successfully edited";
+                TempData["MessageClass"] = "alert-success";
                 return RedirectToAction(nameof(DisplayPackages));
             }
-            catch
-            {
-                return View(nameof(DisplayPackages));
-            }
+            TempData["Message"] = "Package not edited! Something went wrong";
+            TempData["MessageClass"] = "alert-danger";
+            return View();
         }
+        /*
+
+
 
         public ActionResult FindByPackageID(string packageID)
         {

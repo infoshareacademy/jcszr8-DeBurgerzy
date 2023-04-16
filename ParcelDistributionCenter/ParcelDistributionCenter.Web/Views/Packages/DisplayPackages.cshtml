@@ -67,7 +67,7 @@
                     <td>
                         <a asp-action="Edit" asp-route-PackageNumber="@item.PackageNumber" class="btn btn-primary">Edit</a>
                         <a asp-action="DisplaySinglePackage" asp-route-PackageNumber="@item.PackageNumber" class="btn btn-secondary">Details</a>
-                        <a asp-action="Delete" asp-route-PackageNumber="@item.PackageNumber" class="btn btn-danger" onclick="return confirmDelete();">Delete</a>
+                        <a asp-action="DeletePackage" asp-route-PackageNumber="@item.PackageNumber" class="btn btn-danger" onclick="return confirmDelete();">Delete</a>
                     </td>
                 </tr>
             }

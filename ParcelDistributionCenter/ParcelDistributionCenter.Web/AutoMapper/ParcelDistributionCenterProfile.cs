@@ -16,8 +16,6 @@ namespace ParcelDistributionCenter.Web.AutoMapper
                 .ForMember(dest => dest.TimeCreated, opt => opt.Ignore())
                 .ForMember(dest => dest.CourierId, opt => opt.Ignore())
                 .ForMember(dest => dest.DeliveryMachineJsonId, opt => opt.Ignore())
-                .ForMember(dest => dest.PackageNumber, opt => opt.Ignore())
-                .ForMember(dest => dest.Registered, opt => opt.Ignore())
                 // TODO: Delete this, ensure to be displayed in Views
                 .ForMember(dest => dest.Courier, opt => opt.Ignore())
                 // TODO: Delete this, ensure to be displayed in Views
