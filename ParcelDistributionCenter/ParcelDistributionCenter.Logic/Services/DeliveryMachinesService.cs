@@ -29,6 +29,10 @@ namespace ParcelDistributionCenter.Logic.Services
 
         public IEnumerable<DeliveryMachine> GetAll() => _repository.GetAll();
 
+        public DeliveryMachine GetDeliveryMachineById(string id) => FindDeliveryMachineById(id);
+
+        public void UpdateDeliveryMachine(DeliveryMachine deliveryMachine) => _repository.Update(deliveryMachine);
+
         private DeliveryMachine FindDeliveryMachineById(string deliveryMachineId)
         {
             DeliveryMachine deliveryMachine = _repository.Get(deliveryMachineId);
