@@ -38,7 +38,9 @@ namespace ParcelDistributionCenter.Web.Controllers
                 bool added = _addNewPackageService.AddNewPackage(ref package);
                 if (added)
                 {
-                    return RedirectToAction("AddPackageConfirm", package);
+                    TempData["Message"] = "Package successfully added!";
+                    TempData["MessageClass"] = "alert-success";
+                    return RedirectToAction(nameof(DisplaySinglePackage), packageViewModel);
                 }
                 TempData["Message"] = "Something went wrong. Please ensure that provided data is correct.";
                 TempData["MessageClass"] = "alert-danger";

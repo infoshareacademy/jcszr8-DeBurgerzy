@@ -62,35 +62,39 @@ namespace ParcelDistributionCenter.Logic.Services
 
         private string AssignDeliveryMachineID(PackageSize size)
         {
-            IEnumerable<string> deliveryMachineIDs = _deliverMachineRepository.GetAll().Select(c => c.DeliveryMachineJsonId);
+            IEnumerable<string> deliveryMachineIDs = _deliverMachineRepository.GetAll().Select(c => c.Id);
             string generatedId = GenerateRandomID(deliveryMachineIDs);
             DeliveryMachine deliveryMachine = _deliverMachineRepository.Get(generatedId);
-            switch (size)
+            if (deliveryMachine != null)
             {
-                case PackageSize.Big:
-                    if (deliveryMachine.BigLockersCount > 0)
-                    {
-                        return generatedId;
-                    }
-                    return null;
+                switch (size)
+                {
+                    case PackageSize.Big:
+                        if (deliveryMachine.BigLockersCount > 0)
+                        {
+                            return generatedId;
+                        }
+                        return null;
 
-                case PackageSize.Medium:
-                    if (deliveryMachine.MediumLockersCount > 0)
-                    {
-                        return generatedId;
-                    }
-                    return null;
+                    case PackageSize.Medium:
+                        if (deliveryMachine.MediumLockersCount > 0)
+                        {
+                            return generatedId;
+                        }
+                        return null;
 
-                case PackageSize.Small:
-                    if (deliveryMachine.SmallLockersCount > 0)
-                    {
-                        return generatedId;
-                    }
-                    return null;
+                    case PackageSize.Small:
+                        if (deliveryMachine.SmallLockersCount > 0)
+                        {
+                            return generatedId;
+                        }
+                        return null;
 
-                default:
-                    return null;
+                    default:
+                        return null;
+                }
             }
+            return null;
         }
 
         private int GeneratePackageNumber()
@@ -101,7 +105,7 @@ namespace ParcelDistributionCenter.Logic.Services
             do
             {
                 generatedNumber = rnd.Next(1_000_000, 10_000_000);
-            } while (!packagesNumbers.Contains(generatedNumber));
+            } while (packagesNumbers.Contains(generatedNumber));
             return generatedNumber;
         }
 
