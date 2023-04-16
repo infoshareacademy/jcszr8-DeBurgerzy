@@ -1,0 +1,175 @@
+﻿@using ParcelDistributionCenter.Logic.Services;
+@using ParcelDistributionCenter.Model.Enums;
+@using ParcelDistributionCenter.Web.ViewModels;
+
+@model PackageViewModel;
+
+<h1 class="text-center" style="font-weight: bold; margin-top: 10px">Add Package</h1>
+
+<hr />
+
+<form asp-action="AddPackage">
+    <img src="~/assets/parcel-package.jpeg" style="width: stretch; height: stretch; filter: grayscale(60%); position: fixed; z-index: -1; opacity: 0.3" alt="">
+
+    <div class="row align-items-center justify-content-center">
+        <div class="col-md-3 align-self-center">
+            <h2 class="text-center">Sender</h2>
+        </div>
+        <div class="col-md-3 align-self-center">
+            <h2 class="text-center">Recipient</h2>
+        </div>
+    </div>
+
+    <div class="row align-items-center justify-content-center">
+        <div class="col-md-3">
+            <table class="table align-content-center">
+                <tr>
+                    <div>
+                        <i class="bi bi-house-fill"></i>
+                        <label asp-for="SenderAddress" class="control-label"></label>
+                    </div>
+                    <div>
+                        <input asp-for="SenderAddress" class="form-control" />
+                        <span asp-validation-for="SenderAddress" class="text-danger"></span>
+                    </div>
+                </tr>
+                <tr>
+                    <div>
+                        <i class="bi bi-envelope-fill"></i>
+                        <label asp-for="SenderEmail" class="control-label"></label>
+                    </div>
+                    <div>
+                        <input asp-for="SenderEmail" class="form-control" />
+                        <span asp-validation-for="SenderEmail" class="text-danger"></span>
+                    </div>
+                </tr>
+                <tr>
+                    <div>
+                        <i class="bi bi-person-fill"></i>
+                        <label asp-for="SenderName" class="control-label"></label>
+                    </div>
+                    <div>
+                        <input asp-for="SenderName" class="form-control" />
+                        <span asp-validation-for="SenderName" class="text-danger"></span>
+                    </div>
+                <tr>
+                </tr>
+                <tr>
+                    <div>
+                        <i class="bi bi-telephone-fill"></i>
+                        <label asp-for="SenderPhone" class="control-label"></label>
+                    </div>
+                    <div>
+                        <input asp-for="SenderPhone" class="form-control" data-val="true" data-val-phone="The phone number format is invalid." />
+                        <span asp-validation-for="SenderPhone" class="text-danger"></span>
+                    </div>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-3">
+            <table class="table">
+                <tr>
+                    <div>
+                        <i class="bi bi-house-fill"></i>
+                        <label asp-for="DeliveryAddress" class="control-label"></label>
+                    </div>
+                    <div>
+                        <input asp-for="DeliveryAddress" class="form-control" />
+                        <span asp-validation-for="DeliveryAddress" class="text-danger"></span>
+                    </div>
+                </tr>
+                <tr>
+                    <div>
+                        <i class="bi bi-envelope-fill"></i>
+                        <label asp-for="RecipientEmail" class="control-label"></label>
+                    </div>
+                    <div>
+                        <input asp-for="RecipientEmail" class="form-control" />
+                        <span asp-validation-for="RecipientEmail" class="text-danger"></span>
+                    </div>
+                </tr>
+                <tr>
+                    <div>
+                        <i class="bi bi-person-fill"></i>
+                        <label asp-for="RecipientName" class="control-label"></label>
+                    </div>
+                    <div>
+                        <input asp-for="RecipientName" class="form-control" />
+                        <span asp-validation-for="RecipientName" class="text-danger"></span>
+                    </div>
+                <tr>
+                </tr>
+                <tr>
+                    <div>
+                        <i class="bi bi-telephone-fill"></i>
+                        <label asp-for="RecipientPhone" class="control-label"></label>
+                    </div>
+                    <div>
+                        <input asp-for="RecipientPhone" class="form-control" />
+                        <span asp-validation-for="RecipientPhone" class="text-danger"></span>
+                    </div>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="row align-items-center justify-content-center">
+        <div class="col-md-3 align-self-center">
+            <h2 class="text-center">Other</h2>
+        </div>
+    </div>
+
+    <div class="row align-items-center justify-content-center">
+        <div class="col-md-3">
+            <table>
+                <tr>
+                    <td>
+                        <div class="dropdown">
+                            <i class="fas fa-compress-arrows-alt"></i>
+                            <label asp-for="Size" class="control-label"></label>
+                            <select asp-for="Size" class="form-control">
+                                <option value="">-- Select Size --</option>
+                                @foreach (var size in Enum.GetValues(typeof(PackageSize)))
+                                {
+                                    <option value="@size">@size</option>
+                                }
+                            </select>
+                            <span asp-validation-for="Size" class="text-danger"></span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="dropdown">
+                            <i class="fas fa-clock"></i>
+                            <label asp-for="Status" class="control-label"></label>
+                            <select asp-for="Status" class="form-control">
+                                <option value="">-- Select Size --</option>
+                                @foreach (var status in Enum.GetValues(typeof(Status)))
+                                {
+                                    <option value="@status">@status</option>
+                                }
+                            </select>
+                            <span asp-validation-for="Status" class="text-danger"></span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="form-group text-center">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+
+    <div class="text-center">
+        <a asp-controller="Home" asp-action="Index">Back to Home</a>
+    </div>
+</form>
+
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

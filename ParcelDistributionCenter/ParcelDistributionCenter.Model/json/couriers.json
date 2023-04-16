@@ -1,52 +1,37 @@
 [
   {
-    "Id": "C001",
-    "Name": "Adam",
-    "Surname": "Kowalski",
-    "Email": "Adam.Kowalski@example.com",
-    "Phone": "48610500300",
-    "Capacity": 32,
-    "Rout": [ "10002", "10003", "10005" ],
-    "Parcels_numbers_list": [ "10095", "10100", "10145" ]
+    "courier_id": "63984b26cbf6ee862293e39d",
+    "name": "Adam",
+    "surname": "Kowalski",
+    "email": "Adam.Kowalski@example.com",
+    "phone": "48610500300"
   },
   {
-    "Id": "C002",
-    "Name": "Janusz",
-    "Surname": "Malinowski",
-    "Email": "Janusz.Malinowski@example.com",
-    "Phone": "48610500400",
-    "Capacity": 10,
-    "Rout": [ "10000" ],
-    "Parcels_numbers_list": [ "10105", "10110" ]
+    "courier_id": "63984b26ec96e025ed0d080d",
+    "name": "Janusz",
+    "surname": "Malinowski",
+    "email": "Janusz.Malinowski@example.com",
+    "phone": "48610500400"
   },
   {
-    "Id": "C003",
-    "Name": "Krzysztof",
-    "Surname": "Janiszewski",
-    "Email": "Krzysztof.Janiszewski@example.com",
-    "Phone": "48610500500",
-    "Capacity": 12,
-    "Rout": [ "10001", "10007" ],
-    "Parcels_numbers_list": [ "10115", "10120" ]
+    "courier_id": "63984b26588deaf6f922d673",
+    "name": "Krzysztof",
+    "surname": "Janiszewski",
+    "email": "Krzysztof.Janiszewski@example.com",
+    "phone": "48610500500"
   },
   {
-    "Id": "C004",
-    "Name": "Anna",
-    "Surname": "Borowska",
-    "Email": "Anna.Borowska@example.com",
-    "Phone": "48610500600",
-    "Capacity": 23,
-    "Rout": [ "10003", "10006" ],
-    "Parcels_numbers_list": [ "10125", "10130" ]
+    "courier_id": "63984b269c67a0397203adf9",
+    "name": "Anna",
+    "surname": "Borowska",
+    "email": "Anna.Borowska@example.com",
+    "phone": "48610500600"
   },
   {
-    "Id": "C005",
-    "Name": "Jolanta",
-    "Surname": "Kortyka",
-    "Email": "Jolanta.Kortyka@example.com",
-    "Phone": "48610500700",
-    "Capacity": 12,
-    "Rout": [ "10006", "10007" ],
-    "Parcels_numbers_list": [ "10135", "10140" ]
+    "courier_id": "63984b261c8cd0174cdaeb93",
+    "name": "Jolanta",
+    "surname": "Kortyka",
+    "email": "Jolanta.Kortyka@example.com",
+    "phone": "48610500700"
   }
 ]

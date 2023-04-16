@@ -1,0 +1,28 @@
+﻿@model ParcelDistributionCenter.Web.ViewModels.PackageViewModel;
+
+@{
+    ViewData["Title"] = "Package Details";
+}
+
+<h1 class="text-center text-success" style="font-weight: bold; margin-top: 8px">Package Details</h1>
+<hr />
+
+@Html.Partial("SinglePackageDataPartialViewModel")
+    
+<hr />
+<div class="text-center">
+    <a asp-action="Edit" asp-route-PackageNumber="@Model.PackageNumber" class="btn btn-primary">Edit</a>
+    <a asp-action="DeletePackage" asp-route-PackageNumber="@Model.PackageNumber" class="btn btn-danger" onclick="return confirmDelete();">Delete</a>
+    <a asp-controller="Packages" asp-action="DisplayPackages" class="btn btn-secondary">Back to Packages List</a>
+</div>
+
+<script>
+        function confirmDelete()
+        {
+            if (confirm("Are you sure you want to delete this package?"))
+            {
+                return true;
+            }
+            return false;
+        }
+</script>

@@ -1,0 +1,88 @@
+﻿@model IEnumerable<ParcelDistributionCenter.Web.ViewModels.PackageViewModel>
+
+@{
+    ViewData["Title"] = "DisplayPackages";
+}
+
+<h1 class="text-center" style="font-weight: bold; margin-top: 10px">Packages List</h1>
+<hr />
+<p>
+    <a asp-action="AddPackage" class="btn btn-primary">Add new Package</a>
+</p>
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.PackageNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Registered)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Size)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DeliveryAddress)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RecipientEmail)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SenderEmail)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PackageNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Registered)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Size)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DeliveryAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RecipientEmail)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SenderEmail)
+                    </td>
+
+                    <td>
+                        <a asp-action="Edit" asp-route-PackageNumber="@item.PackageNumber" class="btn btn-primary">Edit</a>
+                        <a asp-action="DisplaySinglePackage" asp-route-PackageNumber="@item.PackageNumber" class="btn btn-secondary">Details</a>
+                        <a asp-action="DeletePackage" asp-route-PackageNumber="@item.PackageNumber" class="btn btn-danger" onclick="return confirmDelete();">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+<script>
+        function confirmDelete()
+        {
+            if (confirm("Are you sure you want to delete this package?"))
+            {
+                return true;
+            }
+            return false;
+        }
+</script>

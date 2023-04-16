@@ -1,0 +1,30 @@
+﻿@model ParcelDistributionCenter.Web.ViewModels.PackageViewModel;
+@using ParcelDistributionCenter.Logic.Services;
+@using ParcelDistributionCenter.Model.Enums;
+@using ParcelDistributionCenter.Web.ViewModels;
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1 class="text-center" style="font-weight: bold; margin-top: 10px">Edit Package Data</h1>
+<hr />
+
+<form asp-action="Edit">
+    @Html.Partial("SinglePackageFormPartialView")
+
+    <div class="form-group text-center">
+        <input type="submit" value="Update" class="btn btn-primary" />
+    </div>
+
+    <div class="text-center">
+        <a asp-action="DisplayPackages">Back to Packages List</a>
+    </div>
+</form>
+
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

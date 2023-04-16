@@ -1,0 +1,61 @@
+﻿@model IEnumerable<ParcelDistributionCenter.Web.ViewModels.PackageViewModel>
+
+@{
+    ViewData["Title"] = "UnassignedPackages";
+}
+
+<h1>Unassigned Packages</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Courier
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Size)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeliveryAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RecipientEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SenderEmail)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+            <tr>
+            <td>
+                Unknown
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Size)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.DeliveryAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RecipientEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SenderEmail)
+            </td>
+            <td>
+                <a asp-action="Assign" asp-route-packageNumber=@item.PackageNumber asp-route-courierId=@ViewContext.RouteData.Values["id"] class="btn btn-primary">Assign</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,141 @@
+﻿@model ParcelDistributionCenter.Web.ViewModels.PackageViewModel
+
+@{
+    ViewData["Title"] = "SinglePackageDataPartialViewModel";
+}
+
+
+
+
+<div class="row align-items-center justify-content-center">
+    <div class="col-md-3 align-self-center">
+        <h2 class="text-center">Main Information</h2>
+    </div>
+</div>
+
+<div class="row align-items-center justify-content-center">
+    <div class="col-md-3">
+        <table>
+                <tr>
+                    <i class="bi bi-upc-scan"></i>
+                    <label asp-for="PackageNumber" class="control-label"></label>
+                </tr>
+                <tr>
+                    <input asp-for="PackageNumber" class="form-control" readonly />
+                    <span asp-validation-for="PackageNumber" class="text-danger"></span>
+                </tr>
+                <tr>
+                    <i class="bi bi-alarm-fill"></i>
+                    <label asp-for="Registered" class="control-label"></label>
+                </tr>
+                <tr>
+                    <input asp-for="Registered" class="form-control" readonly />
+                    <span asp-validation-for="Registered" class="text-danger"></span>
+                </tr>
+                <tr>
+                    <i class="fas fa-compress-arrows-alt"></i>
+                    <label asp-for="Size" class="control-label"></label>
+                    <input asp-for=@Model.Size class="form-control" disabled="disabled" />
+                </tr>
+                <tr>
+                    <i class="fas fa-clock"></i>
+                    <label asp-for="Status" class="control-label"></label>
+                    <input asp-for=@Model.Status class="form-control" disabled="disabled" />
+                </tr>
+        </table>
+    </div>
+</div>
+
+<div class="row align-items-center justify-content-center">
+    <div class="col-md-3 align-self-center">
+        <h2 class="text-center">Sender</h2>
+    </div>
+    <div class="col-md-3 align-self-center">
+        <h2 class="text-center">Recipient</h2>
+    </div>
+</div>
+
+<div class="row align-items-center justify-content-center">
+    <div class="col-md-3">
+        <table class="table align-content-center">
+            <tr>
+                <div>
+                    <i class="bi bi-house-fill"></i>
+                    <label asp-for="SenderAddress" class="control-label"></label>
+                </div>
+                <div>
+                    <input asp-for=@Model.SenderAddress class="form-control" disabled="disabled" />
+                </div>
+            </tr>
+            <tr>
+                <div>
+                    <i class="bi bi-envelope-fill"></i>
+                    <label asp-for="SenderEmail" class="control-label"></label>
+                </div>
+                <div>
+                    <input asp-for="SenderEmail" class="form-control" disabled="disabled" />
+                </div>
+            </tr>
+            <tr>
+                <div>
+                    <i class="bi bi-person-fill"></i>
+                    <label asp-for="SenderName" class="control-label"></label>
+                </div>
+                <div>
+                    <input asp-for="SenderName" class="form-control" disabled="disabled" />
+                </div>
+            <tr>
+            </tr>
+            <tr>
+                <div>
+                    <i class="bi bi-telephone-fill"></i>
+                    <label asp-for="SenderPhone" class="control-label"></label>
+                </div>
+                <div>
+                    <input asp-for="SenderPhone" class="form-control" disabled="disabled" />
+                </div>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-3">
+        <table class="table">
+            <tr>
+                <div>
+                    <i class="bi bi-house-fill"></i>
+                    <label asp-for="DeliveryAddress" class="control-label"></label>
+                </div>
+                <div>
+                    <input asp-for="DeliveryAddress" class="form-control" disabled="disabled" />
+                </div>
+            </tr>
+            <tr>
+                <div>
+                    <i class="bi bi-envelope-fill"></i>
+                    <label asp-for="RecipientEmail" class="control-label"></label>
+                </div>
+                <div>
+                    <input asp-for="RecipientEmail" class="form-control" disabled="disabled" />
+                </div>
+            </tr>
+            <tr>
+                <div>
+                    <i class="bi bi-person-fill"></i>
+                    <label asp-for="RecipientName" class="control-label"></label>
+                </div>
+                <div>
+                    <input asp-for="RecipientName" class="form-control" disabled="disabled" />
+                </div>
+            <tr>
+            </tr>
+            <tr>
+                <div>
+                    <i class="bi bi-telephone-fill"></i>
+                    <label asp-for="RecipientPhone" class="control-label"></label>
+                </div>
+                <div>
+                    <input asp-for="RecipientPhone" class="form-control" disabled="disabled"/>
+                </div>
+            </tr>
+        </table>
+    </div>
+</div>

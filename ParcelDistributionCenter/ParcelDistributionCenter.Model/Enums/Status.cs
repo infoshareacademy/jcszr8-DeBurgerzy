@@ -1,10 +1,22 @@
-﻿namespace ParcelDistributionCenter.Model.Enums
+﻿using System.Runtime.Serialization;
+
+namespace ParcelDistributionCenter.Model.Enums
 {
     public enum Status
     {
-        In_sender_locker,
-        In_delivery,
-        In_destenation_locker,
+        [EnumMember(Value = "in_preparation")]
+        InPreparation,
+
+        [EnumMember(Value = "stored_by_sender")]
+        StoredBySender,
+
+        [EnumMember(Value = "stored_in_machine")]
+        StoredInMachine,
+
+        [EnumMember(Value = "in_delivery")]
+        InDelivery,
+
+        [EnumMember(Value = "delivered")]
         Delivered,
     }
 }
