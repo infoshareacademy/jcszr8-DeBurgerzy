@@ -7,7 +7,7 @@
 <h1>Assign</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -44,9 +44,12 @@
                     @Html.DisplayFor(modelItem => item.Phone)
                 </td>
                 <td>
-                    <a asp-action="Assign" asp-route-packageNumber=@(Context.Request.Query["packageNumber"]) asp-route-CourierId=@item.CourierJsonId asp-route-From="UnassignedPackages">Assign </a>
+                    <a asp-action="Assign" asp-route-packageNumber=@(Context.Request.Query["packageNumber"]) asp-route-CourierId=@item.Id asp-route-From="UnassignedPackages" class="btn btn-primary">Assign </a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+<div>
+<a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>

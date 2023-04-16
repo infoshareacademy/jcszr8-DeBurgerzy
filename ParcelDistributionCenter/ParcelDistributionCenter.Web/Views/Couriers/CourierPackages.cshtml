@@ -7,11 +7,11 @@
 <h1>Couriers Packages List</h1>
 
 <p>
-    <a asp-action="UnassignedPackages" asp-route-id=@ViewContext.RouteData.Values["id"]>Assign unassigned package</a>
+    <a asp-action="UnassignedPackages" asp-route-id=@ViewContext.RouteData.Values["id"] class="btn btn-primary">Assign unassigned package</a>
 </p>
 
 <div class="card-body">
-    <table id="datatablesSimple">
+    <table class="table">
         <thead>
             <tr>
 
@@ -69,7 +69,8 @@
                         
                         </td>
                     <td>
-                        @Html.ActionLink("Unassign", "UnassignPackage", new { packageNumber=item.PackageNumber, CourierId=item.CourierJsonId})
+                        <a asp-action="UnassignPackage" asp-route-packageNumber=@item.PackageNumber asp-route-courierId=@item.CourierId class="btn btn-primary">Unassign</a>
+                        
                     </td>
                 </tr>
             }
@@ -77,5 +78,5 @@
     </table>
 </div>
     <div>
-        <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to Couriers List</a>
     </div>

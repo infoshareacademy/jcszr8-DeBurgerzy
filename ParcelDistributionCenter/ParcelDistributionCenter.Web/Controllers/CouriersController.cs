@@ -1,45 +1,69 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using ParcelDistributionCenter.Logic.Services;
 using ParcelDistributionCenter.Logic.Services.IServices;
 using ParcelDistributionCenter.Model.Context.Memory;
 using ParcelDistributionCenter.Model.Models;
+using ParcelDistributionCenter.Web.ViewModels;
+using System.Diagnostics.Metrics;
 
 namespace ParcelDistributionCenter.Web.Controllers
 {
     public class CouriersController : Controller
     {
-        private readonly IAddNewCourierService _addNewCourierHandler;
-        private readonly ICourierService _courierHandler;
-        private readonly IMemoryRepository _memoryRepository;
-        private readonly IPackageServices _packageServices;
-        public CouriersController(IMemoryRepository memoryRepository, ICourierService courierHandler, IPackageServices packageServices, IAddNewCourierService addNewCourierHandler)
+        private readonly IAddNewCourierService _addNewCourierService;
+        private readonly ICourierService _courierService;
+        private readonly IMapper _mapper;
+
+        public CouriersController(ICourierService courierService, IAddNewCourierService addNewCourierService, IMapper mapper)
         {
-            _memoryRepository = memoryRepository;
-            _courierHandler = courierHandler;
-            _packageServices = packageServices;
-            _addNewCourierHandler = addNewCourierHandler;
+            _courierService = courierService;
+            _mapper = mapper;
+            _addNewCourierService = addNewCourierService;
         }
 
-        public ActionResult Assign(string packageNumber, string CourierId, string From)
+        public ActionResult Index()
         {
-            if (CourierId != null)
-            {
-                _packageServices.AssignPackage(packageNumber, CourierId);
-                return From == "UnassignedPackages" ? RedirectToAction(From) : RedirectToAction("CourierPackages", new { id = CourierId });
-            }
-            else
-            {
-                var model = _courierHandler.FindAll();
-                return View(model);
-            }
+            var courier = _courierService.GetAll().ToList();
+            List<CourierViewModel> model = _mapper.Map<List<Courier>, List<CourierViewModel>>(courier);
+                        
+            return View(model);
         }
-
         public ActionResult CourierPackages(string id)
+         {
+            List<Package> model = _courierService.GetCourierPackages(id);
+             return View(model);
+         }
+        // GET: CouriersController/Delete/5
+        public ActionResult Delete(string id)
         {
-            var model = _packageServices.GetCourierPackages(id);
+            var model = _courierService.DeleteCourier(id);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        // GET: CouriersController/Edit/5
+        public ActionResult Edit(string id)
+        {
+            var model = _courierService.FindById(id);
             return View(model);
         }
 
+        // POST: CouriersController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Courier courier)
+        {
+            try
+            {
+                _courierService.Update(courier);
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View(nameof(Index));
+            }
+        }
         // GET: CouriersController/Create
         public ActionResult Create()
         {
@@ -51,71 +75,36 @@ namespace ParcelDistributionCenter.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Courier courier)
         {
-            if (ModelState.IsValid)
-            {
-                bool added = _addNewCourierHandler.AddNewCourier(courier);
+                bool added = _addNewCourierService.AddNewCourier(courier);
                 if (added)
                 {
                     return RedirectToAction(nameof(Index));
                 }
-            }
             return View();
-        }
-
-        // GET: CouriersController/Delete/5
-        public ActionResult Delete(string id)
-        {
-            var model = _courierHandler.FindById(id);
-
-            _courierHandler.Delete(model);
-            return RedirectToAction(nameof(Index));
-        }
-
-        // GET: CouriersController/Details/5
-        public ActionResult Details(string id)
-        {
-            var model = _courierHandler.FindById(id);
-            return View(model);
-        }
-
-        // GET: CouriersController/Edit/5
-        public ActionResult Edit(string id)
-        {
-            var model = _courierHandler.FindById(id);
-            return View(model);
-        }
-
-        // POST: CouriersController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(Courier courier)
-        {
-            try
-            {
-                _courierHandler.Update(courier);
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View(nameof(Index));
-            }
-        }
-
-        // GET: CouriersController
-        public ActionResult Index()
-        {
-            var model = _courierHandler.FindAll();
-            return View(model);
         }
         public ActionResult UnassignedPackages()
         {
-            var model = _packageServices.GetUnassignedPackages();
-            return View(model);
+            var package= _courierService.GetUnassignedPackages().ToList();
+            List<PackageViewModel> packageVM = _mapper.Map<List<Package>, List<PackageViewModel>>(package);
+            return View(packageVM);
+        }
+        public ActionResult Assign(string packageNumber, string CourierId, string From)
+        {
+            if (CourierId != null)
+            {
+                _courierService.AssignPackage(packageNumber, CourierId);
+                return From == "UnassignedPackages" ? RedirectToAction(From) : RedirectToAction("CourierPackages", new { id = CourierId });
+            }
+            else
+            {
+                var model = _courierService.GetAll();
+                return View(model);
+            }
         }
         public ActionResult UnassignPackage(string packageNumber, string CourierId)
         {
-            _packageServices.UnassignPackage(packageNumber);
-            var model = _packageServices.GetCourierPackages(CourierId);
+            _courierService.UnassignPackage(packageNumber);
+            var model = _courierService.GetCourierPackages(CourierId);
             return RedirectToAction("CourierPackages", new { id = CourierId });
         }
     }

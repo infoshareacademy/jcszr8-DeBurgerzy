@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ParcelDistributionCenter.Web.Models.AssignPackagesVM>
+﻿@model IEnumerable<ParcelDistributionCenter.Web.ViewModels.PackageViewModel>
 
 @{
     ViewData["Title"] = "UnassignedPackages";
@@ -10,13 +10,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PackageNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Registered)
+                Courier
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Size)
@@ -38,38 +32,30 @@
     </thead>
     <tbody>
         @foreach (var item in Model) {
-            @if(item.Name == "Unknown"){
             <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                Unknown
             </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PackageNumber)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Registered)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Size)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Status)
-                    </td>
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DeliveryAddress)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RecipientEmail)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SenderEmail)
-                    </td>
             <td>
-                @Html.ActionLink("Assign", "Assign", new { packageNumber=item.PackageNumber, courierId=ViewContext.RouteData.Values["id"]})
+                @Html.DisplayFor(modelItem => item.Size)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.DeliveryAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RecipientEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SenderEmail)
+            </td>
+            <td>
+                <a asp-action="Assign" asp-route-packageNumber=@item.PackageNumber asp-route-courierId=@ViewContext.RouteData.Values["id"] class="btn btn-primary">Assign</a>
             </td>
         </tr>
-            }
 }
     </tbody>
 </table>

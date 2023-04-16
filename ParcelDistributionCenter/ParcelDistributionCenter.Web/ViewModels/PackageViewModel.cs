@@ -1,12 +1,16 @@
-﻿using Newtonsoft.Json;
-using ParcelDistributionCenter.Model.Enums;
+﻿using ParcelDistributionCenter.Model.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace ParcelDistributionCenter.Logic.Models
+
+namespace ParcelDistributionCenter.Web.ViewModels
 {
     public class PackageViewModel
     {
         private const string AddressErrorMessage = "Address should contain at least 1 digit, 2 letters and 1 space separator!";
+
+        [Display(Name = "Package Number")]
+        public int PackageNumber { get; set; }
+
 
         [Display(Name = "Delivery Address")]
         [Required(ErrorMessage = AddressErrorMessage)]
@@ -51,5 +55,8 @@ namespace ParcelDistributionCenter.Logic.Models
         [Display(Name = "Package Status")]
         [Required(ErrorMessage = "Package Status must be selected!")]
         public Status Status { get; set; }
+
+        [Display(Name = "Package Registration Date")]
+        public DateTime Registered { get; set; }
     }
 }

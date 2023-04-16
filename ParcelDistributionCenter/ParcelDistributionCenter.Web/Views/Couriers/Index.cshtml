@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ParcelDistributionCenter.Model.Models.Courier>
+﻿@model IEnumerable<ParcelDistributionCenter.Web.ViewModels.CourierViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -7,7 +7,7 @@
 <h1>List of Couriers</h1>
 
 <p>
-    <a asp-action="Create">Add new courier</a>
+    <a asp-action="Create" class="btn btn-primary">Add new courier </a>
 </p>
 <table class="table">
     <thead>
@@ -44,13 +44,11 @@
             </td>
 
             <td>
-                @Html.ActionLink("Show Packages", "CourierPackages", new { id=item.CourierJsonId})
-                
+                <a asp-action="CourierPackages" asp-route-id="@item.CourierId" class="btn btn-secondary">Show Packages</a>
             </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id=item.CourierJsonId}) |
-                    @Html.ActionLink("Details", "Details", new { id=item.CourierJsonId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id=item.CourierJsonId })
+                    <a asp-action="Edit" asp-route-id="@item.CourierId" class="btn btn-primary">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@item.CourierId" class="btn btn-danger" onclick="return confirmDelete();">Delete</a>
                 </td>
 
         </tr>

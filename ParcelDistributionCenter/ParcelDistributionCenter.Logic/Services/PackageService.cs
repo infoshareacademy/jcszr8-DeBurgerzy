@@ -13,10 +13,21 @@ namespace ParcelDistributionCenter.Logic.Services
         {
             _repository = repository;
         }
+        public IEnumerable<Package> GetAllPackages() => _repository.GetAll();
 
-        public bool DeletePackageByNumber(string id)
+        public Package FindPackageByPackageNumber(int packageNumber)
         {
-            Package package = FindPackageById(id);
+            var packages = _repository.GetAll();
+            Package package = packages.FirstOrDefault(x => x.PackageNumber == packageNumber);
+            if (package != null)
+            {
+                return package;
+            }
+            return null;
+        }
+        public bool DeletePackageByNumber(int packageNumber)
+        {
+            Package package = FindPackageByPackageNumber(packageNumber);
             if (package != null)
             {
                 _repository.Delete(package);
@@ -24,30 +35,12 @@ namespace ParcelDistributionCenter.Logic.Services
             }
             return false;
         }
-
-        public Package FindPackageById(string id)
+        public bool Update(Package model)
         {
-            Package package = _repository.Get(id);
-            if (package != null)
-            {
-                return package;
-            }
-            return null;
-        }
+            var package = FindPackageByPackageNumber(model.PackageNumber);
+            if (package ==null) return false;
 
-        public IEnumerable<Package> FindPackagesByCourierID(string courierId) => ReturnPackages(p => p.CourierJsonId == courierId);
-
-        public IEnumerable<Package> FindPackagesByDeliveryMachineID(string deliveryMachineID) => ReturnPackages(p => p.DeliveryMachineJsonId == deliveryMachineID);
-
-        public IEnumerable<Package> FindPackagesBySenderEmail(string senderEmail) => ReturnPackages(p => p.SenderEmail == senderEmail);
-
-        public IEnumerable<Package> GetAllPackages() => _repository.GetAll();
-
-        public void Update(Package model)
-        {
-            var package = FindPackageById(model.Id);
             package.Status = model.Status;
-            package.CourierJsonId = model.CourierJsonId;
             package.SenderName = model.SenderName;
             package.RecipientName = model.RecipientName;
             package.SenderEmail = model.SenderEmail;
@@ -56,9 +49,20 @@ namespace ParcelDistributionCenter.Logic.Services
             package.RecipientPhone = model.RecipientPhone;
             package.SenderAddress = model.SenderAddress;
             package.DeliveryAddress = model.DeliveryAddress;
-            package.DeliveryMachineJsonId = model.DeliveryMachineJsonId;
             package.Registered = model.Registered;
+            package.Size = model.Size;
+            _repository.Update(package);
+            return true;
         }
+
+        /*
+        public IEnumerable<Package> FindPackagesByCourierID(string courierId) => ReturnPackages(p => p.CourierId == courierId);
+
+        public IEnumerable<Package> FindPackagesByDeliveryMachineID(string deliveryMachineID) => ReturnPackages(p => p.DeliveryMachineJsonId == deliveryMachineID);
+
+        public IEnumerable<Package> FindPackagesBySenderEmail(string senderEmail) => ReturnPackages(p => p.SenderEmail == senderEmail);
+
+
 
         private IEnumerable<Package> ReturnPackages(Func<Package, bool> predicate)
         {
@@ -69,5 +73,6 @@ namespace ParcelDistributionCenter.Logic.Services
             }
             return packages;
         }
+        */
     }
 }
