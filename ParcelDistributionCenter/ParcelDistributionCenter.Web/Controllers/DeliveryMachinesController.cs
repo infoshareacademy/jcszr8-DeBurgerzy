@@ -17,19 +17,47 @@ namespace ParcelDistributionCenter.Web.Controllers
             _mapper = mapper;
         }
 
-        // GET: DeliveryMachinesController/DeleteDeliveryMachine
-        public ActionResult DeleteDeliveryMachine(string deliveryMachineId)
+        // GET: DeliveryMachinesController/Create
+        public ActionResult Create()
         {
-            bool deleted = _deliveryMachinesService.DeleteDeliveryMachineById(deliveryMachineId);
-            if (deleted)
+            return View();
+        }
+
+        //// POST: DeliveryMachinesController/Create
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult CreateConfirmed(DeliveryMachine deliveryMachine)
+        //{
+        //    bool added = _deliveryMachinesService.CreateNewDeliveryMachine(deliveryMachine);
+        //    if (added)
+        //    {
+        //        return RedirectToAction(nameof(Details));
+        //    }
+        //    return View();
+        //}
+
+        // GET: DeliveryMachinesController/DeleteDeliveryMachine
+        public ActionResult DeleteDeliveryMachine(string id)
+        {
+            try
             {
-                TempData["Message"] = "Delivery Machine successfully deleted";
-                TempData["MessageClass"] = "alert-success";
+                bool deleted = _deliveryMachinesService.DeleteDeliveryMachineById(id);
+                if (deleted)
+                {
+                    TempData["Message"] = "Delivery Machine successfully deleted";
+                    TempData["MessageClass"] = "alert-success";
+                    return RedirectToAction(nameof(Details));
+                }
+                TempData["Message"] = "Package not deleted! Something went wrong";
+                TempData["MessageClass"] = "alert-danger";
                 return RedirectToAction(nameof(Details));
             }
-            TempData["Message"] = "Package not deleted! Something went wrong";
-            TempData["MessageClass"] = "alert-danger";
-            return RedirectToAction(nameof(Details));
+            catch (Exception ex)
+            {
+                TempData["Message"] = "Unable to delete the selected delivery machine because it is associated with one or more packages.";
+                TempData["MessageClass"] = "alert-danger";
+                return RedirectToAction(nameof(Details));
+            }
         }
 
         // GET: DeliveryMachinesController/Details
@@ -40,9 +68,11 @@ namespace ParcelDistributionCenter.Web.Controllers
         }
 
         // GET: DeliveryMachinesController/EditDeliveryMachine
-        public ActionResult EditDeliveryMachine()
+        public ActionResult EditDeliveryMachine(string id)
         {
-            return View();
+            DeliveryMachine deliveryMachine = _deliveryMachinesService.GetDeliveryMachineById(id);
+            DeliveryMachineViewModel viewModel = _mapper.Map<DeliveryMachineViewModel>(deliveryMachine);
+            return View(viewModel);
         }
 
         // POST: DeliveryMachinesController/EditDeliveryMachineConfirmed
@@ -51,7 +81,7 @@ namespace ParcelDistributionCenter.Web.Controllers
         public ActionResult EditDeliveryMachineConfirmed(DeliveryMachineViewModel deliveryMachineViewModel)
         {
             DeliveryMachine deliveryMachine = _mapper.Map<DeliveryMachine>(deliveryMachineViewModel);
-            _deliveryMachinesService.CreateNewDeliveryMachine(deliveryMachine);
+            _deliveryMachinesService.UpdateDeliveryMachine(deliveryMachine);
             return RedirectToAction(nameof(Details));
         }
     }

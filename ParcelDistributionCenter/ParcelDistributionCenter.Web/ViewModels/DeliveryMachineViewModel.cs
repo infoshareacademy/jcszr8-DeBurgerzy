@@ -17,8 +17,7 @@ namespace ParcelDistributionCenter.Web.ViewModels
         public int MediumLockersCount { get; set; }
 
         public ICollection<Package> Packages { get; set; }
-        public int SmallLockersCount { get; set; }
 
-        public DateTime TimeCreated { get; set; } = DateTime.Now;
+        public int SmallLockersCount { get; set; }
     }
 }
