@@ -111,13 +111,13 @@ namespace ParcelDistributionCenter.Web.Controllers
         public ActionResult FindPackageByNumber()
         {
             var packagesNumbers = _packageService.GetAllPackagesNumber();
-           PackageNumberViweModel packageNumberViewModel = new() { PackageNumbers=packagesNumbers, PackageNumber = 0 };
+           PackageNumberViewModel packageNumberViewModel = new() { PackageNumbers=packagesNumbers, PackageNumber = 0 };
             return View(packageNumberViewModel);
         }
         // POST: PackagesController/FindPackageBuNumber/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult FindPackageByNumber(PackageNumberViweModel pVM)
+        public ActionResult FindPackageByNumber(PackageNumberViewModel pVM)
         {
           return RedirectToAction("DisplaySinglePackage", new { packageNumber = pVM.PackageNumber });
         }
