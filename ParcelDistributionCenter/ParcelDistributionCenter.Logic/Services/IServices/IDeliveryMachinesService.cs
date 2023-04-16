@@ -9,5 +9,9 @@ namespace ParcelDistributionCenter.Logic.Services.IServices
         bool DeleteDeliveryMachineById(string deliveryMachineId);
 
         IEnumerable<DeliveryMachine> GetAll();
+
+        DeliveryMachine GetDeliveryMachineById(string id);
+
+        void UpdateDeliveryMachine(DeliveryMachine deliveryMachine);
     }
 }

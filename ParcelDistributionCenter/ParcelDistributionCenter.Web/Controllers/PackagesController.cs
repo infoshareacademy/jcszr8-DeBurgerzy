@@ -1,10 +1,8 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ParcelDistributionCenter.Logic.Services.IServices;
-using ParcelDistributionCenter.Model.Context.Memory;
 using ParcelDistributionCenter.Model.Models;
 using ParcelDistributionCenter.Web.ViewModels;
-using System.Diagnostics.Metrics;
 
 namespace ParcelDistributionCenter.Web.Controllers
 {
@@ -14,7 +12,7 @@ namespace ParcelDistributionCenter.Web.Controllers
         private readonly IMapper _mapper;
         private readonly IPackageService _packageService;
 
-        public PackagesController(IMemoryRepository memoryRepository, IAddNewPackageService addNewPackageHandler, IPackageService packageService, IMapper mapper)
+        public PackagesController(IAddNewPackageService addNewPackageHandler, IPackageService packageService, IMapper mapper)
         {
             _addNewPackageService = addNewPackageHandler;
             _packageService = packageService;
@@ -49,27 +47,10 @@ namespace ParcelDistributionCenter.Web.Controllers
             return View(packageViewModel);
         }
 
-        // GET: PackagesController/DisplayPackages
-        public ActionResult DisplayPackages()
-        {
-            var packages = _packageService.GetAllPackages();
-            IEnumerable<PackageViewModel> packageViewModels= _mapper.Map<IEnumerable<Package>, IEnumerable<PackageViewModel>>(packages);
-            return View(packageViewModels);
-        }
-
-        // GET: PackagesController/DisplayPackages
-        public ActionResult DisplaySinglePackage(int packageNumber)
-        {
-            var package = _packageService.FindPackageByPackageNumber(packageNumber);
-            PackageViewModel packageViewModel = _mapper.Map<Package,PackageViewModel>(package);
-
-            return View(packageViewModel);
-        }
-
         // GET: PackagesController/DeletePackage/5
         public ActionResult DeletePackage(int packageNumber)
         {
-            bool deleted =_packageService.DeletePackageByNumber(packageNumber);
+            bool deleted = _packageService.DeletePackageByNumber(packageNumber);
             if (deleted)
             {
                 TempData["Message"] = "Package successfully deleted";
@@ -80,6 +61,24 @@ namespace ParcelDistributionCenter.Web.Controllers
             TempData["MessageClass"] = "alert-danger";
             return RedirectToAction(nameof(DisplayPackages));
         }
+
+        // GET: PackagesController/DisplayPackages
+        public ActionResult DisplayPackages()
+        {
+            var packages = _packageService.GetAllPackages();
+            IEnumerable<PackageViewModel> packageViewModels = _mapper.Map<IEnumerable<Package>, IEnumerable<PackageViewModel>>(packages);
+            return View(packageViewModels);
+        }
+
+        // GET: PackagesController/DisplayPackages
+        public ActionResult DisplaySinglePackage(int packageNumber)
+        {
+            var package = _packageService.FindPackageByPackageNumber(packageNumber);
+            PackageViewModel packageViewModel = _mapper.Map<Package, PackageViewModel>(package);
+
+            return View(packageViewModel);
+        }
+
         // GET: PackagesController/Edit/5
         public ActionResult Edit(int packageNumber)
         {
@@ -93,9 +92,8 @@ namespace ParcelDistributionCenter.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(PackageViewModel packageViewModel)
         {
-           
             Package package = _mapper.Map<PackageViewModel, Package>(packageViewModel);
-            bool edited=_packageService.Update(package);
+            bool edited = _packageService.Update(package);
             if (edited)
             {
                 TempData["Message"] = "Package successfully edited";
@@ -106,9 +104,8 @@ namespace ParcelDistributionCenter.Web.Controllers
             TempData["MessageClass"] = "alert-danger";
             return View();
         }
+
         /*
-
-
 
         public ActionResult FindByPackageID(string packageID)
         {

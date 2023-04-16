@@ -9,7 +9,9 @@ namespace ParcelDistributionCenter.Web.AutoMapper
         public ParcelDistributionCenterProfile()
         {
             CreateMap<DeliveryMachineViewModel, DeliveryMachine>()
-                .ForMember(dest => dest.DeliveryMachineJsonId, opt => opt.Ignore());
+                .ForMember(dest => dest.DeliveryMachineJsonId, opt => opt.Ignore())
+                .ForMember(dest => dest.TimeCreated, opt => opt.Ignore())
+                .ReverseMap();
 
             CreateMap<PackageViewModel, Package>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
@@ -22,9 +24,8 @@ namespace ParcelDistributionCenter.Web.AutoMapper
                 // TODO: Delete this, ensure to be displayed in Views
                 .ForMember(dest => dest.DeliveryMachine, opt => opt.Ignore());
 
-
             CreateMap<Package, PackageViewModel>();
-            
+
             CreateMap<Courier, CourierViewModel>()
                  .ForMember(dest => dest.CourierId, opt => opt.MapFrom(src => src.Id));
         }
