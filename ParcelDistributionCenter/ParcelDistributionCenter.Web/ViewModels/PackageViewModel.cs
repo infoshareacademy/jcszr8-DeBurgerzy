@@ -55,5 +55,8 @@ namespace ParcelDistributionCenter.Web.ViewModels
         [Display(Name = "Package Status")]
         [Required(ErrorMessage = "Package Status must be selected!")]
         public Status Status { get; set; }
+
+        [Display(Name = "Package Registration Date")]
+        public DateTime Registered { get; set; }
     }
 }

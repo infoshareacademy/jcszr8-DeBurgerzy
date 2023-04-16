@@ -10,7 +10,6 @@ namespace ParcelDistributionCenter.Model.Models
         // TODO: Think if nullable values are needed
         public Courier? Courier { get; set; }
 
-        [JsonProperty("courier_id")]
         public string? CourierId { get; set; }
 
         [JsonProperty("delivery_address")]
@@ -22,6 +21,10 @@ namespace ParcelDistributionCenter.Model.Models
         [NotMapped]
         [JsonProperty("delivery_machine_id")]
         public string DeliveryMachineJsonId { get; set; }
+
+        [NotMapped]
+        [JsonProperty("courier_id")]
+        public string CourierJsonId { get; set; }
 
         [JsonProperty("package_number")]
         public int PackageNumber { get; set; }

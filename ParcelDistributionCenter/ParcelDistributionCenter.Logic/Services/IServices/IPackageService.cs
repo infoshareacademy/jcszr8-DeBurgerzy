@@ -4,9 +4,11 @@ namespace ParcelDistributionCenter.Logic.Services.IServices
 {
     public interface IPackageService
     {
-        bool DeletePackageByNumber(string packageNumber);
-
-        Package FindPackageById(string packageNumber);
+        IEnumerable<Package> GetAllPackages();
+        public Package FindPackageByPackageNumber(int packageNumber);
+        bool DeletePackageByNumber(int packageNumber);
+        bool Update(Package model);
+        /*
 
         IEnumerable<Package> FindPackagesByCourierID(string courierId);
 
@@ -14,8 +16,7 @@ namespace ParcelDistributionCenter.Logic.Services.IServices
 
         IEnumerable<Package> FindPackagesBySenderEmail(string senderEmail);
 
-        IEnumerable<Package> GetAllPackages();
 
-        void Update(Package model);
+        */
     }
 }

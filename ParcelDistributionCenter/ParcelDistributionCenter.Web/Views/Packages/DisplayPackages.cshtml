@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ParcelDistributionCenter.Model.Models.Package>
+﻿@model IEnumerable<ParcelDistributionCenter.Web.ViewModels.PackageViewModel>
 
 @{
     ViewData["Title"] = "DisplayPackages";
@@ -7,7 +7,7 @@
 <h1>Packages List</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="AddPackage" class="btn btn-primary">Add new Package</a>
 </p>
 <div>
     <table class="table">
@@ -25,9 +25,6 @@
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Status)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CourierId)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.DeliveryAddress)
@@ -58,9 +55,6 @@
                         @Html.DisplayFor(modelItem => item.Status)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.CourierId)
-                    </td>
-                    <td>
                         @Html.DisplayFor(modelItem => item.DeliveryAddress)
                     </td>
                     <td>
@@ -71,12 +65,24 @@
                     </td>
 
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { id=item.PackageNumber}) |
-                        @Html.ActionLink("Details", "Details", new { id=item.PackageNumber  }) |
-                        @Html.ActionLink("Delete", "Delete", new { id=item.PackageNumber  })
+                        <a asp-action="Edit" asp-route-PackageNumber="@item.PackageNumber" class="btn btn-primary">Edit</a>
+                        <a asp-action="DisplaySinglePackage" asp-route-PackageNumber="@item.PackageNumber" class="btn btn-secondary">Details</a>
+                        <a asp-action="DeletePackage" asp-route-PackageNumber="@item.PackageNumber" class="btn btn-danger" onclick="return confirmDelete();">Delete</a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
+
+
+<script>
+        function confirmDelete()
+        {
+            if (confirm("Are you sure you want to delete this package?"))
+            {
+                return true;
+            }
+            return false;
+        }
+</script>
