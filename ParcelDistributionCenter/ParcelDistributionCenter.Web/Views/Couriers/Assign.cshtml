@@ -43,7 +43,7 @@
                     @Html.DisplayFor(modelItem => item.Phone)
                 </td>
                 <td>
-                    <a asp-action="Assign" asp-route-packageNumber=@(Context.Request.Query["packageNumber"]) asp-route-CourierId=@item.CourierId asp-route-From="UnassignedPackages" class="btn btn-primary">Assign </a>
+                    <a asp-action="Assign" asp-route-packageNumber=@(Context.Request.Query["packageNumber"]) asp-route-courierId=@item.CourierId asp-route-From="UnassignedPackages" class="btn btn-primary">Assign </a>
                 </td>
             </tr>
         }

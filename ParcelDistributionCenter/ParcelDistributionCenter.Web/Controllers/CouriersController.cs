@@ -102,11 +102,11 @@ namespace ParcelDistributionCenter.Web.Controllers
                 return View(model);
             }
         }
-        public ActionResult UnassignPackage(string packageNumber, string CourierId)
+        public ActionResult UnassignPackage(string packageNumber, string courierId)
         {
             _courierService.UnassignPackage(packageNumber);
-            var model = _courierService.GetCourierPackages(CourierId);
-            return RedirectToAction("CourierPackages", new { id = CourierId });
+            var model = _courierService.GetCourierPackages(courierId);
+            return RedirectToAction("CourierPackages", new { id = courierId });
         }
     }
 }

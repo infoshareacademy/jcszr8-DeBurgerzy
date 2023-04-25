@@ -53,7 +53,7 @@ namespace ParcelDistributionCenter.Web.Controllers
                 TempData["MessageClass"] = "alert-danger";
                 return RedirectToAction(nameof(Details));
             }
-            catch (Exception)
+            catch
             {
                 TempData["Message"] = "Unable to delete the selected delivery machine because it is associated with one or more packages.";
                 TempData["MessageClass"] = "alert-danger";
