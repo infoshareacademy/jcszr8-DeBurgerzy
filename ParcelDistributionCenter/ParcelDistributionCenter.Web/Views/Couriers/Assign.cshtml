@@ -1,6 +1,4 @@
-﻿@using ParcelDistributionCenter.Model.Entites;
-@model IEnumerable<Courier>
-
+﻿@model IEnumerable<ParcelDistributionCenter.Web.ViewModels.CourierViewModel>;
 @{
     ViewData["Title"] = "Assign";
 }
@@ -45,7 +43,7 @@
                     @Html.DisplayFor(modelItem => item.Phone)
                 </td>
                 <td>
-                    <a asp-action="Assign" asp-route-packageNumber=@(Context.Request.Query["packageNumber"]) asp-route-CourierId=@item.Id asp-route-From="UnassignedPackages" class="btn btn-primary">Assign </a>
+                    <a asp-action="Assign" asp-route-packageNumber=@(Context.Request.Query["packageNumber"]) asp-route-CourierId=@item.CourierId asp-route-From="UnassignedPackages" class="btn btn-primary">Assign </a>
                 </td>
             </tr>
         }

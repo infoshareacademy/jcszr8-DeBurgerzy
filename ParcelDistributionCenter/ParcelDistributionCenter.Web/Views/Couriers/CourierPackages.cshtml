@@ -1,5 +1,4 @@
-﻿@using ParcelDistributionCenter.Model.Entites;
-@model IEnumerable<Package>
+﻿@model IEnumerable<ParcelDistributionCenter.Web.ViewModels.PackageViewModel>
 
 @{
     ViewData["Title"] = "CourierPackages";
@@ -70,7 +69,7 @@
                         
                         </td>
                     <td>
-                        <a asp-action="UnassignPackage" asp-route-packageNumber=@item.PackageNumber asp-route-courierId=@item.CourierId class="btn btn-primary">Unassign</a>
+                        <a asp-action="UnassignPackage" asp-route-packageNumber=@item.PackageNumber asp-route-courierId=@ViewContext.RouteData.Values["id"] class="btn btn-primary">Unassign</a>
                         
                     </td>
                 </tr>
