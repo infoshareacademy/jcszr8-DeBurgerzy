@@ -44,7 +44,7 @@ namespace ParcelDistributionCenter.Logic.Validators
                 return false;
             }
             */
-                return true;
+            return true;
         }
 
         public static bool ValidateName(string name)

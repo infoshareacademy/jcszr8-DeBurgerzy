@@ -39,7 +39,7 @@ namespace ParcelDistributionCenter.Logic.Services
 
         public IEnumerable<Courier> GetAll() => _courierRepository.GetAll();
 
-        public List<Package> GetCourierPackages(string courierId) => _packageRepository.GetAll().Where(p => p.CourierId == courierId).ToList();
+        public IEnumerable<Package> GetCourierPackages(string courierId) => _packageRepository.GetAll().Where(p => p.CourierId == courierId);
 
         public IEnumerable<Package> GetUnassignedPackages() => _packageRepository.GetAll().Where(p => p.CourierId == null);
 

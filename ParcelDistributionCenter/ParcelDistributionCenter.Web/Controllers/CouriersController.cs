@@ -22,18 +22,18 @@ namespace ParcelDistributionCenter.Web.Controllers
 
         public ActionResult Index()
         {
-            var courier = _courierService.GetAll().ToList();
-            List<CourierViewModel> model = _mapper.Map<List<Courier>, List<CourierViewModel>>(courier);
-                        
+            var courier = _courierService.GetAll();
+            IEnumerable<CourierViewModel> model = _mapper.Map<IEnumerable<Courier>, IEnumerable<CourierViewModel>>(courier);
             return View(model);
         }
-        public ActionResult CourierPackages(string id)
-         {
 
-            List<Package> packages = _courierService.GetCourierPackages(id);
-            List<PackageViewModel> model = _mapper.Map<List<Package>, List<PackageViewModel>>(packages);
+        public ActionResult CourierPackages(string id)
+        {
+            IEnumerable<Package> packages = _courierService.GetCourierPackages(id);
+            IEnumerable<PackageViewModel> model = _mapper.Map<IEnumerable<Package>, IEnumerable<PackageViewModel>>(packages);
             return View(model);
-         }
+        }
+
         // GET: CouriersController/Delete/5
         public ActionResult Delete(string id)
         {
@@ -81,18 +81,20 @@ namespace ParcelDistributionCenter.Web.Controllers
         {
             Courier courier = _mapper.Map<CourierViewModel, Courier>(courierViewModel);
             bool added = _addNewCourierService.AddNewCourier(courier);
-                if (added)
-                {
-                    return RedirectToAction(nameof(Index));
-                }
+            if (added)
+            {
+                return RedirectToAction(nameof(Index));
+            }
             return View();
         }
+
         public ActionResult UnassignedPackages()
         {
-            var package= _courierService.GetUnassignedPackages().ToList();
+            var package = _courierService.GetUnassignedPackages().ToList();
             List<PackageViewModel> packageVM = _mapper.Map<List<Package>, List<PackageViewModel>>(package);
             return View(packageVM);
         }
+
         public ActionResult Assign(string packageNumber, string courierId, string from)
         {
             if (courierId != null)
@@ -108,6 +110,7 @@ namespace ParcelDistributionCenter.Web.Controllers
                 return View(model);
             }
         }
+
         public ActionResult UnassignPackage(string packageNumber, string courierId)
         {
             _courierService.UnassignPackage(packageNumber);

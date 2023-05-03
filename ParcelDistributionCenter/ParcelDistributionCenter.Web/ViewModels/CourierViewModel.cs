@@ -1,6 +1,4 @@
-﻿using ParcelDistributionCenter.Model.Enums;
-using System.ComponentModel.DataAnnotations;
-
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ParcelDistributionCenter.Web.ViewModels
 
@@ -8,7 +6,7 @@ namespace ParcelDistributionCenter.Web.ViewModels
     public class CourierViewModel
     {
         public string CourierId { get; init; }
-        
+
         [Required(ErrorMessage = "Please enter Courier Email")]
         [EmailAddress]
         public string Email { get; set; }
