@@ -68,6 +68,12 @@ namespace ParcelDistributionCenter.Web.Controllers
             }
         }
 
+        // GET: CouriersController/Create
+        public ActionResult Create()
+        {
+            return View();
+        }
+
         // POST: CouriersController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]

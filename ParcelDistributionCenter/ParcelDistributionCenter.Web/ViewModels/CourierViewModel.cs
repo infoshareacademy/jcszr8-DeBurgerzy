@@ -8,13 +8,6 @@ namespace ParcelDistributionCenter.Web.ViewModels
     public class CourierViewModel
     {
         public string CourierId { get; init; }
-<<<<<<< HEAD
-
-        public string Email { get; set; }
-
-        public string Name { get; set; }
-
-=======
         
         [Required(ErrorMessage = "Please enter Courier Email")]
         [EmailAddress]
@@ -27,15 +20,10 @@ namespace ParcelDistributionCenter.Web.ViewModels
         [Required(ErrorMessage = "Please enter Phone Number")]
         [DataType(DataType.PhoneNumber, ErrorMessage = "Invalid Phone Number")]
         [RegularExpression(@"\(?\d{3}\)?-? *\d{3}-? *-?\d{4}", ErrorMessage = "Invalid Phone Number.")]
->>>>>>> ca7b5bc (CourierController and Views Refactored to View Models)
         public string Phone { get; set; }
 
         [Required(ErrorMessage = "Please enter Courier Surname")]
         [RegularExpression(@"[a-zA-Z]{3,12}", ErrorMessage = "The entered Surname must be between 3 and 12 letters")]
         public string Surname { get; set; }
-<<<<<<< HEAD
-=======
-       
->>>>>>> ca7b5bc (CourierController and Views Refactored to View Models)
     }
 }

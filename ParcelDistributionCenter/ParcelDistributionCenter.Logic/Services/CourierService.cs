@@ -45,7 +45,7 @@ namespace ParcelDistributionCenter.Logic.Services
 
         public void UnassignCouriersPackages(string courierId)
         {
-            IEnumerable<Package> packages = _packageRepository.GetAll().Where(p => p.CourierId == CourierId);
+            IEnumerable<Package> packages = _packageRepository.GetAll().Where(p => p.CourierId == courierId);
             foreach (Package p in packages)
             {
                 _packageRepository.Update(p);
