@@ -12,7 +12,7 @@ namespace ParcelDistributionCenter.Logic.Services.IServices
 
         public IEnumerable<Courier> GetAll();
 
-        public List<Package> GetCourierPackages(string courierId);
+        public IEnumerable<Package> GetCourierPackages(string courierId);
 
         public IEnumerable<Package> GetUnassignedPackages();
 

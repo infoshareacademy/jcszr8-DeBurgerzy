@@ -34,7 +34,8 @@ namespace ParcelDistributionCenter.Logic.Validators
 
         public static bool ValidateEmail(string email)
         {
-            var regex = @"/ ^[a - zA - Z0 - 9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/";
+            //Walidacja niepotrzebna, sprawdzanie maila w ViewModelu
+            /*var regex =@"/ ^[a - zA - Z0 - 9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/";
 
             Match match = Regex.Match(email, regex, RegexOptions.IgnoreCase);
 
@@ -42,16 +43,15 @@ namespace ParcelDistributionCenter.Logic.Validators
             {
                 return false;
             }
+            */
             return true;
         }
 
         public static bool ValidateName(string name)
         {
-            if (name.Length >= 3 & name.Length <= 12)
-            {
-                return true;
-            }
-            return false;
+            if (name is null || name.Length < 3 || name.Length > 12) { return false; }
+
+            return true;
         }
 
         public static bool ValidatePackageNumber(int packageNumber) => packageNumber >= 1_000_000 && packageNumber <= 9_999_999;

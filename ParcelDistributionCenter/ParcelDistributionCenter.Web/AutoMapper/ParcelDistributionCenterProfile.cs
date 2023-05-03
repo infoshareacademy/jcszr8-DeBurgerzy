@@ -25,7 +25,8 @@ namespace ParcelDistributionCenter.Web.AutoMapper
             CreateMap<Package, PackageViewModel>();
 
             CreateMap<Courier, CourierViewModel>()
-                 .ForMember(dest => dest.CourierId, opt => opt.MapFrom(src => src.Id));
+                 .ForMember(dest => dest.CourierId, opt => opt.MapFrom(src => src.Id))
+                 .ReverseMap();
         }
     }
 }
