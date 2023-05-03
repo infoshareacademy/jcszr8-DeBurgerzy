@@ -19,5 +19,7 @@ namespace ParcelDistributionCenter.Logic.Services.IServices
         public void UnassignPackage(string packageNumber);
 
         public void Update(Courier model);
+
+        public bool AddNewCourier(Courier courier);
     }
 }

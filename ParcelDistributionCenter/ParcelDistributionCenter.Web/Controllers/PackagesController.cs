@@ -92,6 +92,7 @@ namespace ParcelDistributionCenter.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(PackageViewModel packageViewModel)
         {
+            if (!ModelState.IsValid) return View(packageViewModel);
             Package package = _mapper.Map<PackageViewModel, Package>(packageViewModel);
             bool edited = _packageService.Update(package);
             if (edited)

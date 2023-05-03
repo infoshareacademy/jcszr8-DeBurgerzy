@@ -5,10 +5,10 @@ namespace ParcelDistributionCenter.Web.ViewModels
 {
     public class PackageViewModel
     {
-        private const string AddressErrorMessage = "Address should contain at least 1 digit, 2 letters and 1 space separator!";
+        private const string AddressErrorMessage = "Please provide an address between 3 and 30 characters.";
 
         [Display(Name = "Delivery Address")]
-        [Required(ErrorMessage = AddressErrorMessage)]
+        [RegularExpression(@"[a-zA-Z0-9,\s\-]{3,30}", ErrorMessage = AddressErrorMessage)]
         public string DeliveryAddress { get; set; }
 
         [Display(Name = "Package Number")]
@@ -19,20 +19,19 @@ namespace ParcelDistributionCenter.Web.ViewModels
         public string RecipientEmail { get; set; }
 
         [Display(Name = "Recipient Name and Surname/Company Name")]
+        [RegularExpression(@"[a-zA-Z0-9,\s\-]{3,20}", ErrorMessage = "The entered Name must be between 3 and 20 characters")]
         public string RecipientName { get; set; }
 
         // TODO: PORPAWIĆ TO REGULAR EXPRESSION
         [Display(Name = "Recipient Phone")]
-        [Required(ErrorMessage = "A Recipient Phone is required.")]
-        [DataType(DataType.PhoneNumber, ErrorMessage = "Invalid Phone Number")]
-        [RegularExpression(@"\(?\d{3}\)?-? *\d{3}-? *-?\d{4}", ErrorMessage = "Invalid Phone Number.")]
+        [RegularExpression(@"^[\+]?[0-9]{2}[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{3}$", ErrorMessage = "Please provide number in format +NN NNN-NNN-NNN")]
         public string RecipientPhone { get; set; }
 
         [Display(Name = "Package Registration Date")]
         public DateTime Registered { get; set; }
 
         [Display(Name = "Sender Address")]
-        [Required(ErrorMessage = AddressErrorMessage)]
+        [RegularExpression(@"[a-zA-Z0-9,\s\-]{3,30}", ErrorMessage = AddressErrorMessage)]
         public string SenderAddress { get; set; }
 
         [Display(Name = "Sender Email")]
@@ -40,13 +39,12 @@ namespace ParcelDistributionCenter.Web.ViewModels
         public string SenderEmail { get; set; }
 
         [Display(Name = "Sender Name and Surname/Company Name")]
+        [RegularExpression(@"[a-zA-Z0-9,\s\-]{3,20}", ErrorMessage = "The entered Name must be between 3 and 20 characters")]
         public string SenderName { get; set; }
 
-        // TODO: PORPAWIĆ TO REGULAR EXPRESSION
         [Display(Name = "Sender Phone")]
         [Required(ErrorMessage = "A Sender Phone is required.")]
-        [DataType(DataType.PhoneNumber, ErrorMessage = "Invalid Phone Number")]
-        [RegularExpression(@"\(?\d{3}\)?-? *\d{3}-? *-?\d{4}", ErrorMessage = "Invalid Phone Number.")]
+        [RegularExpression(@"^[\+]?[0-9]{2}[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{3}$", ErrorMessage = "Please provide number in format +NN NNN-NNN-NNN")]
         public string SenderPhone { get; set; }
 
         [Display(Name = "Package Size")]

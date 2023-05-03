@@ -6,18 +6,15 @@ using ParcelDistributionCenter.Web.ViewModels;
 
 namespace ParcelDistributionCenter.Web.Controllers
 {
-    [Obsolete("DOPRACOWAĆ VIEW MODEL")]
     public class CouriersController : Controller
     {
-        private readonly IAddNewCourierService _addNewCourierService;
         private readonly ICourierService _courierService;
         private readonly IMapper _mapper;
 
-        public CouriersController(ICourierService courierService, IAddNewCourierService addNewCourierService, IMapper mapper)
+        public CouriersController(ICourierService courierService, IMapper mapper)
         {
             _courierService = courierService;
             _mapper = mapper;
-            _addNewCourierService = addNewCourierService;
         }
 
         public ActionResult Index()
@@ -56,6 +53,8 @@ namespace ParcelDistributionCenter.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(CourierViewModel courierViewModel)
         {
+            if (!ModelState.IsValid) { return View(courierViewModel); }
+
             Courier courier = _mapper.Map<CourierViewModel, Courier>(courierViewModel);
             try
             {
@@ -79,8 +78,9 @@ namespace ParcelDistributionCenter.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(CourierViewModel courierViewModel)
         {
+            if (!ModelState.IsValid) { return View(courierViewModel); }
             Courier courier = _mapper.Map<CourierViewModel, Courier>(courierViewModel);
-            bool added = _addNewCourierService.AddNewCourier(courier);
+            bool added = _courierService.AddNewCourier(courier);
             if (added)
             {
                 return RedirectToAction(nameof(Index));
