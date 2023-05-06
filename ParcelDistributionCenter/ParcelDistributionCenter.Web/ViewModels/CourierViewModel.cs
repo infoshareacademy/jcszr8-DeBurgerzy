@@ -16,8 +16,7 @@ namespace ParcelDistributionCenter.Web.ViewModels
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Please enter Phone Number")]
-        [DataType(DataType.PhoneNumber, ErrorMessage = "Invalid Phone Number")]
-        [RegularExpression(@"\(?\d{3}\)?-? *\d{3}-? *-?\d{4}", ErrorMessage = "Invalid Phone Number.")]
+        [RegularExpression(@"^[\+]?[0-9]{2}[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{3}$", ErrorMessage = "Please provide number in format +NN NNN-NNN-NNN")]
         public string Phone { get; set; }
 
         [Required(ErrorMessage = "Please enter Courier Surname")]

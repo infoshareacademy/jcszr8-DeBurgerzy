@@ -2,7 +2,6 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ParcelDistributionCenter.Logic.Services;
 using ParcelDistributionCenter.Logic.Services.IServices;
-using ParcelDistributionCenter.Logic.Validators;
 using ParcelDistributionCenter.Model.Context;
 using ParcelDistributionCenter.Model.Context.Memory;
 using ParcelDistributionCenter.Model.Repositories;
@@ -26,8 +25,6 @@ namespace ParcelDistributionCenter.Web
             builder.Services.AddSingleton<IJsonReader>(JsonReader.LoadData());
             builder.Services.AddScoped<IAddNewPackageService, AddNewPackageService>();
             builder.Services.AddScoped<IPackageService, PackageService>();
-            builder.Services.AddScoped<IPackageValidator, PackageValidator>();
-            builder.Services.AddTransient<IAddNewCourierService, AddNewCourierService>();
             builder.Services.AddTransient<ICourierService, CourierService>();
             builder.Services.AddTransient<IDeliveryMachinesService, DeliveryMachinesService>();
             builder.Services.AddAutoMapper(typeof(DeliveryMachineViewModel));

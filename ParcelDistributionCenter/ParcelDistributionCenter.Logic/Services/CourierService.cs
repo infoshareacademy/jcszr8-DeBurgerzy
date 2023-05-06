@@ -68,5 +68,11 @@ namespace ParcelDistributionCenter.Logic.Services
             courier.Phone = model.Phone;
             _courierRepository.Update(courier);
         }
+
+        public bool AddNewCourier(Courier courier)
+        {
+            _courierRepository.Insert(courier);
+            return true;
+        }
     }
 }
