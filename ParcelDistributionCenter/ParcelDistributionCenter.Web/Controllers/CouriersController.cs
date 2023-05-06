@@ -53,7 +53,10 @@ namespace ParcelDistributionCenter.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(CourierViewModel courierViewModel)
         {
-            if (!ModelState.IsValid) { return View(courierViewModel); }
+            if (!ModelState.IsValid)
+            {
+                return View(courierViewModel);
+            }
 
             Courier courier = _mapper.Map<CourierViewModel, Courier>(courierViewModel);
             try
@@ -78,7 +81,10 @@ namespace ParcelDistributionCenter.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(CourierViewModel courierViewModel)
         {
-            if (!ModelState.IsValid) { return View(courierViewModel); }
+            if (!ModelState.IsValid)
+            {
+                return View(courierViewModel);
+            }
             Courier courier = _mapper.Map<CourierViewModel, Courier>(courierViewModel);
             bool added = _courierService.AddNewCourier(courier);
             if (added)
