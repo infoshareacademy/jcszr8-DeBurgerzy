@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ParcelDistributionCenter.Web.ViewModels;
+using ParcelDistributionCenter.Logic.ViewModels;
 using System.Diagnostics;
 
 namespace ParcelDistributionCenter.Web.Controllers

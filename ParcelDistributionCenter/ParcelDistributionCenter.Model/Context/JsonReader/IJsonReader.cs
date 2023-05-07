@@ -1,6 +1,6 @@
 ﻿using ParcelDistributionCenter.Model.Entites;
 
-namespace ParcelDistributionCenter.Model.Context.Memory
+namespace ParcelDistributionCenter.Model.Context.JsonReader
 {
     public interface IJsonReader
     {

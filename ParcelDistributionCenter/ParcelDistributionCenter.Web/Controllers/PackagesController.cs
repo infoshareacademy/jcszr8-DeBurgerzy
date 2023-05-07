@@ -1,8 +1,8 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ParcelDistributionCenter.Logic.Services.IServices;
+using ParcelDistributionCenter.Logic.ViewModels;
 using ParcelDistributionCenter.Model.Entites;
-using ParcelDistributionCenter.Web.ViewModels;
 
 namespace ParcelDistributionCenter.Web.Controllers
 {
@@ -33,17 +33,12 @@ namespace ParcelDistributionCenter.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                Package package = _mapper.Map<Package>(packageViewModel);
-                bool added = _addNewPackageService.AddNewPackage(ref package);
-                if (added)
-                {
-                    TempData["Message"] = "Package successfully added!";
-                    TempData["MessageClass"] = "alert-success";
-                    return RedirectToAction(nameof(DisplaySinglePackage), packageViewModel);
-                }
-                TempData["Message"] = "Something went wrong. Please ensure that provided data is correct.";
-                TempData["MessageClass"] = "alert-danger";
-                return View(packageViewModel);
+                packageViewModel = _addNewPackageService.AddNewPackage(packageViewModel);
+                //TODO: TempData do przeniesienia do widoku
+                TempData["Message"] = "Package successfully added!";
+                TempData["MessageClass"] = "alert-success";
+
+                return RedirectToAction(nameof(DisplaySinglePackage), packageViewModel);
             }
             return View(packageViewModel);
         }

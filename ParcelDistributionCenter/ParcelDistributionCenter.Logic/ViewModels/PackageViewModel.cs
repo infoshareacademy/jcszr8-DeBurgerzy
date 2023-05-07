@@ -1,14 +1,14 @@
 ﻿using ParcelDistributionCenter.Model.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace ParcelDistributionCenter.Web.ViewModels
+namespace ParcelDistributionCenter.Logic.ViewModels
 {
     public class PackageViewModel
     {
         private const string AddressErrorMessage = "Please provide an address between 3 and 30 characters.";
 
         [Display(Name = "Delivery Address")]
-        [RegularExpression(@"[a-zA-Z0-9,\s\-]{3,30}", ErrorMessage = AddressErrorMessage)]
+        [RegularExpression(@"[a-zA-Z0-9\s\-]{3,30}", ErrorMessage = AddressErrorMessage)]
         public string DeliveryAddress { get; set; }
 
         [Display(Name = "Package Number")]
@@ -19,7 +19,7 @@ namespace ParcelDistributionCenter.Web.ViewModels
         public string RecipientEmail { get; set; }
 
         [Display(Name = "Recipient Name and Surname/Company Name")]
-        [RegularExpression(@"[a-zA-Z0-9,\s\-]{3,20}", ErrorMessage = "The entered Name must be between 3 and 20 characters")]
+        [RegularExpression(@"[a-zA-Z0-9\s\-]{3,20}", ErrorMessage = "The entered Name must be between 3 and 20 characters")]
         public string RecipientName { get; set; }
 
         // TODO: PORPAWIĆ TO REGULAR EXPRESSION
@@ -28,7 +28,7 @@ namespace ParcelDistributionCenter.Web.ViewModels
         public string RecipientPhone { get; set; }
 
         [Display(Name = "Package Registration Date")]
-        public DateTime Registered { get; set; }
+        public DateTime Registered { get; set; } = DateTime.Now;
 
         [Display(Name = "Sender Address")]
         [RegularExpression(@"[a-zA-Z0-9,\s\-]{3,30}", ErrorMessage = AddressErrorMessage)]

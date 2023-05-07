@@ -1,4 +1,6 @@
-﻿using ParcelDistributionCenter.Logic.Services.IServices;
+﻿using AutoMapper;
+using ParcelDistributionCenter.Logic.Services.IServices;
+using ParcelDistributionCenter.Logic.ViewModels;
 using ParcelDistributionCenter.Model.Entites;
 using ParcelDistributionCenter.Model.Enums;
 using ParcelDistributionCenter.Model.Repositories;
@@ -11,28 +13,25 @@ namespace ParcelDistributionCenter.Logic.Services
         private readonly IRepository<Courier> _courierRepository;
         private readonly IRepository<DeliveryMachine> _deliverMachineRepository;
         private readonly IRepository<Package> _packageRepository;
-        private readonly List<bool> validations = new();
+        private readonly IMapper _mapper;
 
-        public AddNewPackageService(IRepository<Package> packageRepository, IRepository<Courier> courierRepository, IRepository<DeliveryMachine> deliverMachineRepository)
+        public AddNewPackageService(IRepository<Package> packageRepository, IMapper mapper, IRepository<Courier> courierRepository, IRepository<DeliveryMachine> deliverMachineRepository)
         {
             _packageRepository = packageRepository;
+            _mapper = mapper;
             _courierRepository = courierRepository;
             _deliverMachineRepository = deliverMachineRepository;
         }
 
-        public bool AddNewPackage(ref Package package)
+        public PackageViewModel AddNewPackage(PackageViewModel packageViewModel)
         {
-            GeneratePackageNumber();
-            AssignCourierID();
-            string deliveryMachineID = AssignDeliveryMachineID(package.Size);
-
-            if (validations.Any(v => v == false) || deliveryMachineID == null)
-            {
-                return false;
-            }
-
+            Package package = _mapper.Map<Package>(packageViewModel);
+            package.PackageNumber = GeneratePackageNumber();
+            package.CourierId = AssignCourierID();
+            package.DeliveryMachineJsonId = AssignDeliveryMachineID(package.Size);
             _packageRepository.Insert(package);
-            return true;
+            packageViewModel.PackageNumber = package.PackageNumber;
+            return packageViewModel;
         }
 
         protected string AssignCourierID()
