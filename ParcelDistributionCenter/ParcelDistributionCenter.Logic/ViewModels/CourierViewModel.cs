@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ParcelDistributionCenter.Web.ViewModels
+namespace ParcelDistributionCenter.Logic.ViewModels
 
 {
     public class CourierViewModel
@@ -12,7 +12,7 @@ namespace ParcelDistributionCenter.Web.ViewModels
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Please enter Courier Name")]
-        [RegularExpression(@"[a-zA-Z]{3,12}", ErrorMessage = "The entered Name must be between 3 and 12 letters")]
+        [StringLength(12, ErrorMessage = "The entered Name must be between 3 and 12 letters", MinimumLength = 3)]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Please enter Phone Number")]

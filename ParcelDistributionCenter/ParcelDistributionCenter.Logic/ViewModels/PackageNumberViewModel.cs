@@ -1,4 +1,4 @@
-﻿namespace ParcelDistributionCenter.Web.ViewModels
+﻿namespace ParcelDistributionCenter.Logic.ViewModels
 {
     [Obsolete("TO BE DELETED")]
     public class PackageNumberViewModel

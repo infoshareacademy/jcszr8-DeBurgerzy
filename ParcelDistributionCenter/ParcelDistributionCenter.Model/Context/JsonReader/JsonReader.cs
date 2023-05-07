@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using ParcelDistributionCenter.Model.Entites;
 
-namespace ParcelDistributionCenter.Model.Context.Memory
+namespace ParcelDistributionCenter.Model.Context.JsonReader
 {
     [Obsolete("WYWALIĆ Z KONTENERA I WRZUCIC DO KOSNTRUKTORA/METODY INITIALIZE SEEDA")]
     public class JsonReader : IJsonReader

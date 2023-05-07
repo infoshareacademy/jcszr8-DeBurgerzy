@@ -1,6 +1,6 @@
 ﻿using ParcelDistributionCenter.Model.Entites;
 
-namespace ParcelDistributionCenter.Web.ViewModels
+namespace ParcelDistributionCenter.Logic.ViewModels
 {
     public class DeliveryMachineViewModel
     {

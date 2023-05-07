@@ -3,9 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using ParcelDistributionCenter.Logic.Services;
 using ParcelDistributionCenter.Logic.Services.IServices;
 using ParcelDistributionCenter.Model.Context;
-using ParcelDistributionCenter.Model.Context.Memory;
+using ParcelDistributionCenter.Model.Context.JsonReader;
 using ParcelDistributionCenter.Model.Repositories;
-using ParcelDistributionCenter.Web.ViewModels;
 
 namespace ParcelDistributionCenter.Web
 {
@@ -27,7 +26,7 @@ namespace ParcelDistributionCenter.Web
             builder.Services.AddScoped<IPackageService, PackageService>();
             builder.Services.AddTransient<ICourierService, CourierService>();
             builder.Services.AddTransient<IDeliveryMachinesService, DeliveryMachinesService>();
-            builder.Services.AddAutoMapper(typeof(DeliveryMachineViewModel));
+            builder.Services.AddAutoMapper(typeof(Program));
             var app = builder.Build();
             CreateDbIfNotExists(app);
 
