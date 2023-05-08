@@ -24,18 +24,14 @@ namespace ParcelDistributionCenter.Web.Controllers
             return View();
         }
 
-        //// POST: DeliveryMachinesController/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult CreateConfirmed(DeliveryMachine deliveryMachine)
-        //{
-        //    bool added = _deliveryMachinesService.CreateNewDeliveryMachine(deliveryMachine);
-        //    if (added)
-        //    {
-        //        return RedirectToAction(nameof(Details));
-        //    }
-        //    return View();
-        //}
+        // POST: DeliveryMachinesController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateConfirmed(DeliveryMachine deliveryMachine)
+        {
+            _deliveryMachinesService.CreateNewDeliveryMachine(deliveryMachine);
+            return RedirectToAction(nameof(Details));
+        }
 
         // GET: DeliveryMachinesController/DeleteDeliveryMachine
         public ActionResult DeleteDeliveryMachine(string id)

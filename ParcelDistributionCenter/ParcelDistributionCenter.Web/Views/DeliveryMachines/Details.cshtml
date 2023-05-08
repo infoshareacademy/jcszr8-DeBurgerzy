@@ -28,6 +28,9 @@
             <th>
                 <label asp-for="First().BigLockersCount"></label>
             </th>
+            <th>
+                <label>Packages Quantity</label>
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -49,6 +52,9 @@
                 </td>
                 <td>
                     @item.BigLockersCount
+                </td>
+                <td>
+                    @item.Packages.Count
                 </td>
                 <td>
                     <div class="text-center">
