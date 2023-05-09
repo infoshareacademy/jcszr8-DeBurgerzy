@@ -13,10 +13,10 @@
             Find in table: 
         </td>
         <td text-align="left">
-            <input type="text" id="searchInput" onkeyup="search()" placeholder="Search" title="Type in a name">
+            <input type="text" id="searchInput" onkeyup="search('packagesTable')" placeholder="Search" title="Type in a name">
         </td>
         <td style="text-align:right">
-            <a asp-action="dPackage" class="btn btn-primary">Add new Package</a>
+            <a asp-action="addPackage" class="btn btn-primary">Add new Package</a>
         </td>
     </tr>
 </table>
@@ -89,6 +89,8 @@
 </div>
 
 
+<script src="~/js/search.js"></script>
+
 <script>
         function confirmDelete()
         {
@@ -97,24 +99,5 @@
                 return true;
             }
             return false;
-        }
-        function search() {
-            var input, filter, ul, li, a, i, txtValue;
-            input = document.getElementById("searchInput");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("packagesTable");
-            rows = table.getElementsByTagName("tr");
-            for (i = 0; i < rows.length; i++) {
-                shouldDisplay= Object.values(rows[i].cells)
-                    .map((td)=>td.textContent || td.innerText)
-                    .some(tdText => tdText.toUpperCase().includes(filter))
-                //td = rows[i].cells[0];
-                //txtValue = td.textContent || td.innerText;
-                if (shouldDisplay) {
-                    rows[i].style.display = "";
-                } else {
-                    rows[i].style.display = "none";
-                }
-            }
         }
 </script>
