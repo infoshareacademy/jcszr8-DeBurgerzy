@@ -100,21 +100,5 @@ namespace ParcelDistributionCenter.Web.Controllers
             TempData["MessageClass"] = "alert-danger";
             return View();
         }
-
-        // GET: PackagesController/FindPackageByNumber
-        public ActionResult FindPackageByNumber()
-        {
-            var packagesNumbers = _packageService.GetAllPackagesNumber();
-            PackageNumberViewModel packageNumberViewModel = new() { PackageNumbers = packagesNumbers, PackageNumber = 0 };
-            return View(packageNumberViewModel);
-        }
-
-        // POST: PackagesController/FindPackageBuNumber/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult FindPackageByNumber(PackageNumberViewModel pVM)
-        {
-            return RedirectToAction("DisplaySinglePackage", new { packageNumber = pVM.PackageNumber });
-        }
     }
 }
