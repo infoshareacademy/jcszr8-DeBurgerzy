@@ -12,6 +12,12 @@ namespace ParcelDistributionCenter.Logic.Services.IServices
 
         DeliveryMachine GetDeliveryMachineById(string id);
 
+        IEnumerable<Package> GetDeliveryMachinePackages(string deliveryMachineId);
+
+        IEnumerable<Package> GetDeliveryMachineUnassignedPackages();
+
+        void UnassignPackage(string packageNumber, string deliveryMachineId);
+
         void UpdateDeliveryMachine(DeliveryMachine deliveryMachine);
     }
 }

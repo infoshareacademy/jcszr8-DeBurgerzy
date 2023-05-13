@@ -35,9 +35,9 @@ namespace ParcelDistributionCenter.Logic.Services
             return false;
         }
 
-        public Courier FindById(string id) => _courierRepository.Get(id);
+        public Courier FindById(string id) => _courierRepository.Get(id, c => c.Packages);
 
-        public IEnumerable<Courier> GetAll() => _courierRepository.GetAll();
+        public IEnumerable<Courier> GetAll() => _courierRepository.GetAll(c => c.Packages);
 
         public IEnumerable<Package> GetCourierPackages(string courierId) => _packageRepository.GetAll().Where(p => p.CourierId == courierId);
 

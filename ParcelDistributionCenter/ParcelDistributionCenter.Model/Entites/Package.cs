@@ -22,6 +22,8 @@ namespace ParcelDistributionCenter.Model.Entites
         // TODO: Think if nullable values are needed
         public DeliveryMachine? DeliveryMachine { get; set; }
 
+        public string? DeliveryMachineId { get; set; }
+
         [NotMapped]
         [JsonProperty("delivery_machine_id")]
         public string DeliveryMachineJsonId { get; set; }

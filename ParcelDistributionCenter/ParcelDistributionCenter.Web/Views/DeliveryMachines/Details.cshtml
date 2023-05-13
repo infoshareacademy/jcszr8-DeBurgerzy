@@ -20,13 +20,13 @@
                 <label asp-for="First().IsActive"></label>
             </th>
             <th>
-                <label asp-for="First().SmallLockersCount"></label>
+                <label asp-for="First().SmallLockersCount">Free Small Lockers Count</label>
             </th>
             <th>
-                <label asp-for="First().MediumLockersCount"></label>
+                <label asp-for="First().MediumLockersCount">Free Medium Lockers Count</label>
             </th>
             <th>
-                <label asp-for="First().BigLockersCount"></label>
+                <label asp-for="First().BigLockersCount">Free Big Lockers Count</label>
             </th>
             <th>
                 <label>Packages Quantity</label>
@@ -53,8 +53,9 @@
                 <td>
                     @item.BigLockersCount
                 </td>
-                <td>
-                    @item.Packages.Count
+                <td style="display:flex; justify-content:space-between; align-items:center;">
+                    <span>@item.Packages.Count</span>
+                    <a asp-action="DMPackagesList" asp-route-id="@item.Id" class="btn btn-secondary">Show Packages</a>
                 </td>
                 <td>
                     <div class="text-center">

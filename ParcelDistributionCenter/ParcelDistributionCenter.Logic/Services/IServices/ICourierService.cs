@@ -4,22 +4,22 @@ namespace ParcelDistributionCenter.Logic.Services.IServices
 {
     public interface ICourierService
     {
-        public void AssignPackage(string packageNumber, string CourierId);
+        void AssignPackage(string packageNumber, string CourierId);
 
-        public bool DeleteCourier(string courierId);
+        bool DeleteCourier(string courierId);
 
-        public Courier FindById(string id);
+        Courier FindById(string id);
 
-        public IEnumerable<Courier> GetAll();
+        IEnumerable<Courier> GetAll();
 
-        public IEnumerable<Package> GetCourierPackages(string courierId);
+        IEnumerable<Package> GetCourierPackages(string courierId);
 
-        public IEnumerable<Package> GetUnassignedPackages();
+        IEnumerable<Package> GetUnassignedPackages();
 
-        public void UnassignPackage(string packageNumber);
+        void UnassignPackage(string packageNumber);
 
-        public void Update(Courier model);
+        void Update(Courier model);
 
-        public bool AddNewCourier(Courier courier);
+        bool AddNewCourier(Courier courier);
     }
 }
