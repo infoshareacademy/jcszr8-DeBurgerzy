@@ -4,6 +4,8 @@ namespace ParcelDistributionCenter.Logic.Services.IServices
 {
     public interface IDeliveryMachinesService
     {
+        void AssignPackage(string packageNumber, string deliveryMachineId);
+
         void CreateNewDeliveryMachine(DeliveryMachine deliveryMachine);
 
         bool DeleteDeliveryMachineById(string deliveryMachineId);

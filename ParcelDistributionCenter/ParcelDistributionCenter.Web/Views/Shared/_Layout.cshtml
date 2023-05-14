@@ -50,16 +50,16 @@
                                 <a class="nav-link" asp-controller="DeliveryMachines" asp-action="Details">By Delivery Machine</a>
                             </nav>
                         </div>
+                        <a class="nav-link" asp-controller="Packages" asp-action="UnassignedPackages">
+                            <div class="sb-nav-link-icon"><i class="fas fa-dolly"></i></div>
+                            Unassigned Packages
+                        </a>
                         
                         @*COURIERS*@
                         <div class="sb-sidenav-menu-heading">Manage Couriers</div>
                         <a class="nav-link" asp-controller="Couriers" asp-action="Index">
                            <div class="sb-nav-link-icon"><i class="fas fa-dolly"></i></div>
                             Couriers List
-                        </a>
-                        <a class="nav-link" asp-controller="Couriers" asp-action="UnassignedPackages">
-                            <div class="sb-nav-link-icon"><i class="fas fa-dolly"></i></div>
-                            Unassigned Packages
                         </a>
 
                         @*DELIVERY MACHINES*@

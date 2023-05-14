@@ -1,18 +1,11 @@
-﻿using ParcelDistributionCenter.Model.Context.JsonReader;
+﻿using ParcelDistributionCenter.Model.Context.JsonReaderService;
 using ParcelDistributionCenter.Model.Entites;
 
 namespace ParcelDistributionCenter.Model.Context
 {
     public class Seed
     {
-        private readonly IJsonReader _memoryRepository;
-
-        public Seed(IJsonReader memoryRepository)
-        {
-            _memoryRepository = memoryRepository;
-        }
-
-        public void Initialize(ParcelDistributionCenterContext context)
+        public static void Initialize(ParcelDistributionCenterContext context)
         {
             context.Database.EnsureCreated();
             if (context.Couriers.Any())
@@ -20,13 +13,16 @@ namespace ParcelDistributionCenter.Model.Context
                 return;
             }
 
-            List<Package> packages = _memoryRepository.PackagesList;
+            JsonReader jsonReader = new();
+            jsonReader.LoadData();
+
+            List<Package> packages = jsonReader.PackagesList;
             foreach (Package package in packages)
             {
                 context.Packages.Add(package);
             }
 
-            List<Courier> couriers = _memoryRepository.CouriersList;
+            List<Courier> couriers = jsonReader.CouriersList;
             foreach (Courier courier in couriers)
             {
                 IEnumerable<Package> courierPackages = packages.Where(p => p.CourierJsonId == courier.CourierJsonId);
@@ -37,7 +33,7 @@ namespace ParcelDistributionCenter.Model.Context
                 context.Couriers.Add(courier);
             }
 
-            List<DeliveryMachine> deliveryMachines = _memoryRepository.DeliveryMachinesList;
+            List<DeliveryMachine> deliveryMachines = jsonReader.DeliveryMachinesList;
             foreach (DeliveryMachine deliveryMachine in deliveryMachines)
             {
                 IEnumerable<Package> deliveryMachinePackages = packages.Where(p => p.DeliveryMachineJsonId == deliveryMachine.DeliveryMachineJsonId);
