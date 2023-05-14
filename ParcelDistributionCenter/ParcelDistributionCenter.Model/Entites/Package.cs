@@ -7,7 +7,6 @@ namespace ParcelDistributionCenter.Model.Entites
 {
     public class Package : Entity
     {
-        // TODO: Think if nullable values are needed
         public Courier? Courier { get; set; }
 
         public string? CourierId { get; set; }
@@ -19,7 +18,6 @@ namespace ParcelDistributionCenter.Model.Entites
         [JsonProperty("delivery_address")]
         public string DeliveryAddress { get; set; }
 
-        // TODO: Think if nullable values are needed
         public DeliveryMachine? DeliveryMachine { get; set; }
 
         public string? DeliveryMachineId { get; set; }

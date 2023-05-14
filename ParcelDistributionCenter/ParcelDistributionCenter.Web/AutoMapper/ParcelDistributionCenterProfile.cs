@@ -12,11 +12,9 @@ namespace ParcelDistributionCenter.Web.AutoMapper
                 .ForMember(dest => dest.DeliveryMachineJsonId, opt => opt.Ignore())
                 .ForMember(dest => dest.TimeCreated, opt => opt.Ignore())
                 .ReverseMap();
-            CreateMap<PackageViewModel, Package>(MemberList.Source)
-                //.ForMember(dest => dest.Registered, opt => opt.Ignore())
-                .ReverseMap();
 
-            //CreateMap<Package, PackageViewModel>();
+            CreateMap<PackageViewModel, Package>(MemberList.Source)
+                .ReverseMap();
 
             CreateMap<Courier, CourierViewModel>()
                  .ForMember(dest => dest.CourierId, opt => opt.MapFrom(src => src.Id))

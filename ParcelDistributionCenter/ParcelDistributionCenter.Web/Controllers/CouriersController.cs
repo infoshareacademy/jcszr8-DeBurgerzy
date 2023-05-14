@@ -17,13 +17,6 @@ namespace ParcelDistributionCenter.Web.Controllers
             _mapper = mapper;
         }
 
-        public ActionResult Index()
-        {
-            var courier = _courierService.GetAll();
-            IEnumerable<CourierViewModel> model = _mapper.Map<IEnumerable<Courier>, IEnumerable<CourierViewModel>>(courier);
-            return View(model);
-        }
-
         public ActionResult CourierPackages(string id)
         {
             IEnumerable<Package> packages = _courierService.GetCourierPackages(id);
@@ -31,11 +24,34 @@ namespace ParcelDistributionCenter.Web.Controllers
             return View(model);
         }
 
+        // GET: CouriersController/Create
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: CouriersController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(CourierViewModel courierViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(courierViewModel);
+            }
+            Courier courier = _mapper.Map<CourierViewModel, Courier>(courierViewModel);
+            bool added = _courierService.AddNewCourier(courier);
+            if (added)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
+        }
+
         // GET: CouriersController/Delete/5
         public ActionResult Delete(string id)
         {
             var model = _courierService.DeleteCourier(id);
-
             return RedirectToAction(nameof(Index));
         }
 
@@ -44,7 +60,6 @@ namespace ParcelDistributionCenter.Web.Controllers
         {
             var courier = _courierService.FindById(id);
             CourierViewModel model = _mapper.Map<Courier, CourierViewModel>(courier);
-
             return View(model);
         }
 
@@ -70,28 +85,11 @@ namespace ParcelDistributionCenter.Web.Controllers
             }
         }
 
-        // GET: CouriersController/Create
-        public ActionResult Create()
+        public ActionResult Index()
         {
-            return View();
-        }
-
-        // POST: CouriersController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(CourierViewModel courierViewModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(courierViewModel);
-            }
-            Courier courier = _mapper.Map<CourierViewModel, Courier>(courierViewModel);
-            bool added = _courierService.AddNewCourier(courier);
-            if (added)
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            return View();
+            var courier = _courierService.GetAll();
+            IEnumerable<CourierViewModel> model = _mapper.Map<IEnumerable<Courier>, IEnumerable<CourierViewModel>>(courier);
+            return View(model);
         }
 
         public ActionResult UnassignPackage(string packageNumber, string courierId)

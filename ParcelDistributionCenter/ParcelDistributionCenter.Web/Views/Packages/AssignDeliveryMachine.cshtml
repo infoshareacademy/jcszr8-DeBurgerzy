@@ -34,31 +34,32 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BigLockersCount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MediumLockersCount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SmallLockersCount)
-            </td>
-            <td>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BigLockersCount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MediumLockersCount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SmallLockersCount)
+                </td>
+                <td>
                     <a asp-action="AssignDeliveryMachine" asp-route-packageNumber=@(Context.Request.Query["packageNumber"]) asp-route-deliveryMachineId=@item.Id asp-route-From="UnassignedPackages" class="btn btn-primary">Assign </a>
-            </td>
-        </tr>
-}
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 <div>

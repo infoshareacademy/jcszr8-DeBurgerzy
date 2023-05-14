@@ -7,13 +7,12 @@ using ParcelDistributionCenter.Model.Repositories;
 
 namespace ParcelDistributionCenter.Logic.Services
 {
-    // TODO: Prevent code from nullable ids coming form json
     public class AddNewPackageService : IAddNewPackageService
     {
         private readonly IRepository<Courier> _courierRepository;
         private readonly IRepository<DeliveryMachine> _deliverMachineRepository;
-        private readonly IRepository<Package> _packageRepository;
         private readonly IMapper _mapper;
+        private readonly IRepository<Package> _packageRepository;
 
         public AddNewPackageService(IRepository<Package> packageRepository, IMapper mapper, IRepository<Courier> courierRepository, IRepository<DeliveryMachine> deliverMachineRepository)
         {

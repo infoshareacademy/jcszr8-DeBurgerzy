@@ -4,7 +4,6 @@ using ParcelDistributionCenter.Model.Repositories;
 
 namespace ParcelDistributionCenter.Logic.Services
 {
-    // TODO: Prevent code from nullable ids coming form json
     public class CourierService : ICourierService
     {
         private readonly IRepository<Courier> _courierRepository;
@@ -14,6 +13,12 @@ namespace ParcelDistributionCenter.Logic.Services
         {
             _courierRepository = courierRepository;
             _packageRepository = packageRepository;
+        }
+
+        public bool AddNewCourier(Courier courier)
+        {
+            _courierRepository.Insert(courier);
+            return true;
         }
 
         public bool DeleteCourier(string id)
@@ -58,12 +63,6 @@ namespace ParcelDistributionCenter.Logic.Services
             courier.Email = model.Email;
             courier.Phone = model.Phone;
             _courierRepository.Update(courier);
-        }
-
-        public bool AddNewCourier(Courier courier)
-        {
-            _courierRepository.Insert(courier);
-            return true;
         }
     }
 }
