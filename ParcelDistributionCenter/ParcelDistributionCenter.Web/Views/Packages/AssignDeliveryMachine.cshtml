@@ -1,0 +1,66 @@
+﻿@model IEnumerable<ParcelDistributionCenter.Logic.ViewModels.DeliveryMachineViewModel>
+
+@{
+    ViewData["Title"] = "AssignDeliveryMachine";
+}
+
+<h1>AssignDeliveryMachine</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BigLockersCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MediumLockersCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SmallLockersCount)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BigLockersCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MediumLockersCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SmallLockersCount)
+            </td>
+            <td>
+                    <a asp-action="AssignDeliveryMachine" asp-route-packageNumber=@(Context.Request.Query["packageNumber"]) asp-route-deliveryMachineId=@item.Id asp-route-From="UnassignedPackages" class="btn btn-primary">Assign </a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<div>
+    <a asp-action="UnassignedPackages" class="btn btn-secondary">Back to List</a>
+</div>
