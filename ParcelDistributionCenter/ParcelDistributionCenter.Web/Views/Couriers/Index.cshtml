@@ -4,11 +4,23 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>List of Couriers</h1>
-
-<p>
-    <a asp-action="Create" class="btn btn-primary">Add new courier </a>
-</p>
+<h1 class="text-center" style="font-weight: bold; margin-top: 10px">List of Couriers</h1>
+<hr />
+<table width=90%>
+    <tr>
+        <td width=150px style="text-align:right; padding:15px">
+            <span class="sb-nav-link-icon"><i class="fas fa-filter"></i></span>
+            Find in table:
+        </td>
+        <td width=150px text-align="left">
+            <input type="text" id="searchInput" onkeyup="search('courierTable')" placeholder="Search" title="Type in a name">
+        </td>
+        <td style="text-align:right">
+            <a asp-action="Create" class="btn btn-primary">Add new courier </a>
+        </td>
+    </tr>
+</table>
+<hr />
 <table class="table">
     <thead>
         <tr>
@@ -27,7 +39,7 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="courierTable">
 @foreach (var item in Model) {
         <tr>
             <td>
@@ -55,3 +67,5 @@
 }
     </tbody>
 </table>
+
+<script src="~/js/search.js"></script>
