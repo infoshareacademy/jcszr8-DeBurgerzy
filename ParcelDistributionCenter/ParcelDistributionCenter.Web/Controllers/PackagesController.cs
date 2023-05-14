@@ -10,13 +10,17 @@ namespace ParcelDistributionCenter.Web.Controllers
     public class PackagesController : Controller
     {
         private readonly IAddNewPackageService _addNewPackageService;
+        private readonly ICourierService _courierService;
+        private readonly IDeliveryMachinesService _deliveryMachinesService;
         private readonly IMapper _mapper;
         private readonly IPackageService _packageService;
 
-        public PackagesController(IAddNewPackageService addNewPackageHandler, IPackageService packageService, IMapper mapper)
+        public PackagesController(IAddNewPackageService addNewPackageHandler, IPackageService packageService, ICourierService courierService, IDeliveryMachinesService deliveryMachinesService, IMapper mapper)
         {
             _addNewPackageService = addNewPackageHandler;
             _packageService = packageService;
+            _courierService = courierService;
+            _deliveryMachinesService = deliveryMachinesService;
             _mapper = mapper;
         }
 
@@ -41,6 +45,36 @@ namespace ParcelDistributionCenter.Web.Controllers
                 return RedirectToAction(nameof(DisplaySinglePackage), packageViewModel);
             }
             return View(packageViewModel);
+        }
+
+        public ActionResult AssignCourier(string packageNumber, string courierId, string from)
+        {
+            if (courierId != null)
+            {
+                _packageService.AssignCourier(packageNumber, courierId);
+                return from == "UnassignedPackages" ? RedirectToAction(from) : RedirectToAction("CourierPackages", "Couriers", new { id = courierId });
+            }
+            else
+            {
+                IEnumerable<Courier> courier = _courierService.GetAll();
+                IEnumerable<CourierViewModel> model = _mapper.Map<IEnumerable<Courier>, IEnumerable<CourierViewModel>>(courier);
+                return View(model);
+            }
+        }
+
+        public ActionResult AssignDeliveryMachine(string packageNumber, string deliveryMachineId, string from)
+        {
+            if (deliveryMachineId != null)
+            {
+                _packageService.AssignDeliveryMachine(packageNumber, deliveryMachineId);
+                return from == "UnassignedPackages" ? RedirectToAction(from) : RedirectToAction("Details", "DeliveryMachines", new { id = deliveryMachineId });
+            }
+            else
+            {
+                IEnumerable<DeliveryMachine> deliveryMachine = _deliveryMachinesService.GetAll();
+                IEnumerable<DeliveryMachineViewModel> model = _mapper.Map<IEnumerable<DeliveryMachine>, IEnumerable<DeliveryMachineViewModel>>(deliveryMachine);
+                return View(model);
+            }
         }
 
         // GET: PackagesController/DeletePackage/5
@@ -99,6 +133,29 @@ namespace ParcelDistributionCenter.Web.Controllers
             TempData["Message"] = "Package not edited! Something went wrong";
             TempData["MessageClass"] = "alert-danger";
             return View();
+        }
+
+        // GET: PackagesController/FindPackageByNumber
+        public ActionResult FindPackageByNumber()
+        {
+            var packagesNumbers = _packageService.GetAllPackagesNumber();
+            PackageNumberViewModel packageNumberViewModel = new() { PackageNumbers = packagesNumbers, PackageNumber = 0 };
+            return View(packageNumberViewModel);
+        }
+
+        // POST: PackagesController/FindPackageBuNumber/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult FindPackageByNumber(PackageNumberViewModel pVM)
+        {
+            return RedirectToAction("DisplaySinglePackage", new { packageNumber = pVM.PackageNumber });
+        }
+
+        public ActionResult UnassignedPackages()
+        {
+            IEnumerable<Package> package = _packageService.GetUnassignedPackages();
+            IEnumerable<PackageViewModel> packageVM = _mapper.Map<IEnumerable<Package>, IEnumerable<PackageViewModel>>(package);
+            return View(packageVM);
         }
     }
 }

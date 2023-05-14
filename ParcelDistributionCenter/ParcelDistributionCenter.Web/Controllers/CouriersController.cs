@@ -61,7 +61,7 @@ namespace ParcelDistributionCenter.Web.Controllers
             Courier courier = _mapper.Map<CourierViewModel, Courier>(courierViewModel);
             try
             {
-                _courierService.Update(courier);
+                _courierService.UpdateCourier(courier);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -94,33 +94,9 @@ namespace ParcelDistributionCenter.Web.Controllers
             return View();
         }
 
-        public ActionResult UnassignedPackages()
-        {
-            var package = _courierService.GetUnassignedPackages().ToList();
-            List<PackageViewModel> packageVM = _mapper.Map<List<Package>, List<PackageViewModel>>(package);
-            return View(packageVM);
-        }
-
-        public ActionResult Assign(string packageNumber, string courierId, string from)
-        {
-            if (courierId != null)
-            {
-                _courierService.AssignPackage(packageNumber, courierId);
-                return from == "UnassignedPackages" ? RedirectToAction(from) : RedirectToAction("CourierPackages", new { id = courierId });
-            }
-            else
-            {
-                var courier = _courierService.GetAll().ToList();
-                List<CourierViewModel> model = _mapper.Map<List<Courier>, List<CourierViewModel>>(courier);
-
-                return View(model);
-            }
-        }
-
         public ActionResult UnassignPackage(string packageNumber, string courierId)
         {
             _courierService.UnassignPackage(packageNumber);
-            var model = _courierService.GetCourierPackages(courierId);
             return RedirectToAction("CourierPackages", new { id = courierId });
         }
     }

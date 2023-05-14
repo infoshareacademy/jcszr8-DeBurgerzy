@@ -6,7 +6,6 @@ using ParcelDistributionCenter.Model.Entites;
 
 namespace ParcelDistributionCenter.Web.Controllers
 {
-    [Obsolete("ADD CREATE METHOD")]
     public class DeliveryMachinesController : Controller
     {
         private readonly IDeliveryMachinesService _deliveryMachinesService;
@@ -24,18 +23,14 @@ namespace ParcelDistributionCenter.Web.Controllers
             return View();
         }
 
-        //// POST: DeliveryMachinesController/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult CreateConfirmed(DeliveryMachine deliveryMachine)
-        //{
-        //    bool added = _deliveryMachinesService.CreateNewDeliveryMachine(deliveryMachine);
-        //    if (added)
-        //    {
-        //        return RedirectToAction(nameof(Details));
-        //    }
-        //    return View();
-        //}
+        // POST: DeliveryMachinesController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateConfirmed(DeliveryMachine deliveryMachine)
+        {
+            _deliveryMachinesService.CreateNewDeliveryMachine(deliveryMachine);
+            return RedirectToAction(nameof(Details));
+        }
 
         // GET: DeliveryMachinesController/DeleteDeliveryMachine
         public ActionResult DeleteDeliveryMachine(string id)
@@ -68,6 +63,14 @@ namespace ParcelDistributionCenter.Web.Controllers
             return View(deliveryMachines);
         }
 
+        // GET: DeliveryMachinesController/DeleteDeliveryMachine
+        public ActionResult DMPackagesList(string id)
+        {
+            DeliveryMachine deliveryMachine = _deliveryMachinesService.GetDeliveryMachineById(id);
+            IEnumerable<PackageViewModel> packages = _mapper.Map<IEnumerable<PackageViewModel>>(deliveryMachine.Packages);
+            return View(packages);
+        }
+
         // TODO: ZABEZPIECZYĆ PRZED NULLEM
         // GET: DeliveryMachinesController/EditDeliveryMachine
         public ActionResult EditDeliveryMachine(string id)
@@ -85,6 +88,12 @@ namespace ParcelDistributionCenter.Web.Controllers
             DeliveryMachine deliveryMachine = _mapper.Map<DeliveryMachine>(deliveryMachineViewModel);
             _deliveryMachinesService.UpdateDeliveryMachine(deliveryMachine);
             return RedirectToAction(nameof(Details));
+        }
+
+        public ActionResult UnassignPackage(string packageNumber, string deliveryMachineId)
+        {
+            _deliveryMachinesService.UnassignPackage(packageNumber, deliveryMachineId);
+            return RedirectToAction("DMPackagesList", new { id = deliveryMachineId });
         }
     }
 }

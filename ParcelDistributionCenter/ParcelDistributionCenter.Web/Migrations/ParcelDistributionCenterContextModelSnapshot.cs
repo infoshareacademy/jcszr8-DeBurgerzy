@@ -22,7 +22,7 @@ namespace ParcelDistributionCenter.Web.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ParcelDistributionCenter.Model.Models.Courier", b =>
+            modelBuilder.Entity("ParcelDistributionCenter.Model.Entites.Courier", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
@@ -59,7 +59,7 @@ namespace ParcelDistributionCenter.Web.Migrations
                     b.ToTable("Couriers");
                 });
 
-            modelBuilder.Entity("ParcelDistributionCenter.Model.Models.DeliveryMachine", b =>
+            modelBuilder.Entity("ParcelDistributionCenter.Model.Entites.DeliveryMachine", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
@@ -89,7 +89,7 @@ namespace ParcelDistributionCenter.Web.Migrations
                     b.ToTable("DeliveryMachines");
                 });
 
-            modelBuilder.Entity("ParcelDistributionCenter.Model.Models.Package", b =>
+            modelBuilder.Entity("ParcelDistributionCenter.Model.Entites.Package", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
@@ -157,23 +157,23 @@ namespace ParcelDistributionCenter.Web.Migrations
                     b.ToTable("Packages");
                 });
 
-            modelBuilder.Entity("ParcelDistributionCenter.Model.Models.Courier", b =>
+            modelBuilder.Entity("ParcelDistributionCenter.Model.Entites.Courier", b =>
                 {
-                    b.HasOne("ParcelDistributionCenter.Model.Models.DeliveryMachine", "DeliveryMachine")
+                    b.HasOne("ParcelDistributionCenter.Model.Entites.DeliveryMachine", "DeliveryMachine")
                         .WithOne("Courier")
-                        .HasForeignKey("ParcelDistributionCenter.Model.Models.Courier", "DeliveryMachineId");
+                        .HasForeignKey("ParcelDistributionCenter.Model.Entites.Courier", "DeliveryMachineId");
 
                     b.Navigation("DeliveryMachine");
                 });
 
-            modelBuilder.Entity("ParcelDistributionCenter.Model.Models.Package", b =>
+            modelBuilder.Entity("ParcelDistributionCenter.Model.Entites.Package", b =>
                 {
-                    b.HasOne("ParcelDistributionCenter.Model.Models.Courier", "Courier")
+                    b.HasOne("ParcelDistributionCenter.Model.Entites.Courier", "Courier")
                         .WithMany("Packages")
                         .HasForeignKey("CourierId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("ParcelDistributionCenter.Model.Models.DeliveryMachine", "DeliveryMachine")
+                    b.HasOne("ParcelDistributionCenter.Model.Entites.DeliveryMachine", "DeliveryMachine")
                         .WithMany("Packages")
                         .HasForeignKey("DeliveryMachineId")
                         .OnDelete(DeleteBehavior.NoAction);
@@ -183,12 +183,12 @@ namespace ParcelDistributionCenter.Web.Migrations
                     b.Navigation("DeliveryMachine");
                 });
 
-            modelBuilder.Entity("ParcelDistributionCenter.Model.Models.Courier", b =>
+            modelBuilder.Entity("ParcelDistributionCenter.Model.Entites.Courier", b =>
                 {
                     b.Navigation("Packages");
                 });
 
-            modelBuilder.Entity("ParcelDistributionCenter.Model.Models.DeliveryMachine", b =>
+            modelBuilder.Entity("ParcelDistributionCenter.Model.Entites.DeliveryMachine", b =>
                 {
                     b.Navigation("Courier")
                         .IsRequired();

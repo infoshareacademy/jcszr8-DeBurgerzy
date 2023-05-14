@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using ParcelDistributionCenter.Logic.Services;
 using ParcelDistributionCenter.Logic.Services.IServices;
 using ParcelDistributionCenter.Model.Context;
-using ParcelDistributionCenter.Model.Context.JsonReader;
 using ParcelDistributionCenter.Model.Repositories;
 
 namespace ParcelDistributionCenter.Web
@@ -19,9 +18,6 @@ namespace ParcelDistributionCenter.Web
             opts.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("ParcelDistributionCenter.Web")));
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddControllersWithViews();
-            // TODO: Wywaliæ MemoryRepository z DependencyInjection i wsadziæ ca³e do Seeda (¿eby nie zajmowa³o
-            // pamiêci niepotrzebnie przez okres dzia³ania ca³ego programu
-            builder.Services.AddSingleton<IJsonReader>(JsonReader.LoadData());
             builder.Services.AddScoped<IAddNewPackageService, AddNewPackageService>();
             builder.Services.AddScoped<IPackageService, PackageService>();
             builder.Services.AddTransient<ICourierService, CourierService>();
@@ -61,10 +57,9 @@ namespace ParcelDistributionCenter.Web
             var services = scope.ServiceProvider;
             try
             {
-                var memoryRepository = services.GetRequiredService<IJsonReader>();
                 var context = services.GetRequiredService<ParcelDistributionCenterContext>();
-                Seed seed = new(memoryRepository);
-                seed.Initialize(context);
+                Seed seed = new();
+                Seed.Initialize(context);
             }
             catch (Exception ex)
             {

@@ -4,6 +4,8 @@ namespace ParcelDistributionCenter.Logic.Services.IServices
 {
     public interface IDeliveryMachinesService
     {
+        void AssignPackage(string packageNumber, string deliveryMachineId);
+
         void CreateNewDeliveryMachine(DeliveryMachine deliveryMachine);
 
         bool DeleteDeliveryMachineById(string deliveryMachineId);
@@ -11,6 +13,12 @@ namespace ParcelDistributionCenter.Logic.Services.IServices
         IEnumerable<DeliveryMachine> GetAll();
 
         DeliveryMachine GetDeliveryMachineById(string id);
+
+        IEnumerable<Package> GetDeliveryMachinePackages(string deliveryMachineId);
+
+        IEnumerable<Package> GetDeliveryMachineUnassignedPackages();
+
+        void UnassignPackage(string packageNumber, string deliveryMachineId);
 
         void UpdateDeliveryMachine(DeliveryMachine deliveryMachine);
     }

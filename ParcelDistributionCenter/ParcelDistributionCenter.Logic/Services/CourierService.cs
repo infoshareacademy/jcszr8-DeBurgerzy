@@ -16,13 +16,6 @@ namespace ParcelDistributionCenter.Logic.Services
             _packageRepository = packageRepository;
         }
 
-        public void AssignPackage(string packageNumber, string CourierId)
-        {
-            var package = _packageRepository.GetAll().First(p => p.PackageNumber == int.Parse(packageNumber));
-            package.CourierId = CourierId;
-            _packageRepository.Update(package);
-        }
-
         public bool DeleteCourier(string id)
         {
             var courier = FindById(id);
@@ -35,13 +28,11 @@ namespace ParcelDistributionCenter.Logic.Services
             return false;
         }
 
-        public Courier FindById(string id) => _courierRepository.Get(id);
+        public Courier FindById(string id) => _courierRepository.Get(id, c => c.Packages);
 
-        public IEnumerable<Courier> GetAll() => _courierRepository.GetAll();
+        public IEnumerable<Courier> GetAll() => _courierRepository.GetAll(c => c.Packages);
 
         public IEnumerable<Package> GetCourierPackages(string courierId) => _packageRepository.GetAll().Where(p => p.CourierId == courierId);
-
-        public IEnumerable<Package> GetUnassignedPackages() => _packageRepository.GetAll().Where(p => p.CourierId == null);
 
         public void UnassignCouriersPackages(string courierId)
         {
@@ -59,7 +50,7 @@ namespace ParcelDistributionCenter.Logic.Services
             _packageRepository.Update(package);
         }
 
-        public void Update(Courier model)
+        public void UpdateCourier(Courier model)
         {
             var courier = FindById(model.Id);
             courier.Name = model.Name;

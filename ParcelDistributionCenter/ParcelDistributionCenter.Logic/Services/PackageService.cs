@@ -7,11 +7,26 @@ namespace ParcelDistributionCenter.Logic.Services
     // TODO: Prevent code from nullable ids coming form json
     public class PackageService : IPackageService
     {
-        private readonly IRepository<Package> _repository;
+        private readonly IDeliveryMachinesService _deliveryMachinesService;
+        private readonly IRepository<Package> _packageRepository;
 
-        public PackageService(IRepository<Package> repository)
+        public PackageService(IRepository<Package> repository, IDeliveryMachinesService deliveryMachinesService)
         {
-            _repository = repository;
+            _packageRepository = repository;
+            _deliveryMachinesService = deliveryMachinesService;
+        }
+
+        public void AssignCourier(string packageNumber, string CourierId)
+        {
+            var package = _packageRepository.GetAll().First(p => p.PackageNumber == int.Parse(packageNumber));
+            package.CourierId = CourierId;
+            _packageRepository.Update(package);
+        }
+
+        public void AssignDeliveryMachine(string packageNumber, string deliveryMachineId)
+        {
+            Package package = _packageRepository.GetAll().First(p => p.PackageNumber == int.Parse(packageNumber));
+            _deliveryMachinesService.AssignPackage(packageNumber, deliveryMachineId);
         }
 
         public bool DeletePackageByNumber(int packageNumber)
@@ -19,7 +34,7 @@ namespace ParcelDistributionCenter.Logic.Services
             Package package = FindPackageByPackageNumber(packageNumber);
             if (package != null)
             {
-                _repository.Delete(package);
+                _packageRepository.Delete(package);
                 return true;
             }
             return false;
@@ -27,7 +42,7 @@ namespace ParcelDistributionCenter.Logic.Services
 
         public Package FindPackageByPackageNumber(int packageNumber)
         {
-            var packages = _repository.GetAll();
+            var packages = _packageRepository.GetAll();
             Package package = packages.FirstOrDefault(x => x.PackageNumber == packageNumber);
             if (package != null)
             {
@@ -36,9 +51,11 @@ namespace ParcelDistributionCenter.Logic.Services
             return null;
         }
 
-        public IEnumerable<Package> GetAllPackages() => _repository.GetAll();
+        public IEnumerable<Package> GetAllPackages() => _packageRepository.GetAll();
 
-        public IEnumerable<int> GetAllPackagesNumber() => _repository.GetAll().Select(p => p.PackageNumber);
+        public IEnumerable<int> GetAllPackagesNumber() => _packageRepository.GetAll().Select(p => p.PackageNumber);
+
+        public IEnumerable<Package> GetUnassignedPackages() => _packageRepository.GetAll().Where(p => p.CourierId == null);
 
         public bool Update(Package model)
         {
@@ -56,7 +73,7 @@ namespace ParcelDistributionCenter.Logic.Services
             package.DeliveryAddress = model.DeliveryAddress;
             package.Registered = model.Registered;
             package.Size = model.Size;
-            _repository.Update(package);
+            _packageRepository.Update(package);
             return true;
         }
     }
