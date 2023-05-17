@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ParcelDistributionCenter.Logic.Services;
 using ParcelDistributionCenter.Logic.Services.IServices;
 using ParcelDistributionCenter.Model.Context;
+using ParcelDistributionCenter.Model.Entites;
 using ParcelDistributionCenter.Model.Repositories;
 
 namespace ParcelDistributionCenter.Web
@@ -15,7 +16,10 @@ namespace ParcelDistributionCenter.Web
 
             // Add services to the container.
             builder.Services.AddDbContext<ParcelDistributionCenterContext>(opts =>
-            opts.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("ParcelDistributionCenter.Web")));
+                                          opts.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+                                          b => b.MigrationsAssembly("ParcelDistributionCenter.Web")));
+            builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
+                            .AddEntityFrameworkStores<ParcelDistributionCenterContext>();
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<IAddNewPackageService, AddNewPackageService>();
@@ -42,11 +46,14 @@ namespace ParcelDistributionCenter.Web
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
                 pattern: "/{controller=Home}/{action=Index}/{id?}");
+
+            app.MapRazorPages();
 
             app.Run();
         }

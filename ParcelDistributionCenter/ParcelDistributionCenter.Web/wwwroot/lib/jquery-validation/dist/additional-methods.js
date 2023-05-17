@@ -142,7 +142,7 @@ $.validator.addMethod( "bic", function( value, element ) {
 }, "Please specify a valid BIC code" );
 
 /*
- * Código de identificación fiscal ( CIF ) is the tax identification code for Spanish legal entities
+ * Código de identificación fiscal ( CIF ) is the tax identification code for Spanish legal Entites
  * Further rules can be found in Spanish on http://es.wikipedia.org/wiki/C%C3%B3digo_de_identificaci%C3%B3n_fiscal
  *
  * Spanish CIF structure:
@@ -170,7 +170,7 @@ $.validator.addMethod( "bic", function( value, element ) {
  *   K. Old format
  *   L. Old format
  *   M. Old format
- *   N. Nonresident entities
+ *   N. Nonresident Entites
  *   P. Local authorities
  *   Q. Autonomous bodies, state or not, and the like, and congregations and religious institutions
  *   R. Congregations and religious institutions (since 2008 ORDER EHA/451/2008)
