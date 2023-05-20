@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ParcelDistributionCenter.Logic.Services.IServices;
 using ParcelDistributionCenter.Logic.ViewModels;
@@ -7,6 +8,7 @@ using ParcelDistributionCenter.Model.Entites;
 namespace ParcelDistributionCenter.Web.Controllers
 {
     [Obsolete("TEMPDATA ATTRIBUTE INTO SEPARATE CLASS")]
+    [Authorize]
     public class PackagesController : Controller
     {
         private readonly IAddNewPackageService _addNewPackageService;

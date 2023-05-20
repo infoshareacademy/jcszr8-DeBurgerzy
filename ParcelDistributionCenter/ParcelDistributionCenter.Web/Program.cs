@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ParcelDistributionCenter.Logic.Services;
 using ParcelDistributionCenter.Logic.Services.IServices;
@@ -10,7 +11,7 @@ namespace ParcelDistributionCenter.Web
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,7 @@ namespace ParcelDistributionCenter.Web
                                           opts.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
                                           b => b.MigrationsAssembly("ParcelDistributionCenter.Web")));
             builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
+                            .AddRoles<IdentityRole>()
                             .AddEntityFrameworkStores<ParcelDistributionCenterContext>();
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddControllersWithViews();
@@ -27,8 +29,9 @@ namespace ParcelDistributionCenter.Web
             builder.Services.AddTransient<ICourierService, CourierService>();
             builder.Services.AddTransient<IDeliveryMachinesService, DeliveryMachinesService>();
             builder.Services.AddAutoMapper(typeof(Program));
+            builder.Services.AddScoped<Seed>();
             var app = builder.Build();
-            CreateDbIfNotExists(app);
+            await CreateDbIfNotExists(app);
 
             var mapper = (IMapper)app.Services.GetRequiredService(typeof(IMapper));
             mapper.ConfigurationProvider.AssertConfigurationIsValid();
@@ -58,15 +61,15 @@ namespace ParcelDistributionCenter.Web
             app.Run();
         }
 
-        private static void CreateDbIfNotExists(IHost host)
+        private static async Task CreateDbIfNotExists(IHost host)
         {
             using var scope = host.Services.CreateScope();
             var services = scope.ServiceProvider;
             try
             {
                 var context = services.GetRequiredService<ParcelDistributionCenterContext>();
-                Seed seed = new();
-                Seed.Initialize(context);
+                Seed seed = services.GetRequiredService<Seed>();
+                await seed.Initialize(context);
             }
             catch (Exception ex)
             {
