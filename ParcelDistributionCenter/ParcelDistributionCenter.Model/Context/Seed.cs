@@ -118,7 +118,9 @@ namespace ParcelDistributionCenter.Model.Context
                 //PasswordHash = defaultPassword
             };
 
+            // See if it is needed
             await _userManager.CreateAsync(michalPietrzakAdminUser, defaultPassword);
+
             context.Users.Add(michalPietrzakAdminUser);
             context.Users.Add(maciejDuszaAdminUser);
             context.Users.Add(szymonGrzędaAdminUser);

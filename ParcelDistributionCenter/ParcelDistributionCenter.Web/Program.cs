@@ -19,7 +19,7 @@ namespace ParcelDistributionCenter.Web
             builder.Services.AddDbContext<ParcelDistributionCenterContext>(opts =>
                                           opts.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
                                           b => b.MigrationsAssembly("ParcelDistributionCenter.Web")));
-            builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
+            builder.Services.AddDefaultIdentity<User>(/*options => options.SignIn.RequireConfirmedAccount = true*/)
                             .AddRoles<IdentityRole>()
                             .AddEntityFrameworkStores<ParcelDistributionCenterContext>();
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
