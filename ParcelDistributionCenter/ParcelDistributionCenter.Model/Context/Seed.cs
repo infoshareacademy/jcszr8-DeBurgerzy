@@ -69,110 +69,67 @@ namespace ParcelDistributionCenter.Model.Context
             // Creating roles
             IdentityRole adminRole = new(AdminRole);
             IdentityRole commonUserRole = new(CommonUserRole);
-            context.Roles.Add(adminRole);
-            context.Roles.Add(commonUserRole);
-            //await _roleManager.CreateAsync(adminRole);
-            //await _roleManager.CreateAsync(commonUserRole);
+            await _roleManager.CreateAsync(adminRole);
+            await _roleManager.CreateAsync(commonUserRole);
 
             // Creating users
             User michalPietrzakAdminUser = new()
             {
-                FirstName = "Michał",
+                FirstName = "Michal",
                 LastName = "Pietrzak",
                 Email = "mp@wp.pl",
-                //PasswordHash = defaultPassword
+                UserName = "mp@wp.pl",
             };
             User maciejDuszaAdminUser = new()
             {
                 FirstName = "Maciej",
                 LastName = "Dusza",
                 Email = "md@wp.pl",
-                //PasswordHash = defaultPassword
+                UserName = "md@wp.pl",
             };
             User szymonGrzędaAdminUser = new()
             {
                 FirstName = "Szymon",
-                LastName = "Grzęda",
+                LastName = "Grzeda",
                 Email = "sg@wp.pl",
-                //PasswordHash = defaultPassword
+                UserName = "sg@wp.pl",
             };
             User commonUser_1 = new()
             {
                 FirstName = "Patryk",
-                LastName = "Wącławski",
+                LastName = "Waclawski",
                 Email = "pw@wp.pl",
-                //PasswordHash = defaultPassword
+                UserName = "pw@wp.pl",
             };
             User commonUser_2 = new()
             {
                 FirstName = "Monika",
                 LastName = "Winiecka",
                 Email = "mw@wp.pl",
-                //PasswordHash = defaultPassword
+                UserName = "mw@wp.pl"
             };
             User commonUser_3 = new()
             {
                 FirstName = "Klauida",
                 LastName = "Sonacka",
                 Email = "ks@wp.pl",
-                //PasswordHash = defaultPassword
+                UserName = "ks@wp.pl"
             };
 
-            // See if it is needed
             await _userManager.CreateAsync(michalPietrzakAdminUser, defaultPassword);
+            await _userManager.CreateAsync(maciejDuszaAdminUser, defaultPassword);
+            await _userManager.CreateAsync(szymonGrzędaAdminUser, defaultPassword);
+            await _userManager.CreateAsync(commonUser_1, defaultPassword);
+            await _userManager.CreateAsync(commonUser_2, defaultPassword);
+            await _userManager.CreateAsync(commonUser_3, defaultPassword);
 
-            context.Users.Add(michalPietrzakAdminUser);
-            context.Users.Add(maciejDuszaAdminUser);
-            context.Users.Add(szymonGrzędaAdminUser);
-            context.Users.Add(commonUser_1);
-            context.Users.Add(commonUser_2);
-            context.Users.Add(commonUser_3);
-            //await _userManager.CreateAsync(maciejDuszaAdminUser, defaultPassword);
-            //await _userManager.CreateAsync(szymonGrzędaAdminUser, defaultPassword);
-            //await _userManager.CreateAsync(commonUser_1, defaultPassword);
-            //await _userManager.CreateAsync(commonUser_2, defaultPassword);
-            //await _userManager.CreateAsync(commonUser_3, defaultPassword);
-
-            context.SaveChanges();
-
-            // Assigning roles to users
-            context.UserRoles.Add(new IdentityUserRole<string>
-            {
-                UserId = michalPietrzakAdminUser.Id,
-                RoleId = adminRole.Id
-            });
-            context.UserRoles.Add(new IdentityUserRole<string>
-            {
-                UserId = maciejDuszaAdminUser.Id,
-                RoleId = adminRole.Id
-            });
-            context.UserRoles.Add(new IdentityUserRole<string>
-            {
-                UserId = szymonGrzędaAdminUser.Id,
-                RoleId = adminRole.Id
-            });
-
-            context.UserRoles.Add(new IdentityUserRole<string>
-            {
-                UserId = commonUser_1.Id,
-                RoleId = commonUserRole.Id
-            });
-            context.UserRoles.Add(new IdentityUserRole<string>
-            {
-                UserId = commonUser_2.Id,
-                RoleId = commonUserRole.Id
-            });
-            context.UserRoles.Add(new IdentityUserRole<string>
-            {
-                UserId = commonUser_3.Id,
-                RoleId = commonUserRole.Id
-            });
-            //await _userManager.AddToRoleAsync(michalPietrzakAdminUser, AdminRole);
-            //await _userManager.AddToRoleAsync(maciejDuszaAdminUser, AdminRole);
-            //await _userManager.AddToRoleAsync(szymonGrzędaAdminUser, AdminRole);
-            //await _userManager.AddToRoleAsync(commonUser_1, CommonUserRole);
-            //await _userManager.AddToRoleAsync(commonUser_2, CommonUserRole);
-            //await _userManager.AddToRoleAsync(commonUser_3, CommonUserRole);
+            // Adding roles to users
+            await _userManager.AddToRoleAsync(michalPietrzakAdminUser, AdminRole);
+            await _userManager.AddToRoleAsync(maciejDuszaAdminUser, AdminRole);
+            await _userManager.AddToRoleAsync(szymonGrzędaAdminUser, AdminRole);
+            await _userManager.AddToRoleAsync(commonUser_1, CommonUserRole);
+            await _userManager.AddToRoleAsync(commonUser_2, CommonUserRole);
+            await _userManager.AddToRoleAsync(commonUser_3, CommonUserRole);
         }
     }
 }
