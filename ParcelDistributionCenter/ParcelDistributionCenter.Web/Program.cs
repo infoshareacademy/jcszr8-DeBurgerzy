@@ -23,9 +23,18 @@ namespace ParcelDistributionCenter.Web
             builder.Services.AddTransient<ICourierService, CourierService>();
             builder.Services.AddTransient<IDeliveryMachinesService, DeliveryMachinesService>();
             builder.Services.AddAutoMapper(typeof(Program));
+
+            // Add HTTP Client
+            builder.Services.AddHttpClient<IReportService, ReportService>(config =>
+            {
+                string baseAddress = builder.Configuration["ApiSettings:BaseUrl"];
+                config.BaseAddress = new Uri(baseAddress);
+            });
+
             var app = builder.Build();
             CreateDbIfNotExists(app);
 
+            // Check AutoMapper configuration
             var mapper = (IMapper)app.Services.GetRequiredService(typeof(IMapper));
             mapper.ConfigurationProvider.AssertConfigurationIsValid();
 

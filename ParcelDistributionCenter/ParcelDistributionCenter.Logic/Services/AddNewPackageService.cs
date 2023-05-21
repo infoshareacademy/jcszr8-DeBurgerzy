@@ -13,13 +13,16 @@ namespace ParcelDistributionCenter.Logic.Services
         private readonly IRepository<DeliveryMachine> _deliverMachineRepository;
         private readonly IMapper _mapper;
         private readonly IRepository<Package> _packageRepository;
+        private readonly IReportService _reportService;
 
-        public AddNewPackageService(IRepository<Package> packageRepository, IMapper mapper, IRepository<Courier> courierRepository, IRepository<DeliveryMachine> deliverMachineRepository)
+        public AddNewPackageService(IRepository<Package> packageRepository, IMapper mapper, IRepository<Courier> courierRepository,
+                                    IRepository<DeliveryMachine> deliverMachineRepository, IReportService reportService)
         {
             _packageRepository = packageRepository;
             _mapper = mapper;
             _courierRepository = courierRepository;
             _deliverMachineRepository = deliverMachineRepository;
+            _reportService = reportService;
         }
 
         public PackageViewModel AddNewPackage(PackageViewModel packageViewModel)
@@ -30,6 +33,7 @@ namespace ParcelDistributionCenter.Logic.Services
             package.DeliveryMachineJsonId = AssignDeliveryMachineID(package.Size);
             _packageRepository.Insert(package);
             packageViewModel.PackageNumber = package.PackageNumber;
+            _reportService.AddingPackageDuration(package.TimeCreated);
             return packageViewModel;
         }
 
