@@ -38,7 +38,14 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddAutoMapper(typeof(Program));
 
+builder.Services.AddCors(p => p.AddDefaultPolicy(build =>
+{
+    build.WithOrigins("https://localhost:7082").AllowAnyMethod().AllowAnyHeader();
+}));
+
 var app = builder.Build();
+
+app.UseCors();
 
 IMapper mapper = (IMapper)app.Services.GetRequiredService(typeof(IMapper));
 mapper.ConfigurationProvider.AssertConfigurationIsValid();
