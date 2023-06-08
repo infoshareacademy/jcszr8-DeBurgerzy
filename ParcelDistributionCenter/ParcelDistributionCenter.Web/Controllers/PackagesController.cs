@@ -14,16 +14,19 @@ namespace ParcelDistributionCenter.Web.Controllers
         private readonly IAddNewPackageService _addNewPackageService;
         private readonly ICourierService _courierService;
         private readonly IDeliveryMachinesService _deliveryMachinesService;
+        private readonly ILogger<PackagesController> _logger;
         private readonly IMapper _mapper;
         private readonly IPackageService _packageService;
 
-        public PackagesController(IAddNewPackageService addNewPackageHandler, IPackageService packageService, ICourierService courierService, IDeliveryMachinesService deliveryMachinesService, IMapper mapper)
+        public PackagesController(IAddNewPackageService addNewPackageHandler, IPackageService packageService, ICourierService courierService,
+                                  IDeliveryMachinesService deliveryMachinesService, IMapper mapper, ILogger<PackagesController> logger)
         {
             _addNewPackageService = addNewPackageHandler;
             _packageService = packageService;
             _courierService = courierService;
             _deliveryMachinesService = deliveryMachinesService;
             _mapper = mapper;
+            _logger = logger;
         }
 
         // GET: PackagesController/AddPackage
@@ -37,16 +40,24 @@ namespace ParcelDistributionCenter.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddPackage(PackageViewModel packageViewModel)
         {
-            if (ModelState.IsValid)
+            try
             {
-                packageViewModel = _addNewPackageService.AddNewPackage(packageViewModel);
-                //TODO: TempData do przeniesienia do widoku
-                TempData["Message"] = "Package successfully added!";
-                TempData["MessageClass"] = "alert-success";
+                if (ModelState.IsValid)
+                {
+                    packageViewModel = _addNewPackageService.AddNewPackage(packageViewModel);
+                    //TODO: TempData do przeniesienia do widoku
+                    TempData["Message"] = "Package successfully added!";
+                    TempData["MessageClass"] = "alert-success";
 
-                return RedirectToAction(nameof(DisplaySinglePackage), packageViewModel);
+                    return RedirectToAction(nameof(DisplaySinglePackage), packageViewModel);
+                }
+                return View(packageViewModel);
             }
-            return View(packageViewModel);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500);
+            }
         }
 
         public ActionResult AssignCourier(string packageNumber, string courierId, string from)
