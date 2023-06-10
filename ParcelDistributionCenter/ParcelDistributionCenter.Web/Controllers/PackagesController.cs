@@ -56,7 +56,9 @@ namespace ParcelDistributionCenter.Web.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500);
+                TempData["Message"] = "Sorry. Something went wrong. Try to add package again.";
+                TempData["MessageClass"] = "alert-danger";
+                return View(packageViewModel);
             }
         }
 
