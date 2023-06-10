@@ -6,6 +6,7 @@ using ParcelDistributionCenter.Logic.Services.IServices;
 using ParcelDistributionCenter.Model.Context;
 using ParcelDistributionCenter.Model.Entites;
 using ParcelDistributionCenter.Model.Repositories;
+using Serilog;
 
 namespace ParcelDistributionCenter.Web
 {
@@ -13,9 +14,13 @@ namespace ParcelDistributionCenter.Web
     {
         public static async Task Main(string[] args)
         {
+            IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+            Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(config).CreateLogger();
+
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddSerilog();
             builder.Services.AddDbContext<ParcelDistributionCenterContext>(opts =>
                                           opts.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
                                           b => b.MigrationsAssembly("ParcelDistributionCenter.Web")));
@@ -30,6 +35,7 @@ namespace ParcelDistributionCenter.Web
             builder.Services.AddTransient<IDeliveryMachinesService, DeliveryMachinesService>();
             builder.Services.AddAutoMapper(typeof(Program));
             builder.Services.AddScoped<Seed>();
+
             var app = builder.Build();
             await CreateDbIfNotExists(app);
 
