@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ParcelDistributionCenter.Model.Context;
 
@@ -11,9 +12,11 @@ using ParcelDistributionCenter.Model.Context;
 namespace ParcelDistributionCenter.Web.Migrations
 {
     [DbContext(typeof(ParcelDistributionCenterContext))]
-    partial class ParcelDistributionCenterContextModelSnapshot : ModelSnapshot
+    [Migration("20230610100422_ReportPackageEntityAdded")]
+    partial class ReportPackageEntityAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

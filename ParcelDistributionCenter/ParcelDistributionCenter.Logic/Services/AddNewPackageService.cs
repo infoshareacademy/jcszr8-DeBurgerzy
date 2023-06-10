@@ -25,7 +25,7 @@ namespace ParcelDistributionCenter.Logic.Services
             _reportService = reportService;
         }
 
-        public PackageViewModel AddNewPackage(PackageViewModel packageViewModel)
+        public PackageViewModel AddNewPackage(PackageViewModel packageViewModel, DateTime packageAddingStartTime)
         {
             Package package = _mapper.Map<Package>(packageViewModel);
             package.PackageNumber = GeneratePackageNumber();
@@ -33,7 +33,7 @@ namespace ParcelDistributionCenter.Logic.Services
             package.DeliveryMachineJsonId = AssignDeliveryMachineID(package.Size);
             _packageRepository.Insert(package);
             packageViewModel.PackageNumber = package.PackageNumber;
-            _reportService.AddingPackageDuration(package.TimeCreated);
+            _reportService.AddPackageCreatingDuration(packageAddingStartTime, package.TimeCreated, package.Size);
             return packageViewModel;
         }
 

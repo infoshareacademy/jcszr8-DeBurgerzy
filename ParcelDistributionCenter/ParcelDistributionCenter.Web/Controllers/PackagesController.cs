@@ -37,7 +37,8 @@ namespace ParcelDistributionCenter.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                packageViewModel = _addNewPackageService.AddNewPackage(packageViewModel);
+                DateTime packageAddingStartTime = DateTime.Parse(Request.Form["currentTime"]);
+                packageViewModel = _addNewPackageService.AddNewPackage(packageViewModel, packageAddingStartTime);
                 //TODO: TempData do przeniesienia do widoku
                 TempData["Message"] = "Package successfully added!";
                 TempData["MessageClass"] = "alert-success";

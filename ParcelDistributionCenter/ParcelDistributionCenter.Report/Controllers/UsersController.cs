@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ParcelDistributionCenter.Model.DTOs;
+using ParcelDistributionCenter.Model.Entites;
+using ParcelDistributionCenter.Model.Repositories;
 
 namespace ParcelDistributionCenter.Report.Controllers
 {
@@ -7,12 +8,18 @@ namespace ParcelDistributionCenter.Report.Controllers
     [Route("reports/[controller]")]
     public class UsersController : ControllerBase
     {
-        // TODO: To be changed
-        [HttpPost]
-        public IActionResult CreateTransfer(PackageAddingDurationDto packageAddingDurationDto)
+        private readonly IRepository<ReportPackage> _reportPackageRepository;
+
+        public UsersController(IRepository<ReportPackage> reportPackageRepository)
         {
-            packageAddingDurationDto.Duration.ToString();
-            return Ok();
+            _reportPackageRepository = reportPackageRepository;
+        }
+
+        [HttpPost]
+        public IActionResult AddReportPackage(ReportPackage reportPackage)
+        {
+            _reportPackageRepository.Insert(reportPackage);
+            return Ok(reportPackage);
         }
 
         // TODO: To be changed
