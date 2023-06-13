@@ -1,6 +1,8 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using ParcelDistributionCenter.Logic.Services;
+using ParcelDistributionCenter.Logic.Services.IServices;
 using ParcelDistributionCenter.Model.Context;
 using ParcelDistributionCenter.Model.Repositories;
 using ParcelDistributionCenter.Report.Authentication;
@@ -11,6 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ParcelDistributionCenterContext>(opts =>
 opts.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("ParcelDistributionCenter.Web")));
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddSingleton<IEmailService, EmailService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -51,6 +54,9 @@ builder.Services.AddCors(p => p.AddDefaultPolicy(build =>
 var app = builder.Build();
 
 app.UseCors();
+
+IEmailService emailSender = app.Services.GetRequiredService<IEmailService>();
+await emailSender.StartSendingEmails();
 
 IMapper mapper = (IMapper)app.Services.GetRequiredService(typeof(IMapper));
 mapper.ConfigurationProvider.AssertConfigurationIsValid();

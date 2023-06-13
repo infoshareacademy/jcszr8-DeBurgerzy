@@ -3,5 +3,7 @@
     public interface IEmailService
     {
         void SendEmail(string body);
+
+        Task StartSendingEmails();
     }
 }
