@@ -20,6 +20,7 @@ namespace ParcelDistributionCenter.Web
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<IAddNewPackageService, AddNewPackageService>();
             builder.Services.AddScoped<IPackageService, PackageService>();
+            builder.Services.AddScoped<IEmailService, EmailService>();
             builder.Services.AddTransient<ICourierService, CourierService>();
             builder.Services.AddTransient<IDeliveryMachinesService, DeliveryMachinesService>();
             builder.Services.AddAutoMapper(typeof(Program));
@@ -33,6 +34,9 @@ namespace ParcelDistributionCenter.Web
 
             var app = builder.Build();
             CreateDbIfNotExists(app);
+
+            //IEmailService emailSender = app.Services.GetRequiredService<IEmailService>();
+            //await emailSender.StartSendingEmails();
 
             // Check AutoMapper configuration
             var mapper = (IMapper)app.Services.GetRequiredService(typeof(IMapper));

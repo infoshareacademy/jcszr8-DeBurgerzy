@@ -10,7 +10,7 @@ namespace ParcelDistributionCenter.Logic.Services
 {
     public class EmailService : IEmailService
     {
-        private readonly AuthorizationHelper _authorizationHelper;
+        private readonly IConfiguration _configuration;
         private readonly HttpClient _httpClient;
         private string emailAddress;
         private string host;
@@ -20,7 +20,7 @@ namespace ParcelDistributionCenter.Logic.Services
         public EmailService(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
-            _authorizationHelper = new AuthorizationHelper(httpClient, configuration);
+            _configuration = configuration;
             SetConnectionValuesByConfiguration(configuration);
         }
 
@@ -54,7 +54,7 @@ namespace ParcelDistributionCenter.Logic.Services
 
         private async Task<string> GetReportFromDatabase()
         {
-            _authorizationHelper.AddAuthorizationHeader();
+            AuthorizationHelper.AddAuthorizationHeader(_httpClient, _configuration);
             return await _httpClient.GetFromJsonAsync<string>("reports/users");
         }
 
