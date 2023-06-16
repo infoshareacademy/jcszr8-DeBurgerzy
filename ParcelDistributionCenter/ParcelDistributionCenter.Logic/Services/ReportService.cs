@@ -28,8 +28,7 @@ namespace ParcelDistributionCenter.Logic.Services
                 AddingDurationInSeconds = Math.Round(packageAddingDuration.TotalSeconds, 0),
                 Size = size
             };
-            string apiKey = _configuration["Authentication:ApiKey"];
-            _httpClient.DefaultRequestHeaders.Add("x-api-key", apiKey);
+            AuthorizationHelper.AddAuthorizationHeader(_httpClient, _configuration);
             await _httpClient.PostAsJsonAsync("reports/users", reportPackage);
         }
     }
