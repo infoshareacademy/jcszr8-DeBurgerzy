@@ -40,13 +40,15 @@ namespace ParcelDistributionCenter.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddPackage(PackageViewModel packageViewModel)
         {
-            if (ModelState.IsValid)
+            try
             {
-                DateTime packageAddingStartTime = DateTime.Parse(Request.Form["currentTime"]);
-                packageViewModel = _addNewPackageService.AddNewPackage(packageViewModel, packageAddingStartTime);
-                //TODO: TempData do przeniesienia do widoku
-                TempData["Message"] = "Package successfully added!";
-                TempData["MessageClass"] = "alert-success";
+                if (ModelState.IsValid)
+                {
+                    DateTime packageAddingStartTime = DateTime.Parse(Request.Form["currentTime"]);
+                    packageViewModel = _addNewPackageService.AddNewPackage(packageViewModel, packageAddingStartTime);
+                    //TODO: TempData do przeniesienia do widoku
+                    TempData["Message"] = "Package successfully added!";
+                    TempData["MessageClass"] = "alert-success";
 
                     return RedirectToAction(nameof(DisplaySinglePackage), packageViewModel);
                 }
@@ -54,7 +56,7 @@ namespace ParcelDistributionCenter.Web.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError($"An error occured: {ex.Message}");
                 TempData["Message"] = "Sorry. Something went wrong. Try to add package again.";
                 TempData["MessageClass"] = "alert-danger";
                 return View(packageViewModel);

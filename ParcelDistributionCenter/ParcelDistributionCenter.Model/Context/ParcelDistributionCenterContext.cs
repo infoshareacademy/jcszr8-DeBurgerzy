@@ -15,10 +15,6 @@ namespace ParcelDistributionCenter.Model.Context
         {
         }
 
-        public ParcelDistributionCenterContext(DbContextOptions<ParcelDistributionCenterContext> options) : base(options)
-        {
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
