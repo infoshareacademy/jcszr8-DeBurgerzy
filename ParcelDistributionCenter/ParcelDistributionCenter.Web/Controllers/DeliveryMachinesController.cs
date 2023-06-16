@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ParcelDistributionCenter.Logic.Services.IServices;
 using ParcelDistributionCenter.Logic.ViewModels;
@@ -6,6 +7,7 @@ using ParcelDistributionCenter.Model.Entites;
 
 namespace ParcelDistributionCenter.Web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class DeliveryMachinesController : Controller
     {
         private readonly IDeliveryMachinesService _deliveryMachinesService;

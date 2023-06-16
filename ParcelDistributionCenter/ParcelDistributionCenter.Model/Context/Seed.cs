@@ -1,18 +1,37 @@
-﻿using ParcelDistributionCenter.Model.Context.JsonReaderService;
+﻿using Microsoft.AspNetCore.Identity;
+using ParcelDistributionCenter.Model.Context.JsonReaderService;
 using ParcelDistributionCenter.Model.Entites;
 
 namespace ParcelDistributionCenter.Model.Context
 {
     public class Seed
     {
-        public static void Initialize(ParcelDistributionCenterContext context)
+        private const string AdminRole = "Admin";
+        private const string CommonUserRole = "CommonUser";
+        private const string defaultPassword = "Admin123%";
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<User> _userManager;
+
+        public Seed(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        {
+            _userManager = userManager;
+            _roleManager = roleManager;
+        }
+
+        public async Task Initialize(ParcelDistributionCenterContext context)
         {
             context.Database.EnsureCreated();
             if (context.Couriers.Any())
             {
                 return;
             }
+            AddDataFromJsonFiles(context);
+            await AddUsersAndRoles(context);
+            context.SaveChanges();
+        }
 
+        private static void AddDataFromJsonFiles(ParcelDistributionCenterContext context)
+        {
             JsonReader jsonReader = new();
             jsonReader.LoadData();
 
@@ -43,8 +62,74 @@ namespace ParcelDistributionCenter.Model.Context
                 }
                 context.DeliveryMachines.Add(deliveryMachine);
             }
+        }
 
-            context.SaveChanges();
+        private async Task AddUsersAndRoles(ParcelDistributionCenterContext context)
+        {
+            // Creating roles
+            IdentityRole adminRole = new(AdminRole);
+            IdentityRole commonUserRole = new(CommonUserRole);
+            await _roleManager.CreateAsync(adminRole);
+            await _roleManager.CreateAsync(commonUserRole);
+
+            // Creating users
+            User michalPietrzakAdminUser = new()
+            {
+                FirstName = "Michal",
+                LastName = "Pietrzak",
+                Email = "mp@wp.pl",
+                UserName = "mp@wp.pl",
+            };
+            User maciejDuszaAdminUser = new()
+            {
+                FirstName = "Maciej",
+                LastName = "Dusza",
+                Email = "md@wp.pl",
+                UserName = "md@wp.pl",
+            };
+            User szymonGrzędaAdminUser = new()
+            {
+                FirstName = "Szymon",
+                LastName = "Grzeda",
+                Email = "sg@wp.pl",
+                UserName = "sg@wp.pl",
+            };
+            User commonUser_1 = new()
+            {
+                FirstName = "Patryk",
+                LastName = "Waclawski",
+                Email = "pw@wp.pl",
+                UserName = "pw@wp.pl",
+            };
+            User commonUser_2 = new()
+            {
+                FirstName = "Monika",
+                LastName = "Winiecka",
+                Email = "mw@wp.pl",
+                UserName = "mw@wp.pl"
+            };
+            User commonUser_3 = new()
+            {
+                FirstName = "Klauida",
+                LastName = "Sonacka",
+                Email = "ks@wp.pl",
+                UserName = "ks@wp.pl"
+            };
+
+            await _userManager.CreateAsync(michalPietrzakAdminUser, defaultPassword);
+            await _userManager.CreateAsync(maciejDuszaAdminUser, defaultPassword);
+            await _userManager.CreateAsync(szymonGrzędaAdminUser, defaultPassword);
+            await _userManager.CreateAsync(commonUser_1, defaultPassword);
+            await _userManager.CreateAsync(commonUser_2, defaultPassword);
+            await _userManager.CreateAsync(commonUser_3, defaultPassword);
+
+            // Adding roles to users
+            await _userManager.AddToRoleAsync(michalPietrzakAdminUser, AdminRole);
+            await _userManager.AddToRoleAsync(maciejDuszaAdminUser, AdminRole);
+            await _userManager.AddToRoleAsync(szymonGrzędaAdminUser, AdminRole);
+            await _userManager.AddToRoleAsync(commonUser_1, CommonUserRole);
+            await _userManager.AddToRoleAsync(commonUser_2, CommonUserRole);
+            await _userManager.AddToRoleAsync(commonUser_3, CommonUserRole);
         }
     }
 }

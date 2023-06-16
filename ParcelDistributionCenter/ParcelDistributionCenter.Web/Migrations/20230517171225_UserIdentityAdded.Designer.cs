@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ParcelDistributionCenter.Model.Context;
 
@@ -11,9 +12,11 @@ using ParcelDistributionCenter.Model.Context;
 namespace ParcelDistributionCenter.Web.Migrations
 {
     [DbContext(typeof(ParcelDistributionCenterContext))]
-    partial class ParcelDistributionCenterContextModelSnapshot : ModelSnapshot
+    [Migration("20230517171225_UserIdentityAdded")]
+    partial class UserIdentityAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -418,26 +421,6 @@ namespace ParcelDistributionCenter.Web.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ParcelDistributionCenter.Model.Entites.ReportPackage", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<double>("AddingDurationInSeconds")
-                        .HasColumnType("float");
-
-                    b.Property<int>("Size")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("TimeCreated")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ReportPackages");
                 });
 
             modelBuilder.Entity("ParcelDistributionCenter.Model.Entites.Courier", b =>
