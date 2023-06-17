@@ -18,8 +18,13 @@ namespace ParcelDistributionCenter.Web.Controllers
         private readonly IMapper _mapper;
         private readonly IPackageService _packageService;
 
-        public PackagesController(IAddNewPackageService addNewPackageHandler, IPackageService packageService, ICourierService courierService,
-                                  IDeliveryMachinesService deliveryMachinesService, IMapper mapper, ILogger<PackagesController> logger)
+        public PackagesController(
+            IAddNewPackageService addNewPackageHandler,
+            IPackageService packageService,
+            ICourierService courierService,
+            IDeliveryMachinesService deliveryMachinesService,
+            IMapper mapper,
+            ILogger<PackagesController> logger)
         {
             _addNewPackageService = addNewPackageHandler;
             _packageService = packageService;

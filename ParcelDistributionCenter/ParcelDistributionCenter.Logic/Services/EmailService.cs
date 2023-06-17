@@ -4,23 +4,22 @@ using Microsoft.Extensions.Configuration;
 using MimeKit;
 using MimeKit.Text;
 using ParcelDistributionCenter.Logic.Services.IServices;
-using System.Net.Http.Json;
+using ParcelDistributionCenter.Model.Entites;
+using System.Text;
 
 namespace ParcelDistributionCenter.Logic.Services
 {
     public class EmailService : IEmailService
     {
-        private readonly IConfiguration _configuration;
-        private readonly HttpClient _httpClient;
+        private readonly IReportService _reportService;
         private string emailAddress;
         private string host;
         private string password;
         private int port;
 
-        public EmailService(HttpClient httpClient, IConfiguration configuration)
+        public EmailService(IConfiguration configuration, IReportService reportService)
         {
-            _httpClient = httpClient;
-            _configuration = configuration;
+            _reportService = reportService;
             SetConnectionValuesByConfiguration(configuration);
         }
 
@@ -48,14 +47,26 @@ namespace ParcelDistributionCenter.Logic.Services
                 nextSendingEmailOccurence.AddDays(1);
             }
             TimeSpan delay = nextSendingEmailOccurence - now;
-            string dataToBeSent = await GetReportFromDatabase();
+            string dataToBeSent = await GetReportPackagesFromDatabase();
             Timer timer = new(state => SendEmail(state.ToString()), dataToBeSent, (int)delay.TotalMilliseconds, (int)TimeSpan.FromDays(1).TotalMilliseconds);
         }
 
-        private async Task<string> GetReportFromDatabase()
+        private async Task<string> GetReportPackagesFromDatabase()
         {
-            AuthorizationHelper.AddAuthorizationHeader(_httpClient, _configuration);
-            return await _httpClient.GetFromJsonAsync<string>("reports/users");
+            IEnumerable<ReportPackage> reportPackages = await _reportService.GetReportPackages();
+            StringBuilder stringBuilder = new();
+            double averageAddingDurationTime = reportPackages.Average(r => r.AddingDurationInSeconds);
+            int bigPackagesCount = reportPackages.Count(r => r.Size == Model.Enums.PackageSize.Big);
+            int mediumPackagesCount = reportPackages.Count(r => r.Size == Model.Enums.PackageSize.Medium);
+            int smallPackagesCount = reportPackages.Count(r => r.Size == Model.Enums.PackageSize.Small);
+            stringBuilder.Append("PACKAGES REPORT");
+            stringBuilder.Append("Here you will find a packages report created for all packages ever added by clients.");
+            stringBuilder.Append("------------------------------------------------------------------------------------");
+            stringBuilder.Append($"Average duration time for package adding: {averageAddingDurationTime}");
+            stringBuilder.Append($"Big Packages count: {bigPackagesCount}");
+            stringBuilder.Append($"Medium Packages count: {mediumPackagesCount}");
+            stringBuilder.Append($"Small Packages count: {smallPackagesCount}");
+            return stringBuilder.ToString();
         }
 
         private void SetConnectionValuesByConfiguration(IConfiguration configuration)

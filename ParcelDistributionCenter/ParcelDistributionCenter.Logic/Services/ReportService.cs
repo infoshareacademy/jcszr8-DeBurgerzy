@@ -8,13 +8,12 @@ namespace ParcelDistributionCenter.Logic.Services
 {
     public class ReportService : IReportService
     {
-        private readonly IConfiguration _configuration;
         private readonly HttpClient _httpClient;
 
         public ReportService(HttpClient httpClient, IConfiguration configuration)
         {
+            AuthorizationHelper.AddAuthorizationHeader(httpClient, configuration);
             _httpClient = httpClient;
-            _configuration = configuration;
         }
 
         // Czy to powinno coś zwracać?
@@ -28,8 +27,9 @@ namespace ParcelDistributionCenter.Logic.Services
                 AddingDurationInSeconds = Math.Round(packageAddingDuration.TotalSeconds, 0),
                 Size = size
             };
-            AuthorizationHelper.AddAuthorizationHeader(_httpClient, _configuration);
-            await _httpClient.PostAsJsonAsync("reports/users", reportPackage);
+            await _httpClient.PostAsJsonAsync("reports/ReportPackage", reportPackage);
         }
+
+        public async Task<IEnumerable<ReportPackage>> GetReportPackages() => await _httpClient.GetFromJsonAsync<IEnumerable<ReportPackage>>("reports/ReportPackage");
     }
 }

@@ -1,11 +1,19 @@
 ﻿using ParcelDistributionCenter.Model.Enums;
+using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
 
 namespace ParcelDistributionCenter.Model.DTOs
 {
-    // Czy to jest w ogóle potrzebne?
     public class ReportPackageDto
     {
-        public TimeSpan Duration { get; set; }
+
+        [Display(Name = "Adding Duration In Seconds")]
+        public double AddingDurationInSeconds { get; set; }
+
         public PackageSize Size { get; set; }
+
+
+        [Display(Name = "Time Created")]
+        public DateTime TimeCreated { get; set; }
     }
 }

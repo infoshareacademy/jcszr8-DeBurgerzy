@@ -6,11 +6,11 @@ namespace ParcelDistributionCenter.Report.Controllers
 {
     [ApiController]
     [Route("reports/[controller]")]
-    public class UsersController : ControllerBase
+    public class ReportPackageController : ControllerBase
     {
         private readonly IRepository<ReportPackage> _reportPackageRepository;
 
-        public UsersController(IRepository<ReportPackage> reportPackageRepository)
+        public ReportPackageController(IRepository<ReportPackage> reportPackageRepository)
         {
             _reportPackageRepository = reportPackageRepository;
         }
@@ -24,9 +24,6 @@ namespace ParcelDistributionCenter.Report.Controllers
 
         // TODO: To be changed
         [HttpGet]
-        public IActionResult Get()
-        {
-            return Ok();
-        }
+        public IEnumerable<ReportPackage> GetReportPackages() => _reportPackageRepository.GetAll();
     }
 }
