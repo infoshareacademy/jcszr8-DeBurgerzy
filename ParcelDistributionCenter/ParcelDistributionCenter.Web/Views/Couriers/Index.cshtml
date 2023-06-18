@@ -21,9 +21,9 @@
     </tr>
 </table>
 <hr />
-<table class="table">
+<table class="table center-table">
     <thead>
-        <tr>
+        <tr class="center-cell">
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -40,37 +40,38 @@
         </tr>
     </thead>
     <tbody id="courierTable">
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Surname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phone)
-            </td>
+        @foreach (var item in Model)
+        {
+            <tr class="center-cell">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Surname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
 
-            <td>
-                <a asp-action="CourierPackages" asp-route-id="@item.CourierId" class="btn btn-secondary">Show Packages</a>
-            </td>
+                <td>
+                    <a asp-action="CourierPackages" asp-route-id="@item.CourierId" class="btn btn-secondary">Show Packages</a>
+                </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.CourierId" class="btn btn-primary">Edit</a>
                     <a asp-action="Delete" asp-route-id="@item.CourierId" class="btn btn-danger" onclick="return confirmDelete();">Delete</a>
                 </td>
 
-        </tr>
-}
+            </tr>
+        }
     </tbody>
 </table>
 
 <script src="~/js/search.js"></script>
 
-                <script>
+<script>
     function confirmDelete() {
         if (confirm("Are you sure you want to delete this Courier?")) {
             return true;
@@ -78,3 +79,22 @@
         return false;
     }
 </script>
+
+<style>
+    .center-text {
+        text-align: center;
+    }
+
+    .center-table {
+        margin: 0 auto;
+    }
+
+    .center-cell {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .font-weight-bold {
+        font-weight: bold;
+    }
+</style>
