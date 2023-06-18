@@ -31,14 +31,26 @@ namespace ParcelDistributionCenter.Web
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<IAddNewPackageService, AddNewPackageService>();
             builder.Services.AddScoped<IPackageService, PackageService>();
+            builder.Services.AddSingleton<IEmailService, EmailService>();
             builder.Services.AddTransient<ICourierService, CourierService>();
             builder.Services.AddTransient<IDeliveryMachinesService, DeliveryMachinesService>();
             builder.Services.AddAutoMapper(typeof(Program));
             builder.Services.AddScoped<Seed>();
 
+            // Add HTTP Client
+            builder.Services.AddHttpClient<IReportService, ReportService>(config =>
+            {
+                string baseAddress = builder.Configuration["ApiSettings:BaseUrl"];
+                config.BaseAddress = new Uri(baseAddress);
+            });
+
             var app = builder.Build();
             await CreateDbIfNotExists(app);
 
+            IEmailService emailSender = (IEmailService)app.Services.GetRequiredService(typeof(IEmailService));
+            await emailSender.StartSendingEmails();
+
+            // Check AutoMapper configuration
             var mapper = (IMapper)app.Services.GetRequiredService(typeof(IMapper));
             mapper.ConfigurationProvider.AssertConfigurationIsValid();
 

@@ -29,7 +29,6 @@
                 <div class="sb-sidenav-menu">
                     <div class="nav">
 
-
                         @*PACKAGES*@
                         <div class="sb-sidenav-menu-heading">Manage Package</div>
                         <a class="nav-link" asp-controller="Packages" asp-action="DisplayPackages">
@@ -45,19 +44,33 @@
                             Unassigned Packages
                         </a>
 
-                        @*COURIERS*@
-                        <div class="sb-sidenav-menu-heading">Manage Couriers</div>
-                        <a class="nav-link" asp-controller="Couriers" asp-action="Index">
-                            <div class="sb-nav-link-icon"><i class="fas fa-dolly"></i></div>
-                            Couriers List
-                        </a>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            @*COURIERS*@
+                            <div class="sb-sidenav-menu-heading">Manage Couriers</div>
+                            <a class="nav-link" asp-controller="Couriers" asp-action="Index">
+                                <div class="sb-nav-link-icon"><i class="fas fa-dolly"></i></div>
+                                Couriers List
+                            </a>
 
-                        @*DELIVERY MACHINES*@
-                        <div class="sb-sidenav-menu-heading">Manage Delivery Machines</div>
-                        <a class="nav-link" asp-controller="DeliveryMachines" asp-action="Details">
-                            <div class="sb-nav-link-icon"><i class="fas fa-warehouse"></i></div>
-                            Delivery Machines List
-                        </a>
+                            @*DELIVERY MACHINES*@
+                            <div class="sb-sidenav-menu-heading">Manage Delivery Machines</div>
+                            <a class="nav-link" asp-controller="DeliveryMachines" asp-action="Details">
+                                <div class="sb-nav-link-icon"><i class="fas fa-warehouse"></i></div>
+                                Delivery Machines List
+                            </a>
+
+                            @*REPORTS*@
+                            <div class="sb-sidenav-menu-heading">Reports</div>
+                            <a class="nav-link" asp-controller="Reports" asp-action="ReportMailing">
+                                <div class="sb-nav-link-icon"><i class="fas fa-envelope"></i></div>
+                                Report Mailing
+                            </a>
+                            <a class="nav-link" asp-controller="Reports" asp-action="GetPackagesReport">
+                                <div class="sb-nav-link-icon"><i class="fas fa-chart-pie"></i></div>
+                                Packages Report
+                            </a>
+                        }
                     </div>
                 </div>
             </nav>

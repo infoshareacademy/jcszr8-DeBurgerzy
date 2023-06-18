@@ -17,7 +17,6 @@ namespace ParcelDistributionCenter.Model.Entites
 
         [JsonProperty("delivery_address")]
         public string DeliveryAddress { get; set; }
-
         public DeliveryMachine? DeliveryMachine { get; set; }
 
         public string? DeliveryMachineId { get; set; }

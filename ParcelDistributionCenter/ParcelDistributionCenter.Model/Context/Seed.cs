@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using ParcelDistributionCenter.Model.Context.JsonReaderService;
 using ParcelDistributionCenter.Model.Entites;
+using ParcelDistributionCenter.Model.Enums;
 
 namespace ParcelDistributionCenter.Model.Context
 {
@@ -21,11 +22,16 @@ namespace ParcelDistributionCenter.Model.Context
         public async Task Initialize(ParcelDistributionCenterContext context)
         {
             context.Database.EnsureCreated();
-            if (context.Couriers.Any())
+            if (context.Couriers.Any() &&
+                context.Users.Any() &&
+                context.Packages.Any() &&
+                context.ReportPackages.Any() &&
+                context.DeliveryMachines.Any())
             {
                 return;
             }
             AddDataFromJsonFiles(context);
+            GenerateReportPackages(context);
             await AddUsersAndRoles(context);
             context.SaveChanges();
         }
@@ -61,6 +67,23 @@ namespace ParcelDistributionCenter.Model.Context
                     deliveryMachine.Packages.Add(deliveryMachinePackage);
                 }
                 context.DeliveryMachines.Add(deliveryMachine);
+            }
+        }
+
+        private static void GenerateReportPackages(ParcelDistributionCenterContext context)
+        {
+            Random random = new();
+            for (int i = 0; i < 20; i++)
+            {
+                var addingDuration = random.Next(10, 61);
+                var timeCreated = DateTime.Now.AddDays(-i).AddHours(i ^ 2).AddMinutes(i ^ 3).AddSeconds(i ^ 4);
+                ReportPackage reportPackage = new()
+                {
+                    AddingDurationInSeconds = addingDuration,
+                    Size = (PackageSize)random.Next(0, 3),
+                    TimeCreated = timeCreated,
+                };
+                context.ReportPackages.Add(reportPackage);
             }
         }
 

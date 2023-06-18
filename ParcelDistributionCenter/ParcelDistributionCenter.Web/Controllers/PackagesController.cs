@@ -18,8 +18,13 @@ namespace ParcelDistributionCenter.Web.Controllers
         private readonly IMapper _mapper;
         private readonly IPackageService _packageService;
 
-        public PackagesController(IAddNewPackageService addNewPackageHandler, IPackageService packageService, ICourierService courierService,
-                                  IDeliveryMachinesService deliveryMachinesService, IMapper mapper, ILogger<PackagesController> logger)
+        public PackagesController(
+            IAddNewPackageService addNewPackageHandler,
+            IPackageService packageService,
+            ICourierService courierService,
+            IDeliveryMachinesService deliveryMachinesService,
+            IMapper mapper,
+            ILogger<PackagesController> logger)
         {
             _addNewPackageService = addNewPackageHandler;
             _packageService = packageService;
@@ -44,7 +49,8 @@ namespace ParcelDistributionCenter.Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    packageViewModel = _addNewPackageService.AddNewPackage(packageViewModel);
+                    DateTime packageAddingStartTime = DateTime.Parse(Request.Form["currentTime"]);
+                    packageViewModel = _addNewPackageService.AddNewPackage(packageViewModel, packageAddingStartTime);
                     //TODO: TempData do przeniesienia do widoku
                     TempData["Message"] = "Package successfully added!";
                     TempData["MessageClass"] = "alert-success";
@@ -55,7 +61,7 @@ namespace ParcelDistributionCenter.Web.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError($"An error occured: {ex.Message}");
                 TempData["Message"] = "Sorry. Something went wrong. Try to add package again.";
                 TempData["MessageClass"] = "alert-danger";
                 return View(packageViewModel);

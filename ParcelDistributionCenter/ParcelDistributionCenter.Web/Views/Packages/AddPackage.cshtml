@@ -9,6 +9,8 @@
 <hr />
 
 <form asp-action="AddPackage">
+    <input type="hidden" name="currentTime" value="@DateTime.Now" />
+
     <img src="~/assets/parcel-package.jpeg" style="width: stretch; height: stretch; filter: grayscale(60%); position: fixed; z-index: -1; opacity: 0.3" alt="">
 
     <div class="row align-items-center justify-content-center">
