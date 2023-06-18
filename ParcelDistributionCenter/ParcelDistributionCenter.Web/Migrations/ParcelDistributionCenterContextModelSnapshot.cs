@@ -420,6 +420,26 @@ namespace ParcelDistributionCenter.Web.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("ParcelDistributionCenter.Model.Entites.ReportPackage", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<double>("AddingDurationInSeconds")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Size")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TimeCreated")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ReportPackages");
+                });
+
             modelBuilder.Entity("ParcelDistributionCenter.Model.Entites.Courier", b =>
                 {
                     b.HasOne("ParcelDistributionCenter.Model.Entites.DeliveryMachine", "DeliveryMachine")

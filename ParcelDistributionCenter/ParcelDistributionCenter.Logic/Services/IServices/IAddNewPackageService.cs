@@ -4,6 +4,6 @@ namespace ParcelDistributionCenter.Logic.Services.IServices
 {
     public interface IAddNewPackageService
     {
-        PackageViewModel AddNewPackage(PackageViewModel package);
+        PackageViewModel AddNewPackage(PackageViewModel package, DateTime packageAddingStartTime);
     }
 }

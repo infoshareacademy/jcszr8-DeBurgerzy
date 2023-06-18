@@ -9,6 +9,7 @@ namespace ParcelDistributionCenter.Model.Context
         public DbSet<Courier> Couriers { get; set; }
         public DbSet<DeliveryMachine> DeliveryMachines { get; set; }
         public DbSet<Package> Packages { get; set; }
+        public DbSet<ReportPackage> ReportPackages { get; set; }
 
         public ParcelDistributionCenterContext(DbContextOptions<ParcelDistributionCenterContext> options) : base(options)
         {

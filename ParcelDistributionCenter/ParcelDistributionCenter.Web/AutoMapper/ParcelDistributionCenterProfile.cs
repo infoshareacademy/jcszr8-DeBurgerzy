@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ParcelDistributionCenter.Logic.ViewModels;
+using ParcelDistributionCenter.Model.DTOs;
 using ParcelDistributionCenter.Model.Entites;
 
 namespace ParcelDistributionCenter.Web.AutoMapper
@@ -20,6 +21,9 @@ namespace ParcelDistributionCenter.Web.AutoMapper
 
             CreateMap<Courier, CourierViewModel>()
                  .ForMember(dest => dest.CourierId, opt => opt.MapFrom(src => src.Id))
+                 .ReverseMap();
+            CreateMap<ReportPackageDto, ReportPackage>()
+                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                  .ReverseMap();
         }
     }
