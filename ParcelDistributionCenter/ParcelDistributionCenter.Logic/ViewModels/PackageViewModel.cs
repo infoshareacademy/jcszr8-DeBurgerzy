@@ -8,7 +8,7 @@ namespace ParcelDistributionCenter.Logic.ViewModels
         private const string AddressErrorMessage = "Please provide an address between 3 and 30 characters.";
 
         [Display(Name = "Delivery Address")]
-        [RegularExpression(@"[a-zA-Z0-9\s\-]{3,30}", ErrorMessage = AddressErrorMessage)]
+        [RegularExpression(@"[a-zA-Z0-9\s\-\.\/\\]{3,30}", ErrorMessage = AddressErrorMessage)]
         public string DeliveryAddress { get; set; }
 
         [Display(Name = "Package Number")]
@@ -31,7 +31,7 @@ namespace ParcelDistributionCenter.Logic.ViewModels
         public DateTime Registered { get; set; } = DateTime.Now;
 
         [Display(Name = "Sender Address")]
-        [RegularExpression(@"[a-zA-Z0-9,\s\-]{3,30}", ErrorMessage = AddressErrorMessage)]
+        [RegularExpression(@"[a-zA-Z0-9\s\-\.\/\\]{3,30}", ErrorMessage = AddressErrorMessage)]
         public string SenderAddress { get; set; }
 
         [Display(Name = "Sender Email")]
