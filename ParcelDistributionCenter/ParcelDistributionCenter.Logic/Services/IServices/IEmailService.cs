@@ -2,7 +2,9 @@
 {
     public interface IEmailService
     {
-        void SendEmail(string body);
+        int HourToSendEmail { get; set; }
+
+        Task SendEmail();
 
         Task StartSendingEmails();
     }
