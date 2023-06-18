@@ -158,9 +158,9 @@ namespace ParcelDistributionCenter.Web.Controllers
 
         public ActionResult UnassignedPackages()
         {
-            IEnumerable<Package> package = _packageService.GetUnassignedPackages();
-            IEnumerable<PackageViewModel> packageVM = _mapper.Map<IEnumerable<Package>, IEnumerable<PackageViewModel>>(package);
-            return View(packageVM);
+            IEnumerable<Package> packages = _packageService.GetUnassignedPackages();
+            //IEnumerable<UnassignedPackageViewModel> unassignedPackageVM = _mapper.Map<IEnumerable<UnassignedPackageViewModel>>(packages);
+            return View(packages);
         }
     }
 }
