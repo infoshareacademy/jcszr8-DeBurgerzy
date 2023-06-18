@@ -123,30 +123,30 @@
 
     <div class="row align-items-center justify-content-center">
         <div class="col-md-3">
-                        <div class="dropdown">
-                            <i class="fas fa-compress-arrows-alt"></i>
-                            <label asp-for="Size" class="control-label"></label>
-                            <select asp-for="Size" class="form-control">
-                                <option value="">-- Select Size --</option>
-                                @foreach (var size in Enum.GetValues(typeof(PackageSize)))
-                                {
-                                    <option value="@size">@size</option>
-                                }
-                            </select>
-                            <span asp-validation-for="Size" class="text-danger"></span>
-                        </div>
-                        <div class="dropdown">
-                            <i class="fas fa-clock"></i>
-                            <label asp-for="Status" class="control-label"></label>
-                            <select asp-for="Status" class="form-control">
-                                <option value="">-- Select Size --</option>
-                                @foreach (var status in Enum.GetValues(typeof(Status)))
-                                {
-                                    <option value="@status">@status</option>
-                                }
-                            </select>
-                            <span asp-validation-for="Status" class="text-danger"></span>
-                        </div>
+            <div class="dropdown">
+                <i class="fas fa-compress-arrows-alt"></i>
+                <label asp-for="Size" class="control-label"></label>
+                <select asp-for="Size" class="form-control">
+                    <option value="">-- Select Size --</option>
+                    @foreach (var size in Enum.GetValues(typeof(PackageSize)))
+                    {
+                        <option value="@size">@size</option>
+                    }
+                </select>
+                <span asp-validation-for="Size" class="text-danger"></span>
+            </div>
+            <div class="dropdown">
+                <i class="fas fa-clock"></i>
+                <label asp-for="Status" class="control-label"></label>
+                <select asp-for="Status" class="form-control">
+                    <option value="">-- Select Size --</option>
+                    @foreach (var status in Enum.GetValues(typeof(Status)))
+                    {
+                        <option value="@status">@status</option>
+                    }
+                </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
         </div>
     </div>
 
@@ -155,7 +155,7 @@
     </div>
 
     <div class="text-center">
-        <a asp-controller="Home" asp-action="Index">Back to Home</a>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary" style="margin-top: 20px">Back to Home</a>
     </div>
 </form>
 

@@ -8,7 +8,6 @@ namespace ParcelDistributionCenter.Logic.ViewModels
         private const string AddressErrorMessage = "Please provide an address between 3 and 60 characters.";
 
         [Display(Name = "Delivery Address")]
-
         [RegularExpression(@"[a-zA-Z0-9\s\-\.\/\,\\]{3,60}", ErrorMessage = AddressErrorMessage)]
         public string DeliveryAddress { get; set; }
 
@@ -24,6 +23,7 @@ namespace ParcelDistributionCenter.Logic.ViewModels
         public string RecipientName { get; set; }
 
         [Display(Name = "Recipient Phone")]
+        [Required(ErrorMessage = "A Recipient Phone is required.")]
         [RegularExpression(@"^[\+]?[0-9]{2}[-\s\.]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{3,4}$", ErrorMessage = "Please provide number in format +NN NNN-NNN-NNN")]
         public string RecipientPhone { get; set; }
 
@@ -31,7 +31,6 @@ namespace ParcelDistributionCenter.Logic.ViewModels
         public DateTime Registered { get; set; } = DateTime.Now;
 
         [Display(Name = "Sender Address")]
-
         [RegularExpression(@"[a-zA-Z0-9\s\-\.\/\,\\]{3,60}", ErrorMessage = AddressErrorMessage)]
         public string SenderAddress { get; set; }
 
@@ -45,7 +44,7 @@ namespace ParcelDistributionCenter.Logic.ViewModels
 
         [Display(Name = "Sender Phone")]
         [Required(ErrorMessage = "A Sender Phone is required.")]
-        [RegularExpression(@"^[\+]?[0-9]{2}[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{3}$", ErrorMessage = "Please provide number in format +NN NNN-NNN-NNN")]
+        [RegularExpression(@"^[\+]?[0-9]{2}[-\s\.]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{3,4}$", ErrorMessage = "Please provide number in format +NN NNN-NNN-NNN")]
         public string SenderPhone { get; set; }
 
         [Display(Name = "Package Size")]

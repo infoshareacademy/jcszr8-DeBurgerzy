@@ -49,7 +49,7 @@ namespace ParcelDistributionCenter.Logic.Services
                 DateTime nextSendingEmailOccurence = new(now.Year, now.Month, now.Day, HourToSendEmail, 0, 0);
                 if (now > nextSendingEmailOccurence)
                 {
-                    nextSendingEmailOccurence.AddDays(1);
+                    nextSendingEmailOccurence = nextSendingEmailOccurence.AddDays(1);
                 }
                 TimeSpan delay = nextSendingEmailOccurence - now;
                 Timer timer = new(async _ => await SendEmail(), null, (int)delay.TotalMilliseconds, (int)TimeSpan.FromDays(1).TotalMilliseconds);
