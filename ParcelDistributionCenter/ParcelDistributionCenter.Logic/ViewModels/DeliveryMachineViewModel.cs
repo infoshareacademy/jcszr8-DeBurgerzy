@@ -8,7 +8,7 @@ namespace ParcelDistributionCenter.Logic.ViewModels
         private const string AddressErrorMessage = "Please provide an address between 3 and 60 characters.";
 
         [Required]
-        [RegularExpression(@"[a-zA-Z0-9\s\-\.\/\,\\]{3,60}", ErrorMessage = AddressErrorMessage)]
+        [RegularExpression(@"^[\p{L}0-9\s\.\-\/,\\]+ [\p{L}0-9\s\.\-\/,\\]+(, [\p{L}0-9\s\.\-\/,\\]+)?$", ErrorMessage = AddressErrorMessage)]
         public string Address { get; set; }
 
         [Required(ErrorMessage = "Big Lockers Count is required.")]
