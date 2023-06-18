@@ -1,54 +1,78 @@
-﻿@using ParcelDistributionCenter.Web.ViewModels;
+﻿@using ParcelDistributionCenter.Logic.ViewModels;
 @model DeliveryMachineViewModel
 
 @{
     ViewData["Title"] = "Edit Delivery Machine";
 }
 
-<h1>Edit Delivery Machine</h1>
+<h1 class="center-text" style="margin: 30px">Edit Delivery Machine</h1>
 
-<h4>Delivery Machine</h4>
 <hr />
-<div class="row">
+<div class="row justify-content-center">
     <div class="col-md-4">
         <form asp-action="EditDeliveryMachineConfirmed">
+            <input type="hidden" asp-for="Id" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Address" class="control-label"></label>
-                <input asp-for="Address" class="form-control" />
-                <span asp-validation-for="Address" class="text-danger"></span>
+            <div class="form-group row justify-content-center">
+                <label asp-for="Address" class="control-label font-weight-bold" style="margin-bottom: 10px; text-align: center;"></label>
+                <input asp-for="Address" class="form-control" style="text-align: center;" />
+                <span asp-validation-for="Address" class="text-danger" style="margin-bottom: 10px; text-align: center;"></span>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
-                </label>
+            <div class="form-group row justify-content-center align-items-center">
+                <div class="col-md-8 text-center" style="margin: 20px;">
+                    <label class="form-check-label font-weight-bold" style="margin-right: 10px;">
+                        <input class="form-check-input" asp-for="IsActive" style="margin: 0; text-align: center; vertical-align: middle;" />
+                        @Html.DisplayNameFor(model => model.IsActive)
+                    </label>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="BigLockersCount" class="control-label"></label>
-                <input asp-for="BigLockersCount" class="form-control" />
-                <span asp-validation-for="BigLockersCount" class="text-danger"></span>
+            <div class="form-group row justify-content-center">
+                <label asp-for="BigLockersCount" class="control-label font-weight-bold" style="margin-bottom: 10px; text-align: center;"></label>
+                <input asp-for="BigLockersCount" class="form-control" style="margin-bottom: 10px; text-align: center; width: 30%;" />
+                <span asp-validation-for="BigLockersCount" class="text-danger" style="margin-bottom: 10px; text-align: center;"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="MediumLockersCount" class="control-label"></label>
-                <input asp-for="MediumLockersCount" class="form-control" />
-                <span asp-validation-for="MediumLockersCount" class="text-danger"></span>
+            <div class="form-group row justify-content-center">
+                <label asp-for="MediumLockersCount" class="control-label font-weight-bold" style="margin-bottom: 10px; text-align: center;"></label>
+                <input asp-for="MediumLockersCount" class="form-control" style="margin-bottom: 10px; text-align: center; width: 30%;" />
+                <span asp-validation-for="MediumLockersCount" class="text-danger" style="margin-bottom: 10px; text-align: center;"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="SmallLockersCount" class="control-label"></label>
-                <input asp-for="SmallLockersCount" class="form-control" />
-                <span asp-validation-for="SmallLockersCount" class="text-danger"></span>
+            <div class="form-group row justify-content-center">
+                <label asp-for="SmallLockersCount" class="control-label font-weight-bold" style="margin-bottom: 10px; text-align: center;"></label>
+                <input asp-for="SmallLockersCount" class="form-control" style="margin-bottom: 30px; text-align: center; width: 30%;" />
+                <span asp-validation-for="SmallLockersCount" class="text-danger" style="margin-bottom: 10px; text-align: center;"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group text-center">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Details">Back to List</a>
+<div class="text-center" style="margin-top: 20px;">
+    <a asp-action="Details" class="btn btn-secondary">Back to List</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
+
+<style>
+    .center-text {
+        text-align: center;
+    }
+
+    .center-table {
+        margin: 0 auto;
+    }
+
+    .center-cell {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .font-weight-bold {
+        font-weight: bold;
+    }
+</style>

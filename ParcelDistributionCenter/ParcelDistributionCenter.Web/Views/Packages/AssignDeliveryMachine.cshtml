@@ -1,0 +1,69 @@
+﻿@model IEnumerable<ParcelDistributionCenter.Logic.ViewModels.DeliveryMachineViewModel>
+
+@{
+    ViewData["Title"] = "AssignDeliveryMachine";
+}
+
+<h1 style="text-align: center; margin: 30px">Assign Delivery Machine</h1>
+
+<p>
+    <a asp-controller="DeliveryMachines" asp-action="Create" class="btn btn-primary" style="margin-left: 20px">Create New</a>
+</p>
+<div style="text-align: center">
+    <table class="table" style="margin-left: 20px">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BigLockersCount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsActive)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MediumLockersCount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SmallLockersCount)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BigLockersCount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsActive)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MediumLockersCount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SmallLockersCount)
+                    </td>
+                    <td>
+                        <a asp-action="AssignDeliveryMachine" asp-route-packageNumber=@(Context.Request.Query["packageNumber"]) asp-route-deliveryMachineId=@item.Id asp-route-From="UnassignedPackages" class="btn btn-primary">Assign </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    <a asp-action="UnassignedPackages" class="btn btn-secondary" style="margin-left: 20px">Back to List</a>
+</div>

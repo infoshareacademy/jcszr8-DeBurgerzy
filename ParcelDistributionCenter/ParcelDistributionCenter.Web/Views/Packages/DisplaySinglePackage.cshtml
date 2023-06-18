@@ -1,4 +1,4 @@
-﻿@model ParcelDistributionCenter.Web.ViewModels.PackageViewModel;
+﻿@model ParcelDistributionCenter.Logic.ViewModels.PackageViewModel;
 
 @{
     ViewData["Title"] = "Package Details";
@@ -8,7 +8,7 @@
 <hr />
 
 @Html.Partial("SinglePackageDataPartialViewModel")
-    
+
 <hr />
 <div class="text-center">
     <a asp-action="Edit" asp-route-PackageNumber="@Model.PackageNumber" class="btn btn-primary">Edit</a>
@@ -17,12 +17,10 @@
 </div>
 
 <script>
-        function confirmDelete()
-        {
-            if (confirm("Are you sure you want to delete this package?"))
-            {
-                return true;
-            }
-            return false;
+    function confirmDelete() {
+        if (confirm("Are you sure you want to delete this package?")) {
+            return true;
         }
+        return false;
+    }
 </script>

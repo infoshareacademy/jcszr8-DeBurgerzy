@@ -2,7 +2,40 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Parcel Distribution Center</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <div class="background-image"></div>
+
+    <div class="container">
+        <div class="text-center">
+            <h1 class="display-logo">QuickPost</h1>
+            <h2 class="display-logo2">Fastest Parcel Distribution Center</h2>
+            <hr />
+        </div>
+
+        <div class="button-location">
+            <div class="button-wrapper">
+                <a class="btn-big" asp-controller="Packages" asp-action="DisplayPackages">Packages List</a>
+            </div>
+            <div class="button-wrapper">
+                <a class="btn-big" asp-controller="Packages" asp-action="AddPackage">Send Package</a>
+            </div>
+            <div class="button-wrapper">
+                <a class="btn-big" asp-controller="Packages" asp-action="UnassignedPackages">Unassigned Packages</a>
+            </div>
+        </div>
+
+        <div class="image-region">
+            <div class="image-center">
+                <img src="assets/cityBackground.jpg" alt="Sample Photo" />
+            </div>
+        </div>
+    </div>
+</body>
+</html>

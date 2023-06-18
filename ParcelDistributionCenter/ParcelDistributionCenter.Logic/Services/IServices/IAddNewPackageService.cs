@@ -1,9 +1,9 @@
-﻿using ParcelDistributionCenter.Model.Entites;
+﻿using ParcelDistributionCenter.Logic.ViewModels;
 
 namespace ParcelDistributionCenter.Logic.Services.IServices
 {
     public interface IAddNewPackageService
     {
-        bool AddNewPackage(ref Package package);
+        PackageViewModel AddNewPackage(PackageViewModel package, DateTime packageAddingStartTime);
     }
 }

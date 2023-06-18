@@ -1,41 +1,56 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ParcelDistributionCenter.Logic.Services;
 using ParcelDistributionCenter.Logic.Services.IServices;
-using ParcelDistributionCenter.Logic.Validators;
 using ParcelDistributionCenter.Model.Context;
-using ParcelDistributionCenter.Model.Context.Memory;
+using ParcelDistributionCenter.Model.Entites;
 using ParcelDistributionCenter.Model.Repositories;
-using ParcelDistributionCenter.Web.ViewModels;
+using Serilog;
 
 namespace ParcelDistributionCenter.Web
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
+            IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+            Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(config).CreateLogger();
+
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddSerilog();
             builder.Services.AddDbContext<ParcelDistributionCenterContext>(opts =>
-            opts.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("ParcelDistributionCenter.Web")));
+                                          opts.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+                                          b => b.MigrationsAssembly("ParcelDistributionCenter.Web")));
+            builder.Services.AddDefaultIdentity<User>(/*options => options.SignIn.RequireConfirmedAccount = true*/)
+                            .AddRoles<IdentityRole>()
+                            .AddEntityFrameworkStores<ParcelDistributionCenterContext>();
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddControllersWithViews();
-            // TODO: Wywaliæ MemoryRepository z DependencyInjection i wsadziæ ca³e do Seeda (¿eby nie zajmowa³o
-            // pamiêci niepotrzebnie przez okres dzia³ania ca³ego programu
-            builder.Services.AddSingleton<IJsonReader>(JsonReader.LoadData());
             builder.Services.AddScoped<IAddNewPackageService, AddNewPackageService>();
             builder.Services.AddScoped<IPackageService, PackageService>();
-            builder.Services.AddScoped<IPackageValidator, PackageValidator>();
-            builder.Services.AddTransient<IAddNewCourierService, AddNewCourierService>();
+            builder.Services.AddSingleton<IEmailService, EmailService>();
             builder.Services.AddTransient<ICourierService, CourierService>();
             builder.Services.AddTransient<IDeliveryMachinesService, DeliveryMachinesService>();
-            builder.Services.AddAutoMapper(typeof(DeliveryMachineViewModel));
+            builder.Services.AddAutoMapper(typeof(Program));
+            builder.Services.AddScoped<Seed>();
+
+            // Add HTTP Client
+            builder.Services.AddHttpClient<IReportService, ReportService>(config =>
+            {
+                string baseAddress = builder.Configuration["ApiSettings:BaseUrl"];
+                config.BaseAddress = new Uri(baseAddress);
+            });
+
             var app = builder.Build();
-            CreateDbIfNotExists(app);
+            await CreateDbIfNotExists(app);
 
+            IEmailService emailSender = (IEmailService)app.Services.GetRequiredService(typeof(IEmailService));
+            await emailSender.StartSendingEmails();
 
-
+            // Check AutoMapper configuration
             var mapper = (IMapper)app.Services.GetRequiredService(typeof(IMapper));
             mapper.ConfigurationProvider.AssertConfigurationIsValid();
 
@@ -52,25 +67,27 @@ namespace ParcelDistributionCenter.Web
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
                 pattern: "/{controller=Home}/{action=Index}/{id?}");
 
+            app.MapRazorPages();
+
             app.Run();
         }
 
-        private static void CreateDbIfNotExists(IHost host)
+        private static async Task CreateDbIfNotExists(IHost host)
         {
             using var scope = host.Services.CreateScope();
             var services = scope.ServiceProvider;
             try
             {
-                var memoryRepository = services.GetRequiredService<IJsonReader>();
                 var context = services.GetRequiredService<ParcelDistributionCenterContext>();
-                Seed seed = new(memoryRepository);
-                seed.Initialize(context);
+                Seed seed = services.GetRequiredService<Seed>();
+                await seed.Initialize(context);
             }
             catch (Exception ex)
             {

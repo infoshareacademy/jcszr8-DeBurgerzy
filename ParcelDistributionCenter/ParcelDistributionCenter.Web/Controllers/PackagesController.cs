@@ -1,23 +1,37 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ParcelDistributionCenter.Logic.Services.IServices;
+using ParcelDistributionCenter.Logic.ViewModels;
 using ParcelDistributionCenter.Model.Entites;
-using ParcelDistributionCenter.Web.ViewModels;
 
 namespace ParcelDistributionCenter.Web.Controllers
 {
     [Obsolete("TEMPDATA ATTRIBUTE INTO SEPARATE CLASS")]
+    [Authorize]
     public class PackagesController : Controller
     {
         private readonly IAddNewPackageService _addNewPackageService;
+        private readonly ICourierService _courierService;
+        private readonly IDeliveryMachinesService _deliveryMachinesService;
+        private readonly ILogger<PackagesController> _logger;
         private readonly IMapper _mapper;
         private readonly IPackageService _packageService;
 
-        public PackagesController(IAddNewPackageService addNewPackageHandler, IPackageService packageService, IMapper mapper)
+        public PackagesController(
+            IAddNewPackageService addNewPackageHandler,
+            IPackageService packageService,
+            ICourierService courierService,
+            IDeliveryMachinesService deliveryMachinesService,
+            IMapper mapper,
+            ILogger<PackagesController> logger)
         {
             _addNewPackageService = addNewPackageHandler;
             _packageService = packageService;
+            _courierService = courierService;
+            _deliveryMachinesService = deliveryMachinesService;
             _mapper = mapper;
+            _logger = logger;
         }
 
         // GET: PackagesController/AddPackage
@@ -31,21 +45,57 @@ namespace ParcelDistributionCenter.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddPackage(PackageViewModel packageViewModel)
         {
-            if (ModelState.IsValid)
+            try
             {
-                Package package = _mapper.Map<Package>(packageViewModel);
-                bool added = _addNewPackageService.AddNewPackage(ref package);
-                if (added)
+                if (ModelState.IsValid)
                 {
+                    DateTime packageAddingStartTime = DateTime.Parse(Request.Form["currentTime"]);
+                    packageViewModel = _addNewPackageService.AddNewPackage(packageViewModel, packageAddingStartTime);
+                    //TODO: TempData do przeniesienia do widoku
                     TempData["Message"] = "Package successfully added!";
                     TempData["MessageClass"] = "alert-success";
+
                     return RedirectToAction(nameof(DisplaySinglePackage), packageViewModel);
                 }
-                TempData["Message"] = "Something went wrong. Please ensure that provided data is correct.";
+                return View(packageViewModel);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"An error occured: {ex.Message}");
+                TempData["Message"] = "Sorry. Something went wrong. Try to add package again.";
                 TempData["MessageClass"] = "alert-danger";
                 return View(packageViewModel);
             }
-            return View(packageViewModel);
+        }
+
+        public ActionResult AssignCourier(string packageNumber, string courierId, string from)
+        {
+            if (courierId != null)
+            {
+                _packageService.AssignCourier(packageNumber, courierId);
+                return from == "UnassignedPackages" ? RedirectToAction(from) : RedirectToAction("CourierPackages", "Couriers", new { id = courierId });
+            }
+            else
+            {
+                IEnumerable<Courier> courier = _courierService.GetAll();
+                IEnumerable<CourierViewModel> model = _mapper.Map<IEnumerable<Courier>, IEnumerable<CourierViewModel>>(courier);
+                return View(model);
+            }
+        }
+
+        public ActionResult AssignDeliveryMachine(string packageNumber, string deliveryMachineId, string from)
+        {
+            if (deliveryMachineId != null)
+            {
+                _packageService.AssignDeliveryMachine(packageNumber, deliveryMachineId);
+                return from == "UnassignedPackages" ? RedirectToAction(from) : RedirectToAction("Details", "DeliveryMachines", new { id = deliveryMachineId });
+            }
+            else
+            {
+                IEnumerable<DeliveryMachine> deliveryMachine = _deliveryMachinesService.GetAll();
+                IEnumerable<DeliveryMachineViewModel> model = _mapper.Map<IEnumerable<DeliveryMachine>, IEnumerable<DeliveryMachineViewModel>>(deliveryMachine);
+                return View(model);
+            }
         }
 
         // GET: PackagesController/DeletePackage/5
@@ -92,6 +142,7 @@ namespace ParcelDistributionCenter.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(PackageViewModel packageViewModel)
         {
+            if (!ModelState.IsValid) return View(packageViewModel);
             Package package = _mapper.Map<PackageViewModel, Package>(packageViewModel);
             bool edited = _packageService.Update(package);
             if (edited)
@@ -105,20 +156,11 @@ namespace ParcelDistributionCenter.Web.Controllers
             return View();
         }
 
-        // GET: PackagesController/FindPackageByNumber
-        public ActionResult FindPackageByNumber()
+        public ActionResult UnassignedPackages()
         {
-            var packagesNumbers = _packageService.GetAllPackagesNumber();
-            PackageNumberViewModel packageNumberViewModel = new() { PackageNumbers = packagesNumbers, PackageNumber = 0 };
-            return View(packageNumberViewModel);
-        }
-
-        // POST: PackagesController/FindPackageBuNumber/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult FindPackageByNumber(PackageNumberViewModel pVM)
-        {
-            return RedirectToAction("DisplaySinglePackage", new { packageNumber = pVM.PackageNumber });
+            IEnumerable<Package> packages = _packageService.GetUnassignedPackages();
+            //IEnumerable<UnassignedPackageViewModel> unassignedPackageVM = _mapper.Map<IEnumerable<UnassignedPackageViewModel>>(packages);
+            return View(packages);
         }
     }
 }

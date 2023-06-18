@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ParcelDistributionCenter.Logic.Services.IServices;
+using ParcelDistributionCenter.Logic.ViewModels;
 using ParcelDistributionCenter.Model.Entites;
-using ParcelDistributionCenter.Web.ViewModels;
 
 namespace ParcelDistributionCenter.Web.Controllers
 {
-    [Obsolete("ADD CREATE METHOD")]
+    [Authorize(Roles = "Admin")]
     public class DeliveryMachinesController : Controller
     {
         private readonly IDeliveryMachinesService _deliveryMachinesService;
@@ -24,18 +25,18 @@ namespace ParcelDistributionCenter.Web.Controllers
             return View();
         }
 
-        //// POST: DeliveryMachinesController/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult CreateConfirmed(DeliveryMachine deliveryMachine)
-        //{
-        //    bool added = _deliveryMachinesService.CreateNewDeliveryMachine(deliveryMachine);
-        //    if (added)
-        //    {
-        //        return RedirectToAction(nameof(Details));
-        //    }
-        //    return View();
-        //}
+        // POST: DeliveryMachinesController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateConfirmed(DeliveryMachine deliveryMachine)
+        {
+            if (ModelState.IsValid)
+            {
+                _deliveryMachinesService.CreateNewDeliveryMachine(deliveryMachine);
+                return RedirectToAction(nameof(Details));
+            }
+            return View(nameof(Create));
+        }
 
         // GET: DeliveryMachinesController/DeleteDeliveryMachine
         public ActionResult DeleteDeliveryMachine(string id)
@@ -53,7 +54,7 @@ namespace ParcelDistributionCenter.Web.Controllers
                 TempData["MessageClass"] = "alert-danger";
                 return RedirectToAction(nameof(Details));
             }
-            catch (Exception)
+            catch
             {
                 TempData["Message"] = "Unable to delete the selected delivery machine because it is associated with one or more packages.";
                 TempData["MessageClass"] = "alert-danger";
@@ -65,7 +66,16 @@ namespace ParcelDistributionCenter.Web.Controllers
         public ActionResult Details()
         {
             IEnumerable<DeliveryMachine> deliveryMachines = _deliveryMachinesService.GetAll();
-            return View(deliveryMachines);
+            IEnumerable<DeliveryMachineViewModel> deliveryMachinesViewModel = _mapper.Map<IEnumerable<DeliveryMachineViewModel>>(deliveryMachines);
+            return View(deliveryMachinesViewModel);
+        }
+
+        // GET: DeliveryMachinesController/DeleteDeliveryMachine
+        public ActionResult DMPackagesList(string id)
+        {
+            DeliveryMachine deliveryMachine = _deliveryMachinesService.GetDeliveryMachineById(id);
+            IEnumerable<PackageViewModel> packages = _mapper.Map<IEnumerable<PackageViewModel>>(deliveryMachine.Packages);
+            return View(packages);
         }
 
         // TODO: ZABEZPIECZYĆ PRZED NULLEM
@@ -82,9 +92,19 @@ namespace ParcelDistributionCenter.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditDeliveryMachineConfirmed(DeliveryMachineViewModel deliveryMachineViewModel)
         {
-            DeliveryMachine deliveryMachine = _mapper.Map<DeliveryMachine>(deliveryMachineViewModel);
-            _deliveryMachinesService.UpdateDeliveryMachine(deliveryMachine);
-            return RedirectToAction(nameof(Details));
+            if (ModelState.IsValid)
+            {
+                DeliveryMachine deliveryMachine = _mapper.Map<DeliveryMachine>(deliveryMachineViewModel);
+                _deliveryMachinesService.UpdateDeliveryMachine(deliveryMachine);
+                return RedirectToAction(nameof(Details));
+            }
+            return View(nameof(EditDeliveryMachine));
+        }
+
+        public ActionResult UnassignPackage(string packageNumber, string deliveryMachineId)
+        {
+            _deliveryMachinesService.UnassignPackage(packageNumber, deliveryMachineId);
+            return RedirectToAction("DMPackagesList", new { id = deliveryMachineId });
         }
     }
 }

@@ -1,51 +1,44 @@
-﻿@using ParcelDistributionCenter.Model.Entites;
-@model Courier
+﻿@model ParcelDistributionCenter.Logic.ViewModels.CourierViewModel;
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1 class ="center-text" style="margin: 30px">Create Courier</h1>
 
-<h4>Courier</h4>
 <hr />
-<div class="row">
+<div class="row justify-content-center">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div hidden>
-                <label asp-for="CourierJsonId" class="control-label"></label>
-                <input asp-for="CourierJsonId" class="form-control" />
-                <span asp-validation-for="CourierJsonId" class="text-danger"></span>
+            <div class="form-group row justify-content-center">
+                <label asp-for="Name" class="control-label font-weight-bold" style="margin-bottom: 10px; text-align: center;"></label>
+                <input asp-for="Name" class="form-control" style="margin-bottom: 10px; text-align: center;" />
+                <span asp-validation-for="Name" class="text-danger" style="margin-bottom: 10px; text-align: center;"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+            <div class="form-group row justify-content-center">
+                <label asp-for="Surname" class="control-label font-weight-bold" style="margin-bottom: 10px; text-align: center;"></label>
+                <input asp-for="Surname" class="form-control" style="margin-bottom: 10px; text-align: center;" />
+                <span asp-validation-for="Surname" class="text-danger" style="margin-bottom: 10px; text-align: center;"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Surname" class="control-label"></label>
-                <input asp-for="Surname" class="form-control" />
-                <span asp-validation-for="Surname" class="text-danger"></span>
+            <div class="form-group row justify-content-center">
+                <label asp-for="Email" class="control-label font-weight-bold" style="margin-bottom: 10px; text-align: center;"></label>
+                <input asp-for="Email" class="form-control" style="margin-bottom: 10px; text-align: center;" />
+                <span asp-validation-for="Email" class="text-danger" style="margin-bottom: 10px; text-align: center;"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+            <div class="form-group row justify-content-center">
+                <label asp-for="Phone" class="control-label font-weight-bold" style="margin-bottom: 10px; text-align: center;"></label>
+                <input asp-for="Phone" class="form-control" style="margin-bottom: 10px; text-align: center;" />
+                <span asp-validation-for="Phone" class="text-danger" style="margin-bottom: 10px; text-align: center;"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+            <div class="form-group text-center">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
+<div class="text-center" style="margin-top: 20px;">
     <a asp-action="Index" class="btn btn-secondary">Back to List</a>
 
 </div>
@@ -53,3 +46,22 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+<style>
+    .center-text {
+        text-align: center;
+    }
+
+    .center-table {
+        margin: 0 auto;
+    }
+
+    .center-cell {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .font-weight-bold {
+        font-weight: bold;
+    }
+</style>

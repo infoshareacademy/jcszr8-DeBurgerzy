@@ -1,6 +1,6 @@
 ﻿@using ParcelDistributionCenter.Logic.Services;
 @using ParcelDistributionCenter.Model.Enums;
-@using ParcelDistributionCenter.Web.ViewModels;
+@using ParcelDistributionCenter.Logic.ViewModels;
 
 @model PackageViewModel;
 
@@ -9,6 +9,8 @@
 <hr />
 
 <form asp-action="AddPackage">
+    <input type="hidden" name="currentTime" value="@DateTime.Now" />
+
     <img src="~/assets/parcel-package.jpeg" style="width: stretch; height: stretch; filter: grayscale(60%); position: fixed; z-index: -1; opacity: 0.3" alt="">
 
     <div class="row align-items-center justify-content-center">
@@ -121,49 +123,39 @@
 
     <div class="row align-items-center justify-content-center">
         <div class="col-md-3">
-            <table>
-                <tr>
-                    <td>
-                        <div class="dropdown">
-                            <i class="fas fa-compress-arrows-alt"></i>
-                            <label asp-for="Size" class="control-label"></label>
-                            <select asp-for="Size" class="form-control">
-                                <option value="">-- Select Size --</option>
-                                @foreach (var size in Enum.GetValues(typeof(PackageSize)))
-                                {
-                                    <option value="@size">@size</option>
-                                }
-                            </select>
-                            <span asp-validation-for="Size" class="text-danger"></span>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="dropdown">
-                            <i class="fas fa-clock"></i>
-                            <label asp-for="Status" class="control-label"></label>
-                            <select asp-for="Status" class="form-control">
-                                <option value="">-- Select Size --</option>
-                                @foreach (var status in Enum.GetValues(typeof(Status)))
-                                {
-                                    <option value="@status">@status</option>
-                                }
-                            </select>
-                            <span asp-validation-for="Status" class="text-danger"></span>
-                        </div>
-                    </td>
-                </tr>
-            </table>
+            <div class="dropdown">
+                <i class="fas fa-compress-arrows-alt"></i>
+                <label asp-for="Size" class="control-label"></label>
+                <select asp-for="Size" class="form-control">
+                    <option value="">-- Select Size --</option>
+                    @foreach (var size in Enum.GetValues(typeof(PackageSize)))
+                    {
+                        <option value="@size">@size</option>
+                    }
+                </select>
+                <span asp-validation-for="Size" class="text-danger"></span>
+            </div>
+            <div class="dropdown">
+                <i class="fas fa-clock"></i>
+                <label asp-for="Status" class="control-label"></label>
+                <select asp-for="Status" class="form-control">
+                    <option value="">-- Select Size --</option>
+                    @foreach (var status in Enum.GetValues(typeof(Status)))
+                    {
+                        <option value="@status">@status</option>
+                    }
+                </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
         </div>
     </div>
 
-    <div class="form-group text-center">
+    <div class="form-group text-center" style="margin-top: 10px">
         <input type="submit" value="Create" class="btn btn-primary" />
     </div>
 
     <div class="text-center">
-        <a asp-controller="Home" asp-action="Index">Back to Home</a>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary" style="margin-top: 20px">Back to Home</a>
     </div>
 </form>
 

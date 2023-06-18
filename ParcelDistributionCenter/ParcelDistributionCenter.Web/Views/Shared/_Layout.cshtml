@@ -11,22 +11,49 @@
     <link href="~/css/styles.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    <style>
+        .navbar {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            height: 56px;
+            padding: 0 16px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1030;
+        }
+
+        .navbar-brand {
+            margin-right: auto;
+        }
+    </style>
 </head>
 <body class="sb-nav-fixed">
-    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <nav class="sb-topnav navbar navbar-expand-lg navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="index.html">Parcel Distribution</a>
+        <a class="navbar-brand ps-3" asp-controller="Home" asp-action="Index">QuickPost</a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-        <!-- Navbar-->
-
+        <!-- Navbar Toggler -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Navbar -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <partial name="_LoginPartial" />
+                </li>
+            </ul>
+        </div>
     </nav>
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        
 
                         @*PACKAGES*@
                         <div class="sb-sidenav-menu-heading">Manage Package</div>
@@ -38,36 +65,38 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-cube"></i></div>
                             Send Package
                         </a>
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                            <div class="sb-nav-link-icon"><i class="fas fa-filter"></i></div>
-                            Find Package
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" asp-controller="Packages" asp-action="FindPackageByNumber">By Package Number</a>
-                                <a class="nav-link" asp-controller="Couriers" asp-action="Index">By Courier</a>
-                                <a class="nav-link" asp-controller="DeliveryMachines" asp-action="Details">By Delivery Machine</a>
-                            </nav>
-                        </div>
-                        
-                        @*COURIERS*@
-                        <div class="sb-sidenav-menu-heading">Manage Couriers</div>
-                        <a class="nav-link" asp-controller="Couriers" asp-action="Index">
-                           <div class="sb-nav-link-icon"><i class="fas fa-dolly"></i></div>
-                            Couriers List
-                        </a>
-                        <a class="nav-link" asp-controller="Couriers" asp-action="UnassignedPackages">
+                        <a class="nav-link" asp-controller="Packages" asp-action="UnassignedPackages">
                             <div class="sb-nav-link-icon"><i class="fas fa-dolly"></i></div>
                             Unassigned Packages
                         </a>
 
-                        @*DELIVERY MACHINES*@
-                        <div class="sb-sidenav-menu-heading">Manage Delivery Machines</div>
-                        <a class="nav-link" asp-controller="DeliveryMachines" asp-action="Details">
-                            <div class="sb-nav-link-icon"><i class="fas fa-warehouse"></i></div>
-                            Delivery Machines List
-                        </a>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            @*COURIERS*@
+                            <div class="sb-sidenav-menu-heading">Manage Couriers</div>
+                            <a class="nav-link" asp-controller="Couriers" asp-action="Index">
+                                <div class="sb-nav-link-icon"><i class="fas fa-dolly"></i></div>
+                                Couriers List
+                            </a>
+
+                            @*DELIVERY MACHINES*@
+                            <div class="sb-sidenav-menu-heading">Manage Delivery Machines</div>
+                            <a class="nav-link" asp-controller="DeliveryMachines" asp-action="Details">
+                                <div class="sb-nav-link-icon"><i class="fas fa-warehouse"></i></div>
+                                Delivery Machines List
+                            </a>
+
+                            @*REPORTS*@
+                            <div class="sb-sidenav-menu-heading">Reports</div>
+                            <a class="nav-link" asp-controller="Reports" asp-action="ReportMailing">
+                                <div class="sb-nav-link-icon"><i class="fas fa-envelope"></i></div>
+                                Report Mailing
+                            </a>
+                            <a class="nav-link" asp-controller="Reports" asp-action="GetPackagesReport">
+                                <div class="sb-nav-link-icon"><i class="fas fa-chart-pie"></i></div>
+                                Packages Report
+                            </a>
+                        }
                     </div>
                 </div>
             </nav>

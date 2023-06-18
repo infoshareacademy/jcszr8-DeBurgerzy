@@ -1,49 +1,40 @@
-﻿using ParcelDistributionCenter.Logic.Services.IServices;
-using ParcelDistributionCenter.Logic.Validators;
+﻿using AutoMapper;
+using ParcelDistributionCenter.Logic.Services.IServices;
+using ParcelDistributionCenter.Logic.ViewModels;
 using ParcelDistributionCenter.Model.Entites;
 using ParcelDistributionCenter.Model.Enums;
 using ParcelDistributionCenter.Model.Repositories;
 
 namespace ParcelDistributionCenter.Logic.Services
 {
-    // TODO: Prevent code from nullable ids coming form json
     public class AddNewPackageService : IAddNewPackageService
     {
         private readonly IRepository<Courier> _courierRepository;
         private readonly IRepository<DeliveryMachine> _deliverMachineRepository;
+        private readonly IMapper _mapper;
         private readonly IRepository<Package> _packageRepository;
-        private readonly IPackageValidator _packageValidator;
-        private readonly List<bool> validations = new();
+        private readonly IReportService _reportService;
 
-        public AddNewPackageService(IRepository<Package> packageRepository, IRepository<Courier> courierRepository, IRepository<DeliveryMachine> deliverMachineRepository, IPackageValidator packageValidator)
+        public AddNewPackageService(IRepository<Package> packageRepository, IMapper mapper, IRepository<Courier> courierRepository,
+                                    IRepository<DeliveryMachine> deliverMachineRepository, IReportService reportService)
         {
             _packageRepository = packageRepository;
+            _mapper = mapper;
             _courierRepository = courierRepository;
             _deliverMachineRepository = deliverMachineRepository;
-            _packageValidator = packageValidator;
+            _reportService = reportService;
         }
 
-        public bool AddNewPackage(ref Package package)
+        public PackageViewModel AddNewPackage(PackageViewModel packageViewModel, DateTime packageAddingStartTime)
         {
-            GeneratePackageNumber();
-            ValidatePackageStatus(package.Status);
-            ValidatePackageSize(package.Size);
-            AssignCourierID();
-            ValidateFullName(package.SenderName);
-            ValidatePhone(package.SenderPhone);
-            ValidateAddress(package.SenderAddress);
-            ValidateFullName(package.RecipientName);
-            ValidatePhone(package.RecipientPhone);
-            ValidateAddress(package.DeliveryAddress);
-            string deliveryMachineID = AssignDeliveryMachineID(package.Size);
-
-            if (validations.Any(v => v == false) || deliveryMachineID == null)
-            {
-                return false;
-            }
-
+            Package package = _mapper.Map<Package>(packageViewModel);
+            package.PackageNumber = GeneratePackageNumber();
+            package.CourierId = AssignCourierID();
+            package.DeliveryMachineJsonId = AssignDeliveryMachineID(package.Size);
             _packageRepository.Insert(package);
-            return true;
+            packageViewModel.PackageNumber = package.PackageNumber;
+            _reportService.AddPackageCreatingDuration(packageAddingStartTime, package.TimeCreated, package.Size);
+            return packageViewModel;
         }
 
         protected string AssignCourierID()
@@ -103,36 +94,6 @@ namespace ParcelDistributionCenter.Logic.Services
                 generatedNumber = rnd.Next(1_000_000, 10_000_000);
             } while (packagesNumbers.Contains(generatedNumber));
             return generatedNumber;
-        }
-
-        private void ValidateAddress(string address)
-        {
-            bool addressValidation = _packageValidator.ValidateAddress(address);
-            validations.Add(addressValidation);
-        }
-
-        private void ValidateFullName(string name)
-        {
-            bool fullNameValidation = _packageValidator.ValidateName(name);
-            validations.Add(fullNameValidation);
-        }
-
-        private void ValidatePackageSize(PackageSize? packageSize)
-        {
-            bool packageSizeValidation = packageSize != null;
-            validations.Add(packageSizeValidation);
-        }
-
-        private void ValidatePackageStatus(Status? status)
-        {
-            bool statusValidation = status != null;
-            validations.Add(statusValidation);
-        }
-
-        private void ValidatePhone(string phoneNumber)
-        {
-            bool phoneValidation = _packageValidator.ValidatePhoneNumber(phoneNumber);
-            validations.Add(phoneValidation);
         }
     }
 }

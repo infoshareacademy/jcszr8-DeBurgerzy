@@ -11,10 +11,8 @@ namespace ParcelDistributionCenter.Model.Entites
         [JsonProperty("courier_id")]
         public string CourierJsonId { get; init; }
 
-        // TODO: Think if nullable values are needed
         public DeliveryMachine? DeliveryMachine { get; set; }
 
-        // TODO: Think if nullable values are needed
         public string? DeliveryMachineId { get; set; }
 
         [JsonProperty("email")]

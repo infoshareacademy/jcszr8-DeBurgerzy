@@ -1,4 +1,4 @@
-﻿@model ParcelDistributionCenter.Web.ViewModels.PackageViewModel;
+﻿@model ParcelDistributionCenter.Logic.ViewModels.PackageViewModel;
 @using ParcelDistributionCenter.Model.Enums;
 
 @{
@@ -17,52 +17,52 @@
     <div class="col-md-3">
         <table>
 
-                <tr>
-                    <i class="bi bi-upc-scan"></i>
-                    <label asp-for="PackageNumber" class="control-label"></label>
-                </tr>
-                <tr>
-                    <input asp-for="PackageNumber" class="form-control" readonly />
-                    <span asp-validation-for="PackageNumber" class="text-danger"></span>
-                </tr>
-
-                <tr>
-
-                    <i class="bi bi-alarm-fill"></i>
-                    <label asp-for="Registered" class="control-label"></label>
-
-                <tr>
-                    <input asp-for="Registered" class="form-control" readonly />
-                    <span asp-validation-for="Registered" class="text-danger"></span>
-                </tr>
-
-                <tr>
-                    <div class="dropdown">
-                        <i class="fas fa-compress-arrows-alt"></i>
-                        <label asp-for="Size" class="control-label"></label>
-                        <select asp-for="Size" class="form-control">
-                            <option value="">-- Select Size --</option>
-                                @foreach (var size in Enum.GetValues(typeof(PackageSize)))
-                                {
-                                    <option value="@size">@size</option>
-                                }
-                        </select>
-                        <span asp-validation-for="Size" class="text-danger"></span>
-                    </div>
-                </tr>
             <tr>
-                    <div class="dropdown">
-                        <i class="fas fa-clock"></i>
-                        <label asp-for="Status" class="control-label"></label>
-                        <select asp-for="Status" class="form-control">
-                            <option value="">-- Select Size --</option>
-                                @foreach (var status in Enum.GetValues(typeof(Status)))
-                                {
-                                    <option value="@status">@status</option>
-                                }
-                        </select>
-                        <span asp-validation-for="Status" class="text-danger"></span>
-                    </div>
+                <i class="bi bi-upc-scan"></i>
+                <label asp-for="PackageNumber" class="control-label"></label>
+            </tr>
+            <tr>
+                <input asp-for="PackageNumber" class="form-control" readonly />
+                <span asp-validation-for="PackageNumber" class="text-danger"></span>
+            </tr>
+
+            <tr>
+
+                <i class="bi bi-alarm-fill"></i>
+                <label asp-for="Registered" class="control-label"></label>
+
+            <tr>
+                <input asp-for="Registered" class="form-control" readonly />
+                <span asp-validation-for="Registered" class="text-danger"></span>
+            </tr>
+
+            <tr>
+                <div class="dropdown">
+                    <i class="fas fa-compress-arrows-alt"></i>
+                    <label asp-for="Size" class="control-label"></label>
+                    <select asp-for="Size" class="form-control">
+                        <option value="">-- Select Size --</option>
+                            @foreach (var size in Enum.GetValues(typeof(PackageSize)))
+                            {
+                            <option value="@size">@size</option>
+                            }
+                    </select>
+                    <span asp-validation-for="Size" class="text-danger"></span>
+                </div>
+            </tr>
+            <tr>
+                <div class="dropdown">
+                    <i class="fas fa-clock"></i>
+                    <label asp-for="Status" class="control-label"></label>
+                    <select asp-for="Status" class="form-control">
+                        <option value="">-- Select Size --</option>
+                            @foreach (var status in Enum.GetValues(typeof(Status)))
+                            {
+                            <option value="@status">@status</option>
+                            }
+                    </select>
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
             </tr>
         </table>
     </div>

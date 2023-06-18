@@ -4,7 +4,6 @@ using ParcelDistributionCenter.Model.Repositories;
 
 namespace ParcelDistributionCenter.Logic.Services
 {
-    // TODO: Prevent code from nullable ids coming form json
     public class CourierService : ICourierService
     {
         private readonly IRepository<Courier> _courierRepository;
@@ -16,11 +15,10 @@ namespace ParcelDistributionCenter.Logic.Services
             _packageRepository = packageRepository;
         }
 
-        public void AssignPackage(string packageNumber, string CourierId)
+        public bool AddNewCourier(Courier courier)
         {
-            var package = _packageRepository.GetAll().First(p => p.PackageNumber == int.Parse(packageNumber));
-            package.CourierId = CourierId;
-            _packageRepository.Update(package);
+            _courierRepository.Insert(courier);
+            return true;
         }
 
         public bool DeleteCourier(string id)
@@ -35,17 +33,15 @@ namespace ParcelDistributionCenter.Logic.Services
             return false;
         }
 
-        public Courier FindById(string id) => _courierRepository.Get(id);
+        public Courier FindById(string id) => _courierRepository.Get(id, c => c.Packages);
 
-        public IEnumerable<Courier> GetAll() => _courierRepository.GetAll();
+        public IEnumerable<Courier> GetAll() => _courierRepository.GetAll(c => c.Packages);
 
-        public List<Package> GetCourierPackages(string courierId) => _packageRepository.GetAll().Where(p => p.CourierId == courierId).ToList();
+        public IEnumerable<Package> GetCourierPackages(string courierId) => _packageRepository.GetAll().Where(p => p.CourierId == courierId);
 
-        public IEnumerable<Package> GetUnassignedPackages() => _packageRepository.GetAll().Where(p => p.CourierId == null);
-
-        public void UnassignCouriersPackages(string CourierId)
+        public void UnassignCouriersPackages(string courierId)
         {
-            IEnumerable<Package> packages = _packageRepository.GetAll().Where(p => p.CourierId == CourierId);
+            IEnumerable<Package> packages = _packageRepository.GetAll().Where(p => p.CourierId == courierId);
             foreach (Package p in packages)
             {
                 _packageRepository.Update(p);
@@ -59,7 +55,7 @@ namespace ParcelDistributionCenter.Logic.Services
             _packageRepository.Update(package);
         }
 
-        public void Update(Courier model)
+        public void UpdateCourier(Courier model)
         {
             var courier = FindById(model.Id);
             courier.Name = model.Name;

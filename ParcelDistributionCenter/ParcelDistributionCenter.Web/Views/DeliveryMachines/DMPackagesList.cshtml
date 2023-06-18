@@ -1,0 +1,89 @@
+﻿@model IEnumerable<ParcelDistributionCenter.Logic.ViewModels.PackageViewModel>
+
+@{
+    ViewData["Title"] = "DMPackagesList";
+}
+
+<h1 class="center-text" style="margin: 30px">Delivery Machine Packages List</h1>
+
+<p>
+    <a asp-controller="Packages" asp-action="UnassignedPackages" asp-route-id=@ViewContext.RouteData.Values["id"] class="btn btn-primary" style="margin-left: 20px">Assign unassigned package</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr class="center-cell">
+            <th>
+                @Html.DisplayNameFor(model => model.PackageNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Registered)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Size)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeliveryAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RecipientEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SenderEmail)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="center-cell">
+                <td>
+                    @Html.DisplayFor(modelItem => item.PackageNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Registered)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Size)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeliveryAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RecipientEmail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SenderEmail)
+                </td>
+                <td>
+                    <a asp-action="UnassignPackage" asp-route-packageNumber=@item.PackageNumber asp-route-deliveryMachineId=@ViewContext.RouteData.Values["id"] class="btn btn-primary">Unassign</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div>
+    <a asp-action="Details" class="btn btn-secondary" style="margin-left: 20px">Back to Delivery Machines List</a>
+</div>
+
+<style>
+    .center-text {
+        text-align: center;
+    }
+
+    .center-table {
+        margin: 0 auto;
+    }
+
+    .center-cell {
+        text-align: center;
+        vertical-align: middle;
+    }
+</style>
