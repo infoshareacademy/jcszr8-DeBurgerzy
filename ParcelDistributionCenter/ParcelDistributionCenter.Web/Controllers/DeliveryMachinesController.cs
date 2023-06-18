@@ -30,8 +30,12 @@ namespace ParcelDistributionCenter.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateConfirmed(DeliveryMachine deliveryMachine)
         {
-            _deliveryMachinesService.CreateNewDeliveryMachine(deliveryMachine);
-            return RedirectToAction(nameof(Details));
+            if (ModelState.IsValid)
+            {
+                _deliveryMachinesService.CreateNewDeliveryMachine(deliveryMachine);
+                return RedirectToAction(nameof(Details));
+            }
+            return View(nameof(Create));
         }
 
         // GET: DeliveryMachinesController/DeleteDeliveryMachine
@@ -62,7 +66,8 @@ namespace ParcelDistributionCenter.Web.Controllers
         public ActionResult Details()
         {
             IEnumerable<DeliveryMachine> deliveryMachines = _deliveryMachinesService.GetAll();
-            return View(deliveryMachines);
+            IEnumerable<DeliveryMachineViewModel> deliveryMachinesViewModel = _mapper.Map<IEnumerable<DeliveryMachineViewModel>>(deliveryMachines);
+            return View(deliveryMachinesViewModel);
         }
 
         // GET: DeliveryMachinesController/DeleteDeliveryMachine
@@ -87,9 +92,13 @@ namespace ParcelDistributionCenter.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditDeliveryMachineConfirmed(DeliveryMachineViewModel deliveryMachineViewModel)
         {
-            DeliveryMachine deliveryMachine = _mapper.Map<DeliveryMachine>(deliveryMachineViewModel);
-            _deliveryMachinesService.UpdateDeliveryMachine(deliveryMachine);
-            return RedirectToAction(nameof(Details));
+            if (ModelState.IsValid)
+            {
+                DeliveryMachine deliveryMachine = _mapper.Map<DeliveryMachine>(deliveryMachineViewModel);
+                _deliveryMachinesService.UpdateDeliveryMachine(deliveryMachine);
+                return RedirectToAction(nameof(Details));
+            }
+            return View(nameof(EditDeliveryMachine));
         }
 
         public ActionResult UnassignPackage(string packageNumber, string deliveryMachineId)

@@ -2,6 +2,32 @@
 @model EmailViewModel
 
 
+<div class="container">
+    <div class="header">
+        Report Mailing
+    </div>
+    <div class="description">
+        Here you can find a Report Mailing, which will send the data for Packages Report to the Admin mail.<br>
+        (email: leif.hyatt@ethereal.email)
+    </div>
+    <div class="description">
+        Below you can indicate the time at which the data will be sent each day (from 0 to 23).
+    </div>
+    <form asp-action="ReportMailingConfirmed">
+        <div class="form-group">
+            <label class="input-label" for="HourToSendEmail">Cyclical hour of report sending: </label>
+            <input asp-for="HourToSendEmail" class="form-control" id="HourToSendEmail" type="number" min="0" max="23" />
+            <span asp-validation-for="HourToSendEmail" class="text-danger" />
+        </div>
+        <div class="form-group" >
+            <input type="submit" value="Send Email" class="btn btn-primary" />
+        </div>
+        <div>
+            <a asp-controller="Home" asp-action="Index" class="back-link">Back to Home</a>
+        </div>
+    </form>
+</div>
+
 <style>
     body {
         display: flex;
@@ -88,29 +114,3 @@
         text-align: center;
     }
 </style>
-
-<div class="container">
-    <div class="header">
-        Report Mailing
-    </div>
-    <div class="description">
-        Here you can find a Report Mailing, which will send the data for Packages Report to the Admin mail.<br>
-        (email: leif.hyatt@ethereal.email)
-    </div>
-    <div class="description">
-        Below you can indicate the time at which the data will be sent each day (from 0 to 23).
-    </div>
-    <form asp-action="ReportMailingConfirmed">
-        <div class="form-group">
-            <label class="input-label" for="HourToSendEmail">Cyclical hour of report sending: </label>
-            <input asp-for="HourToSendEmail" class="form-control" id="HourToSendEmail" type="number" min="0" max="23" />
-            <span asp-validation-for="HourToSendEmail" class="text-danger" />
-        </div>
-        <div class="form-group" >
-            <input type="submit" value="Send Email" class="btn btn-primary" />
-        </div>
-        <div>
-            <a asp-controller="Home" asp-action="Index" class="back-link">Back to Home</a>
-        </div>
-    </form>
-</div>

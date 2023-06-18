@@ -11,9 +11,9 @@
     "delivery_machine_id": "63984b26b73dcca54916efd0",
     "address": "Jesienna 12 00-02 Warszawa",
     "is_active": true,
-    "big_lockers_count": 1,
-    "medium_lockers_count": 2,
-    "small_lockers_count": 4
+    "big_lockers_count": 5,
+    "medium_lockers_count": 20,
+    "small_lockers_count": 50
   },
   {
     "delivery_machine_id": "63984b2685f6e06d18aa9f94",
@@ -27,9 +27,9 @@
     "delivery_machine_id": "63984b26e5fb0652f03303b3",
     "address": "Zimowa 3 00-04 Warszawa",
     "is_active": true,
-    "big_lockers_count": 1,
-    "medium_lockers_count": 2,
-    "small_lockers_count": 4
+    "big_lockers_count": 3,
+    "medium_lockers_count": 8,
+    "small_lockers_count": 9
   },
   {
     "delivery_machine_id": "63984b26db09ef3e8449f618",
@@ -43,9 +43,9 @@
     "delivery_machine_id": "63984b26db8e26305d3452e3",
     "address": "Gruszkowa 3 01-02 Warszawa",
     "is_active": true,
-    "big_lockers_count": 1,
-    "medium_lockers_count": 2,
-    "small_lockers_count": 4
+    "big_lockers_count": 5,
+    "medium_lockers_count": 15,
+    "small_lockers_count": 30
   },
   {
     "delivery_machine_id": "63984b2625b361350a3e9f30",
@@ -59,17 +59,17 @@
     "delivery_machine_id": "63984b26839ec0b7a943b1d4",
     "address": "Kasprzaka 12 03-01 Warszawa",
     "is_active": true,
-    "big_lockers_count": 1,
-    "medium_lockers_count": 2,
-    "small_lockers_count": 4
+    "big_lockers_count": 3,
+    "medium_lockers_count": 9,
+    "small_lockers_count": 12
   },
   {
     "delivery_machine_id": "63984b26926960eef55c714b",
     "address": "Jasnodworska 23 04-01 Warszawa",
     "is_active": true,
     "big_lockers_count": 1,
-    "medium_lockers_count": 2,
-    "small_lockers_count": 4
+    "medium_lockers_count": 10,
+    "small_lockers_count": 50
   },
   {
     "delivery_machine_id": "63984b269d56fcbf84dd0266",
@@ -77,15 +77,15 @@
     "is_active": true,
     "big_lockers_count": 1,
     "medium_lockers_count": 2,
-    "small_lockers_count": 4
+    "small_lockers_count": 5
   },
   {
     "delivery_machine_id": "63984b2674f520a24dd872e3",
     "address": "Poznańska 23 06-01 Warszawa",
     "is_active": true,
     "big_lockers_count": 1,
-    "medium_lockers_count": 2,
-    "small_lockers_count": 4
+    "medium_lockers_count": 6,
+    "small_lockers_count": 10
   }
 
 ]
