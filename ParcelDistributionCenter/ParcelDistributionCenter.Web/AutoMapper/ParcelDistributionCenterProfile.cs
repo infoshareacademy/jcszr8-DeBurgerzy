@@ -17,8 +17,6 @@ namespace ParcelDistributionCenter.Web.AutoMapper
                 .ReverseMap();
 
             CreateMap<UnassignedPackageViewModel, Package>(MemberList.Source);
-            //.ForMember(dest => dest.Courier, opt => opt.MapFrom(src => src.CourierEmail))
-            //.ForMember(dest => dest.DeliveryMachine, opt => opt.MapFrom(src => src.DeliveryMachineAddress));
 
             CreateMap<Courier, CourierViewModel>()
                  .ForMember(dest => dest.CourierId, opt => opt.MapFrom(src => src.Id))
