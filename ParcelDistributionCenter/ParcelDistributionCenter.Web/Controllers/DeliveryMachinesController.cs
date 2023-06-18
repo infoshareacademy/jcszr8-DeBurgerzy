@@ -28,10 +28,11 @@ namespace ParcelDistributionCenter.Web.Controllers
         // POST: DeliveryMachinesController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateConfirmed(DeliveryMachine deliveryMachine)
+        public ActionResult CreateConfirmed(DeliveryMachineViewModel deliveryMachineViewModel)
         {
             if (ModelState.IsValid)
             {
+                DeliveryMachine? deliveryMachine = _mapper.Map<DeliveryMachine>(deliveryMachineViewModel);
                 _deliveryMachinesService.CreateNewDeliveryMachine(deliveryMachine);
                 return RedirectToAction(nameof(Details));
             }

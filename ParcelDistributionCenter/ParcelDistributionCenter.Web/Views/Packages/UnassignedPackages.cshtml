@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<ParcelDistributionCenter.Model.Entites.Package>
 
 @{
-    ViewData["Title"] = "UnassignedPackages";
+    ViewData["Title"] = "Unassigned Packages";
 }
 
-<h1>Unassigned Packages</h1>
+<h1 class="center-text" style="margin: 30px">Unassigned Packages</h1>
 
-<table class="table">
+<table class="table center-table">
     <thead>
-        <tr>
+        <tr class="center-cell">
             <th>
                 Courier
             </th>
@@ -36,7 +36,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+            <tr class="center-cell">
                 <td>
                     @if (item.CourierId == null)
                     {
@@ -76,3 +76,22 @@
         }
     </tbody>
 </table>
+
+<style>
+    .center-text {
+        text-align: center;
+    }
+
+    .center-table {
+        margin: 0 auto;
+    }
+
+    .center-cell {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .font-weight-bold {
+        font-weight: bold;
+    }
+</style>

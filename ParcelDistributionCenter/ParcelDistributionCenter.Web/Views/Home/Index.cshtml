@@ -31,11 +31,18 @@
             </div>
         </div>
 
-        <div class="image-region">
+        <div class="image-region blur-top">
             <div class="image-center">
-                <img src="assets/cityBackground.jpg" alt="Sample Photo" />
+                <img id="background-image" src="assets/cityBackground.jpg" alt="Sample Photo" />
             </div>
         </div>
     </div>
+
+    <script>
+        window.onload = function () {
+            var image = document.getElementById("background-image");
+            image.style.filter = "blur(5px)";
+        };
+    </script>
 </body>
 </html>

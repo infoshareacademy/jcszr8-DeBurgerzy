@@ -11,9 +11,9 @@
 </p>
 
 <div class="card-body">
-    <table class="table">
+    <table class="table center-table">
         <thead>
-            <tr>
+            <tr class="center-cell">
 
                 <th>
                     @Html.DisplayNameFor(model => model.PackageNumber)
@@ -42,7 +42,7 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
+                <tr class="center-cell">
                     <td>
                         @Html.DisplayFor(modelItem => item.PackageNumber)
                     </td>

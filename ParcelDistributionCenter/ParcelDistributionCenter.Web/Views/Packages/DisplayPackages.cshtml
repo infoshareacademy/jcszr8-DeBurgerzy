@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<ParcelDistributionCenter.Logic.ViewModels.PackageViewModel>
 
 @{
-    ViewData["Title"] = "DisplayPackages";
+    ViewData["Title"] = "Display Packages";
 }
 
 <h1 class="text-center" style="font-weight: bold; margin-top: 10px">Packages List</h1>
 <hr />
 <table width=90%>
-    <tr>
+    <tr class="center-cell">
         <td width=150px style="text-align:right; padding:15px">
             <span class="sb-nav-link-icon"><i class="fas fa-filter"></i></span>
             Find in table:
@@ -23,9 +23,9 @@
 <hr />
 
 <div>
-    <table class="table">
+    <table class="table center-table">
         <thead>
-            <tr>
+            <tr class="center-cell">
 
                 <th>
                     @Html.DisplayNameFor(model => model.PackageNumber)
@@ -54,7 +54,7 @@
         <tbody id="packagesTable">
             @foreach (var item in Model)
             {
-                <tr>
+                <tr class="center-cell">
                     <td>
                         @Html.DisplayFor(modelItem => item.PackageNumber)
                     </td>
@@ -99,3 +99,18 @@
         return false;
     }
 </script>
+
+<style>
+    .center-text {
+        text-align: center;
+    }
+
+    .center-table {
+        margin: 0 auto;
+    }
+
+    .center-cell {
+        text-align: center;
+        vertical-align: middle;
+    }
+</style>

@@ -30,14 +30,14 @@
     <div style="flex: 1;">
         <div class="summary">
             <h2>Summary</h2>
-            <p style="color: teal">Average Package Adding Duration Time: @averageAddingDurationTime s</p>
-            <p style="color: darkgoldenrod">Big Packages Count: @bigPackagesCount</p>
-            <p style="color: indigo">Medium Packages Count: @mediumPackagesCount</p>
-            <p style="color: olive">Small Packages Count: @smallPackagesCount</p>
+            <p style="color: teal; font-weight: bold;">Average Package Adding Duration Time: @averageAddingDurationTime s</p>
+            <p style="color: darkgoldenrod; font-weight: bold;">Big Packages Count: @bigPackagesCount</p>
+            <p style="color: indigo; font-weight: bold;">Medium Packages Count: @mediumPackagesCount</p>
+            <p style="color: olive; font-weight: bold;">Small Packages Count: @smallPackagesCount</p>
         </div>
-        <table class="table">
+        <table class="table center-table">
             <thead>
-                <tr>
+                <tr class="center-cell">
                     <th>
                         @Html.DisplayNameFor(model => model.AddingDurationInSeconds)
                     </th>
@@ -53,7 +53,7 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
+                    <tr class="center-cell">
                         <td>
                             @Html.DisplayFor(modelItem => item.AddingDurationInSeconds)
                         </td>
@@ -80,16 +80,25 @@
         margin-bottom: 20px;
     }
 
-        .summary h2 {
-            font-size: 20px;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
+    .center-table {
+        margin: 0 auto;
+    }
 
-        .summary p {
-            font-size: 16px;
-            margin: 5px 0;
-        }
+    .center-cell {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .summary h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    .summary p {
+        font-size: 16px;
+        margin: 5px 0;
+    }
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1"></script>
