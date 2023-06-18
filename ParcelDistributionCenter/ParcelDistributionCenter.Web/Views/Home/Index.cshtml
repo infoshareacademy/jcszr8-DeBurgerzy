@@ -3,8 +3,18 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <h4>Learn about our Project </h4>
+    <h1 class="display-logo">QuickPost</h1>
+    <h2 class="display-logo2" >Fastest Parcel Distribution Center  </h2>
     <hr />
-
+</div>
+    <div class="image-region">
+        <div class="image-center"> <img src="assets/Postman2.png" alt="Sample Photo" /></div>
+        <div class=" button-location">
+        <a class="btn-big" asp-controller="Packages" asp-action="DisplayPackages">
+        Packages List </a>
+        <a class="btn-big" asp-controller="Packages" asp-action="AddPackage">
+        Send Package </a>
+        <a class="btn-big" asp-controller="Packages" asp-action="UnassignedPackages">
+        Unassigned Packages </a>
+    </div>
 </div>

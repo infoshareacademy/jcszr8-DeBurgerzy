@@ -497,13 +497,14 @@ progress {
   font-weight: 300;
   line-height: 1.2;
 }
-@media (min-width: 1200px) {
-  .display-1 {
-    font-size: 5rem;
-  }
-}
 
-.display-2 {
+    @media (min-width: 1200px) {
+        .display-1 {
+            font-size: 5rem;
+        }
+    }
+
+    .display-2 {
   font-size: calc(1.575rem + 3.9vw);
   font-weight: 300;
   line-height: 1.2;
@@ -11698,4 +11699,77 @@ body {
   width: 20px !important;
   font-size: 0.75rem;
   border-radius: 0.25rem !important;
+}
+.floatfix {
+    zoom: 1;
+}
+
+.floatfix:after {
+        content: '';
+        display: block;
+        clear: both;
+ }
+.image-center {
+    margin-top: 0.25rem;
+    margin-bottom: auto;
+    text-align: center !important;
+    filter: grayscale(60%);
+    z-index: -1;
+    opacity: 0.5;
+}
+.btn-big {
+    padding: 1rem 1.5rem;
+    font-size: calc(0.45rem + 1.0vw);
+    font-style: initial;
+    forced-color-adjust: #000;
+    border-radius: 0.3rem;
+    background-color: #ffc107;
+    margin-left: 0.255em;
+    margin-right: 0.255em;
+    margin-top: -25em;
+    margin-bottom: 0.255em;
+    text-decoration: none;
+}
+
+.display-logo {
+    font-size: calc(1.625rem + 4.5vw);
+    font-weight: 200;
+    line-height: 1.2;
+    background-color: #ffc720;
+    forced-color-adjust: #0a58ca;
+    margin-bottom: 0;
+}
+.display-logo2 {
+    font-size: calc(0.625rem + 1.0vw);
+    background-color: #ffc720;
+    forced-color-adjust: #0a58ca;
+    margin-top: 0;
+    margin-bottom: auto;
+    text-align: center !important;
+}
+button-group {
+    margin-top: 1.25rem;
+    margin-bottom: auto;
+    text-align: center !important;
+}
+.image-region {
+    position: relative; /* obrazek będzie się zmieniał rozmiar wraz ze stroną */
+    text-align: center; /* wyśrodkowanie obrazka */
+    color: black; /* kolor tekstu */
+}
+
+.srodek {
+    >>tekst zawsze będzie na środku position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.button-location {
+    position: absolute;
+    top: 95%; /* położenie względem kontenera, ale też wynikające z ilości tekstu. nad tym należy mieć kontrolę. przycisk będzie na środku, ale tylko w pionie. w poziomie będzie schodził poniżej tekstu */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    /* tutaj oczywiście możesz dodać inne dodatkowe style dla przycisku */
 }
