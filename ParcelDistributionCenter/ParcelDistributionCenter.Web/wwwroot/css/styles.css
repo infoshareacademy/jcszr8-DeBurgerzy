@@ -11719,7 +11719,7 @@ body {
 }
 .btn-big {
     padding: 1rem 1.5rem;
-    font-size: calc(0.45rem + 1.0vw);
+    font-size: calc(0.25rem + 1.0vw);
     font-style: initial;
     forced-color-adjust: #000;
     border-radius: 0.3rem;
@@ -11767,7 +11767,7 @@ button-group {
 
 .button-location {
     position: absolute;
-    top: 95%; /* położenie względem kontenera, ale też wynikające z ilości tekstu. nad tym należy mieć kontrolę. przycisk będzie na środku, ale tylko w pionie. w poziomie będzie schodził poniżej tekstu */
+    top: 20%; /* położenie względem kontenera, ale też wynikające z ilości tekstu. nad tym należy mieć kontrolę. przycisk będzie na środku, ale tylko w pionie. w poziomie będzie schodził poniżej tekstu */
     left: 50%;
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
