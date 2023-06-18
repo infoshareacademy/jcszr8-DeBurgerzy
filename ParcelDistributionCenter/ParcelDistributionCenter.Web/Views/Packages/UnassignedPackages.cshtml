@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ParcelDistributionCenter.Logic.ViewModels.PackageViewModel>
+﻿@model IEnumerable<ParcelDistributionCenter.Model.Entites.Package>
 
 @{
     ViewData["Title"] = "UnassignedPackages";
@@ -38,10 +38,24 @@
         {
             <tr>
                 <td>
-                    <a asp-action="AssignCourier" asp-route-packageNumber=@item.PackageNumber asp-route-courierId=@ViewContext.RouteData.Values["id"] class="btn btn-primary">Assign Courier</a>
+                    @if (item.CourierId == null)
+                    {
+                        <a asp-action="AssignCourier" asp-route-packageNumber=@item.PackageNumber asp-route-courierId=@ViewContext.RouteData.Values["id"] class="btn btn-primary">Assign Courier</a>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem =>item.Courier.Email)
+                    }
                 </td>
                 <td>
-                    <a asp-action="AssignDeliveryMachine" asp-route-packageNumber=@item.PackageNumber asp-route-deliveryMachineId=@ViewContext.RouteData.Values["id"] class="btn btn-primary">Assign Delivery Machine</a>
+                    @if (item.DeliveryMachineId == null)
+                    {
+                        <a asp-action="AssignDeliveryMachine" asp-route-packageNumber=@item.PackageNumber asp-route-deliveryMachineId=@ViewContext.RouteData.Values["id"] class="btn btn-primary">Assign Delivery Machine</a>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem =>item.DeliveryMachine.Address)
+                    }
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Size)

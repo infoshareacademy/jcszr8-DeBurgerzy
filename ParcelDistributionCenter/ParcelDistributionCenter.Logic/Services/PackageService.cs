@@ -7,12 +7,14 @@ namespace ParcelDistributionCenter.Logic.Services
     public class PackageService : IPackageService
     {
         private readonly IDeliveryMachinesService _deliveryMachinesService;
+        private readonly ICourierService _courierService;
         private readonly IRepository<Package> _packageRepository;
 
-        public PackageService(IRepository<Package> repository, IDeliveryMachinesService deliveryMachinesService)
+        public PackageService(IRepository<Package> repository, IDeliveryMachinesService deliveryMachinesService, ICourierService courierService)
         {
             _packageRepository = repository;
             _deliveryMachinesService = deliveryMachinesService;
+            _courierService = courierService;
         }
 
         public void AssignCourier(string packageNumber, string CourierId)
@@ -54,7 +56,22 @@ namespace ParcelDistributionCenter.Logic.Services
 
         public IEnumerable<int> GetAllPackagesNumber() => _packageRepository.GetAll().Select(p => p.PackageNumber);
 
-        public IEnumerable<Package> GetUnassignedPackages() => _packageRepository.GetAll().Where(p => p.CourierId == null);
+        public IEnumerable<Package> GetUnassignedPackages()
+        {
+            var unassigned = _packageRepository.GetAll().Where(p => p.CourierId == null || p.DeliveryMachineId == null);
+            foreach (Package package in unassigned)
+            {
+                if (package.DeliveryMachineId != null && package.CourierId == null)
+                {
+                    package.DeliveryMachine = _deliveryMachinesService.GetAll().First(d => d.Id == package.DeliveryMachineId);
+                }
+                else if (package.DeliveryMachineId == null && package.CourierId != null)
+                {
+                    package.Courier = _courierService.GetAll().First(c => c.Id == package.CourierId);
+                }
+            }
+            return unassigned;
+        }
 
         public bool Update(Package model)
         {
